@@ -1,0 +1,71 @@
+.barber-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.8rem;
+  margin-bottom: 1rem;
+  padding: 0 2rem;
+
+  .kpi-card {
+    padding: 1.8rem;
+    border-radius: 16px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 500;
+      opacity: 0.9;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Soft light overlay */
+    &::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -40%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      transition: 0.4s ease;
+    }
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    &:hover::before {
+      top: -20%;
+      right: -20%;
+    }
+  }
+
+  /* ===== Individual Gradient Colors ===== */
+
+  /* Total Orders */
+  .kpi-card:nth-child(1) {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+  }
+
+  /* Completed Orders */
+  .kpi-card:nth-child(2) {
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+  }
+
+  /* Revenue */
+  .kpi-card:nth-child(3) {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  }
+}

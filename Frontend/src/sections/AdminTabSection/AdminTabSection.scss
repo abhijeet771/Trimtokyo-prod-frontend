@@ -1,0 +1,44 @@
+.admin-tab-section {
+  padding: 2rem;
+
+  &__subtabs {
+    display: flex;
+    gap: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+  }
+
+  &__btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    position: relative;
+    transition: 0.2s ease;
+
+    &.active {
+      font-weight: 600;
+      color: #4f46e5;
+    }
+
+    &.active::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #4f46e5;
+    }
+  }
+
+  &__content {
+    margin-top: 2rem;
+  }
+
+  &__dashboard {
+    padding: 2rem;
+  }
+}

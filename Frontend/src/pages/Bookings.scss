@@ -1,0 +1,258 @@
+.bookings {
+  display: flex;
+  gap: 1.5rem;
+  min-height: 100vh;
+
+  /* ================= CONTENT ================= */
+  &__content {
+    flex: 1;
+    padding: 1rem;
+    min-width: 0; // prevents overflow issues
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  &__loading,
+  &__empty {
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* ================= GRID ================= */
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* ================= CARD ================= */
+
+.booking-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1rem;
+  transition: 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+
+  &__body {
+    margin-top: 0.7rem;
+
+    .service {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .price {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+  }
+
+  &__meta {
+    margin-top: 0.6rem;
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__status {
+    margin-top: 0.7rem;
+
+    .status {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: capitalize;
+      display: inline-block;
+    }
+
+    .upcoming {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .completed {
+      background: #dcfce7;
+      color: #166534;
+    }
+  }
+}
+
+/* ================= PAGINATION ================= */
+
+.pagination {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  button {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover:not(:disabled) {
+      background: #f3f4f6;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    font-size: 13px;
+    color: #444;
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* ----------- LARGE TABLETS (<=1200px) ----------- */
+@media (max-width: 1200px) {
+  .bookings__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ----------- TABLETS (<=992px) ----------- */
+@media (max-width: 992px) {
+  .bookings {
+    gap: 1rem;
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+/* ----------- SMALL TABLETS (<=768px) ----------- */
+@media (max-width: 768px) {
+  .bookings {
+    flex-direction: column;
+
+    &__content {
+      padding: 0.8rem;
+    }
+
+    &__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
+  }
+
+  .booking-card {
+    padding: 0.8rem;
+
+    &__header img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+/* ----------- MOBILE (<=576px) ----------- */
+@media (max-width: 576px) {
+  .bookings {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+  }
+
+  .booking-card {
+    border-radius: 10px;
+
+    &__header {
+      gap: 0.6rem;
+
+      h4 {
+        font-size: 13px;
+      }
+
+      p {
+        font-size: 11px;
+      }
+    }
+
+    &__body {
+      .service {
+        font-size: 12px;
+      }
+
+      .price {
+        font-size: 14px;
+      }
+    }
+
+    &__meta {
+      font-size: 11px;
+    }
+
+    &__status .status {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+  }
+
+  .pagination {
+    gap: 0.5rem;
+
+    button {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.barber-map-section {
+  margin-top: 2rem;
+
+  .track-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .map-container {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+}

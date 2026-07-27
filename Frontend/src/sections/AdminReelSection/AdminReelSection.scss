@@ -1,0 +1,143 @@
+.admin-reel-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    p {
+      margin-top: 6px;
+      color: #6b7280;
+      font-size: 15px;
+    }
+  }
+
+  &__add-btn {
+    border: none;
+    outline: none;
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    color: white;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(124, 58, 237, 0.25);
+    }
+  }
+
+  &__toolbar {
+    display: flex;
+    justify-content: flex-start;
+
+    input {
+      width: 350px;
+      max-width: 100%;
+      height: 46px;
+
+      padding: 0 16px;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+
+      font-size: 15px;
+      outline: none;
+      transition: 0.25s;
+
+      &:focus {
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.08);
+      }
+    }
+  }
+
+  &__table-wrapper {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #ececec;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.04);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      background: #fafafa;
+
+      th {
+        text-align: left;
+        padding: 18px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #374151;
+        border-bottom: 1px solid #ececec;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: 0.2s;
+
+        &:hover {
+          background: #fafafa;
+        }
+
+        td {
+          padding: 18px;
+          border-bottom: 1px solid #f3f4f6;
+          color: #4b5563;
+          font-size: 14px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 60px 20px !important;
+    color: #9ca3af !important;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .admin-reel-section {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    &__toolbar {
+      input {
+        width: 100%;
+      }
+    }
+
+    &__table-wrapper {
+      overflow-x: auto;
+    }
+
+    &__table {
+      min-width: 900px;
+    }
+  }
+}

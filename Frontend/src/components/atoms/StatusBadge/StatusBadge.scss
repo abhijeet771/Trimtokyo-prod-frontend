@@ -1,0 +1,26 @@
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.CONFIRMED {
+    background: #e6f4ff;
+    color: #096dd9;
+  }
+
+  &.IN_PROGRESS {
+    background: #fff7e6;
+    color: #d46b08;
+  }
+
+  &.COMPLETED {
+    background: #e6fffb;
+    color: #08979c;
+  }
+
+  &.CANCELLED {
+    background: #fff1f0;
+    color: #cf1322;
+  }
+}

@@ -1,0 +1,194 @@
+.barber-profile {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #0f172a;
+    text-align: center;
+  }
+
+  .status-badge {
+    margin-bottom: 1rem;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.approved {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    &.pending {
+      background: #fef9c3;
+      color: #92400e;
+    }
+
+    &.rejected {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  }
+
+  .warning {
+    margin-bottom: 1.5rem;
+    background: #fef3c7;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #92400e;
+    text-align: center;
+  }
+
+  .profile-form {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+      background: #f9fafb;
+
+      &:focus {
+        outline: none;
+        border-color: #22c55e;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+      }
+
+      &:disabled {
+        background: #f3f4f6;
+        cursor: not-allowed;
+      }
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    input[name="description"],
+    input[name="address"],
+    input[name="profileImage"],
+    input[name="googleMapLink"] {
+      grid-column: span 2;
+    }
+
+    input[type="date"] {
+      width: 100%;
+    }
+
+    button {
+      grid-column: span 2;
+      padding: 0.9rem;
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-size: 0.95rem;
+    }
+
+    button:first-of-type {
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+      color: white;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+      }
+    }
+
+    button:last-of-type {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+      }
+    }
+
+    button:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+  .barber-profile {
+    padding: 1.8rem;
+
+    .profile-form {
+      max-width: 700px;
+      gap: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .barber-profile {
+    padding: 1.5rem 1rem;
+
+    .profile-form {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+      gap: 1rem;
+
+      input,
+      select,
+      button {
+        grid-column: span 1 !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .barber-profile {
+    padding: 1rem;
+
+    h3 {
+      font-size: 1.3rem;
+    }
+
+    .profile-form {
+      padding: 1.2rem;
+      border-radius: 12px;
+
+      input,
+      select {
+        font-size: 0.9rem;
+        padding: 0.7rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+      }
+    }
+  }
+}

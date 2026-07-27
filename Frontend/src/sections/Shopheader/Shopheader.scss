@@ -1,0 +1,572 @@
+.shop-header {
+  width: 100%;
+  height: 82px;
+
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 32px;
+
+  border-bottom: 1px solid var(--theme-border);
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  box-sizing: border-box;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    min-width: fit-content;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    cursor: pointer;
+
+    img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+      margin: 0;
+      line-height: 1;
+
+      span {
+        color: var(--theme-primary);
+      }
+    }
+  }
+
+  &__location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    border: 1px solid var(--theme-border);
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+    white-space: nowrap;
+
+    &:hover {
+      border-color: var(--theme-primary);
+      box-shadow: 0 8px 18px var(--theme-shadow);
+    }
+
+    span {
+      font-size: 15px;
+      font-weight: 500;
+      color: #222;
+    }
+
+    svg {
+      color: var(--theme-primary);
+      flex-shrink: 0;
+    }
+  }
+
+  &__center {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 0 40px;
+
+    min-width: 0;
+  }
+
+  &__search {
+    width: 100%;
+    max-width: 650px;
+    height: 54px;
+
+    background: #fff;
+
+    border: 1px solid var(--theme-border);
+    border-radius: 50px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    transition: all 0.25s ease;
+
+    &:focus-within {
+      border-color: var(--theme-primary);
+      box-shadow: 0 8px 20px var(--theme-shadow);
+    }
+
+    .search-icon {
+      margin-left: 18px;
+      color: #9a9a9a;
+      flex-shrink: 0;
+    }
+
+    input {
+      flex: 1;
+      height: 100%;
+
+      border: none;
+      outline: none;
+
+      padding: 0 16px;
+
+      font-size: 15px;
+
+      background: transparent;
+
+      min-width: 0;
+    }
+
+    button {
+      width: 56px;
+      height: 56px;
+
+      border: none;
+
+      background: linear-gradient(
+        135deg,
+        var(--theme-primary),
+        var(--theme-accent)
+      );
+
+      color: white;
+
+      border-radius: 50%;
+
+      margin-right: -1px;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-shrink: 0;
+
+      transition: all 0.25s ease;
+
+      &:hover {
+        transform: scale(1.04);
+        box-shadow: 0 10px 22px var(--theme-shadow);
+      }
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-width: fit-content;
+  }
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.barber-btn {
+  background: transparent;
+  border: none;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #111;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--theme-primary);
+  }
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  background: transparent;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  position: relative;
+
+  flex-shrink: 0;
+
+  &:hover {
+    background: var(--theme-primary-light);
+  }
+
+  svg {
+    color: #222;
+  }
+}
+
+/* =========================
+   NOTIFICATION
+========================= */
+
+.notification-btn {
+  position: relative;
+
+  .notification-dot {
+    width: 9px;
+    height: 9px;
+
+    background: var(--theme-primary);
+
+    border-radius: 50%;
+
+    position: absolute;
+    top: 7px;
+    right: 7px;
+
+    border: 2px solid white;
+  }
+}
+
+/* =========================
+   PROFILE MENU
+========================= */
+
+.profile-menu {
+  position: relative;
+}
+
+/* =========================
+   PROFILE AVATAR
+========================= */
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    var(--theme-primary),
+    var(--theme-accent)
+  );
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 15px;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+
+  border: none;
+  outline: none;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 22px var(--theme-shadow);
+  }
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.profile-dropdown {
+  position: absolute;
+
+  top: 55px;
+  right: 0;
+
+  width: 240px;
+
+  background: white;
+
+  border-radius: 16px;
+
+  border: 1px solid var(--theme-border);
+
+  box-shadow: 0 10px 30px var(--theme-shadow);
+
+  overflow: hidden;
+
+  z-index: 9999;
+
+  animation: dropdownFade 0.2s ease;
+}
+
+/* USER INFO */
+
+.profile-dropdown__user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 18px;
+
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.profile-dropdown__avatar {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    var(--theme-primary),
+    var(--theme-accent)
+  );
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  flex-shrink: 0;
+}
+
+.profile-dropdown__user h4 {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.profile-dropdown__user p {
+  margin-top: 4px;
+
+  font-size: 13px;
+  color: #6b7280;
+
+  text-transform: capitalize;
+}
+
+/* =========================
+   MENU ITEMS
+========================= */
+
+.profile-dropdown__item {
+  width: 100%;
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 15px 18px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #111827;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--theme-primary-light);
+  }
+
+  svg {
+    color: var(--theme-primary);
+  }
+
+  span {
+    flex: 1;
+    text-align: left;
+  }
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.profile-dropdown__item.logout {
+  color: #ef4444;
+
+  svg {
+    color: #ef4444;
+  }
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.06);
+  }
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .shop-header {
+    padding: 0 20px;
+
+    &__center {
+      padding: 0 20px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .shop-header {
+    height: auto;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 18px;
+
+    padding: 18px;
+
+    &__left,
+    &__right {
+      width: 100%;
+    }
+
+    &__left {
+      justify-content: space-between;
+    }
+
+    &__right {
+      justify-content: flex-end;
+    }
+
+    &__center {
+      width: 100%;
+      padding: 0;
+    }
+
+    &__search {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .shop-header {
+    &__left {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    &__right {
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .shop-header {
+    padding: 16px;
+
+    &__logo {
+      h2 {
+        font-size: 24px;
+      }
+    }
+
+    &__location {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    &__search {
+      height: 50px;
+
+      input {
+        font-size: 14px;
+      }
+
+      button {
+        width: 52px;
+        height: 52px;
+      }
+    }
+  }
+
+  .barber-btn {
+    font-size: 14px;
+  }
+
+  .profile-avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .profile-dropdown {
+    width: 100%;
+    min-width: 220px;
+    right: 0;
+  }
+}

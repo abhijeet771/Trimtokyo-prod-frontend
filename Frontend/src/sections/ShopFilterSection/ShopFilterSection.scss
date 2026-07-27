@@ -1,0 +1,309 @@
+.shop-filter {
+  width: 290px;
+  min-width: 290px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--theme-border);
+  border-radius: 20px;
+
+  padding: 22px;
+
+  position: sticky;
+  top: 110px;
+
+  height: fit-content;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+
+  /* =========================
+     HEADER
+  ========================= */
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid #f1f1f1;
+
+    h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    button {
+      border: none;
+      background: transparent;
+
+      color: var(--theme-primary);
+
+      font-size: 14px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  /* =========================
+     SECTIONS
+  ========================= */
+
+  &__section {
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+
+    border-bottom: 1px solid #f5f5f5;
+
+    &:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 700;
+
+      color: #111827;
+
+      margin-bottom: 18px;
+    }
+  }
+
+  /* =========================
+     LOCATION
+  ========================= */
+
+  &__location {
+    width: 100%;
+    height: 52px;
+
+    border: 1px solid var(--theme-border);
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 16px;
+
+    background: #fafafa;
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+
+      color: #374151;
+    }
+
+    svg {
+      color: var(--theme-primary);
+    }
+  }
+
+  /* =========================
+     CHECKBOXES
+  ========================= */
+
+  &__checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    cursor: pointer;
+
+    input {
+      width: 18px;
+      height: 18px;
+
+      accent-color: var(--theme-primary);
+
+      cursor: pointer;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+
+      color: #374151;
+    }
+  }
+
+  /* =========================
+     SHOW MORE
+  ========================= */
+
+  &__show-more {
+    margin-top: 16px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--theme-primary);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  /* =========================
+     PRICE
+  ========================= */
+
+  &__price {
+    input[type="range"] {
+      width: 100%;
+
+      accent-color: var(--theme-primary);
+
+      cursor: pointer;
+    }
+  }
+
+  &__price-values {
+    margin-top: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: 14px;
+      font-weight: 600;
+
+      color: #111827;
+    }
+  }
+
+  /* =========================
+     RADIO
+  ========================= */
+
+  &__radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  &__radio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    cursor: pointer;
+
+    input {
+      accent-color: var(--theme-primary);
+      cursor: pointer;
+    }
+
+    span {
+      font-size: 14px;
+      color: #374151;
+      font-weight: 500;
+    }
+  }
+
+  /* =========================
+     STARS
+  ========================= */
+
+  &__stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    svg {
+      color: #FDB022;
+      fill: #FDB022;
+    }
+  }
+
+  /* =========================
+     BUTTON
+  ========================= */
+
+  &__apply-btn {
+    width: 100%;
+    height: 54px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(
+      135deg,
+      var(--theme-primary),
+      var(--theme-accent)
+    );
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    margin-top: 30px;
+
+    transition: all 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px var(--theme-shadow);
+    }
+  }
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1200px) {
+  .shop-filter {
+    width: 260px;
+    min-width: 260px;
+  }
+}
+
+/* =========================
+   MOBILE / TABLET
+========================= */
+
+@media (max-width: 992px) {
+  .shop-filter {
+    display: none;
+  }
+}
+
+/* =========================
+   FUTURE MOBILE DRAWER
+========================= */
+
+/*
+Later when you create MobileFilterDrawer,
+you can reuse same styles there.
+*/

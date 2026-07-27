@@ -1,0 +1,269 @@
+.order-card{
+  background:white;
+
+  border:1px solid #edf0f5;
+  border-radius:24px;
+
+  padding:22px;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:20px;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+
+  box-shadow:
+    0 10px 30px rgba(15,23,42,.04);
+
+  overflow:hidden;
+
+  &:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+      0 18px 40px rgba(15,23,42,.08);
+  }
+
+  /* =========================
+     TOP
+  ========================= */
+
+  &__top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+
+    gap:16px;
+  }
+
+  &__shop{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    min-width:0;
+  }
+
+  &__shop-icon{
+    width:52px;
+    height:52px;
+
+    border-radius:16px;
+
+    background:
+      linear-gradient(
+        135deg,
+        #7b2cbf,
+        #ff4e91
+      );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    svg{
+      color:white;
+    }
+  }
+
+  &__label{
+    font-size:12px;
+    font-weight:600;
+
+    color:#9ca3af;
+
+    margin-bottom:6px;
+  }
+
+  h4{
+    font-size:18px;
+    font-weight:700;
+
+    color:#111827;
+
+    line-height:1.2;
+
+    word-break:break-word;
+  }
+
+  /* =========================
+     DETAILS
+  ========================= */
+
+  &__details{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  &__detail{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    svg{
+      color:#6b7280;
+      flex-shrink:0;
+    }
+
+    span{
+      font-size:14px;
+      font-weight:500;
+
+      color:#374151;
+    }
+
+    &.amount{
+
+      span{
+        font-size:15px;
+        font-weight:700;
+
+        color:#111827;
+      }
+
+      svg{
+        color:#16a34a;
+      }
+    }
+  }
+
+  /* =========================
+     FOOTER
+  ========================= */
+
+  &__footer{
+    padding-top:6px;
+
+    button{
+      width:100%;
+
+      height:48px;
+
+      border:none;
+      border-radius:14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f5f3ff,
+          #fff1f7
+        );
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+
+      font-size:14px;
+      font-weight:700;
+
+      color:#7b2cbf;
+
+      cursor:pointer;
+
+      transition:.25s ease;
+
+      &:hover{
+        transform:translateY(-2px);
+
+        background:
+          linear-gradient(
+            135deg,
+            #ede9fe,
+            #ffe4ef
+          );
+      }
+
+      svg{
+        transition:transform .25s ease;
+      }
+
+      &:hover svg{
+        transform:translateX(3px);
+      }
+    }
+  }
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:992px){
+
+  .order-card{
+    padding:20px;
+
+    border-radius:22px;
+
+    h4{
+      font-size:17px;
+    }
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+  .order-card{
+    padding:18px;
+
+    gap:18px;
+
+    &__top{
+      align-items:flex-start;
+    }
+
+    &__shop-icon{
+      width:48px;
+      height:48px;
+    }
+
+    h4{
+      font-size:16px;
+    }
+
+    &__detail{
+
+      span{
+        font-size:13px;
+      }
+    }
+
+    &__footer{
+
+      button{
+        height:44px;
+        font-size:13px;
+      }
+    }
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:480px){
+
+  .order-card{
+
+    &__top{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+
+    &__shop{
+      width:100%;
+    }
+  }
+}

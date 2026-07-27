@@ -1,0 +1,274 @@
+// src/components/organisms/MainFooter/MainFooter.scss
+
+.main-footer {
+  background: linear-gradient(
+    180deg,
+    #0f172a 0%,
+    #020617 100%
+  );
+
+  padding: 72px 24px 28px;
+
+  color: #ffffff;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  /* ========================================
+     CONTAINER
+  ======================================== */
+
+  &__container {
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+
+  /* ========================================
+     TOP COLUMNS
+  ======================================== */
+
+  &__columns {
+    display: grid;
+
+    grid-template-columns:
+      1.5fr
+      1fr
+      1fr
+      1fr
+      1fr;
+
+    gap: 60px;
+
+    margin-bottom: 52px;
+  }
+
+  /* ========================================
+     BRAND
+  ======================================== */
+
+  &__brand {
+    max-width: 340px;
+  }
+
+  &__brand-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+  }
+
+  &__brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    margin: 0;
+
+    background: linear-gradient(
+      135deg,
+      #ffffff,
+      #e879f9
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__brand-description {
+    margin-top: 18px;
+
+    font-size: 0.95rem;
+
+    line-height: 1.8;
+
+    color: #94a3b8;
+  }
+
+  /* ========================================
+     SOCIALS
+  ======================================== */
+
+  &__social-icons {
+    margin-top: 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__social-link {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #cbd5e1;
+
+    transition: all 0.25s ease;
+
+    text-decoration: none;
+
+    svg {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        #9333ea,
+        #ec4899
+      );
+
+      border-color: transparent;
+
+      color: #ffffff;
+
+      transform: translateY(-2px);
+    }
+  }
+
+  /* ========================================
+     BOTTOM BAR
+  ======================================== */
+
+  &__bottom {
+    border-top: 1px solid
+      rgba(255, 255, 255, 0.08);
+
+    padding-top: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+  }
+
+  &__copy {
+    font-size: 0.85rem;
+    color: #64748b;
+
+    margin: 0;
+  }
+
+  /* ========================================
+     LEGAL LINKS
+  ======================================== */
+
+  &__legal-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  &__legal-link {
+    color: #94a3b8;
+
+    font-size: 0.88rem;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+
+    position: relative;
+
+    &:hover {
+      color: #ffffff;
+    }
+
+    &::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      bottom: -4px;
+
+      width: 0%;
+      height: 1px;
+
+      background: linear-gradient(
+        135deg,
+        #9333ea,
+        #ec4899
+      );
+
+      transition: width 0.25s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  /* ========================================
+     RESPONSIVE
+  ======================================== */
+
+  @media (max-width: 1200px) {
+    &__columns {
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 50px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    padding: 60px 20px 24px;
+
+    &__columns {
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 42px;
+    }
+
+    &__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    padding: 52px 18px 24px;
+
+    &__columns {
+      grid-template-columns: 1fr;
+
+      gap: 36px;
+    }
+
+    &__brand {
+      max-width: 100%;
+    }
+
+    &__brand-name {
+      font-size: 1.5rem;
+    }
+
+    &__brand-description {
+      font-size: 0.9rem;
+    }
+
+    &__legal-links {
+      gap: 16px;
+    }
+  }
+}

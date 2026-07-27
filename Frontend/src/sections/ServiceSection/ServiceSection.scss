@@ -1,0 +1,109 @@
+.nav-section {
+  width: 100%;
+  background: #000000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  position: relative;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* ---------------- NAV LINKS ---------------- */
+  &__nav {
+    display: flex;
+    gap: 30px;
+    font-size : 20px;
+    @media (max-width: 768px) {
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: #000000; 
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      display: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    &.active {
+      display: flex;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    color: #ffffff; 
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #6c5ce7; 
+    }
+  }
+
+  /* ---------------- SEARCH ---------------- */
+  &__search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #444;
+    background: #111;         
+    color: #ffffff;       
+    outline: none;
+
+    &::placeholder {
+      color: #aaa;
+    }
+
+    &:focus {
+      border-color: #6c5ce7;
+    }
+  }
+
+  /* ---------------- RIGHT ---------------- */
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* ---------------- HAMBURGER ---------------- */
+  &__hamburger {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #ffffff;
+
+    @media (max-width: 768px) {
+      display: block;
+      order: -1;
+    }
+  }
+}
+
+/* Buttons remain unchanged */
+.btn {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}

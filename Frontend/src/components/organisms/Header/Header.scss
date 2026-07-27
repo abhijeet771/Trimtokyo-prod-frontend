@@ -1,0 +1,111 @@
+.header {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* LEFT */
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__cart {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  /* CENTER NAV */
+  &__nav {
+    display: flex;
+    gap: 30px;
+
+    @media (max-width: 768px) {
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      display: none;
+    }
+
+    &.active {
+      display: flex;
+    }
+  }
+
+  /* RIGHT */
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* HAMBURGER */
+  &__hamburger {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+}
+
+/* LOGO */
+.logo {
+  font-size: 27px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+/* NAV LINK */
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+
+  &-primary {
+    background: #2f80ed;
+    color: #fff;
+    border: none;
+  }
+
+  &-outline {
+    background: transparent;
+    border: 1px solid #2f80ed;
+    color: #2f80ed;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}

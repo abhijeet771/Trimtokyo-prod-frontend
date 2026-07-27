@@ -1,0 +1,18 @@
+.nav-item--sidebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: 0.25s ease;
+
+  &:hover {
+    background-color: #6c5ce7;
+  }
+}
+
+.nav-item--sidebar.nav-item--active {
+  background-color: #6c5ce7;
+}

@@ -1,0 +1,40 @@
+.splash-container {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.splash-content {
+  text-align: center;
+}
+
+.logo {
+  width: 110px;
+  margin-bottom: 20px;
+}
+
+.welcome-text {
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.progress-bar {
+  width: 220px;
+  height: 6px;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff512f, #ff0000);
+}

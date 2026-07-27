@@ -1,0 +1,12 @@
+/* ================= FONT FAMILY ================= */
+
+:root {
+  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                  Roboto, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

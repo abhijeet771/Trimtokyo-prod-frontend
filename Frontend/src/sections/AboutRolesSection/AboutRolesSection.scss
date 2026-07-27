@@ -1,0 +1,172 @@
+.about-roles {
+  padding: 80px 20px;
+  background: var(--theme-hero-bg);
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ================= HEADER ================= */
+
+  &__header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  &__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ================= STEPS ================= */
+
+  &__steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+
+  .step-card {
+    position: relative;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 35px var(--theme-shadow);
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #111827;
+    }
+
+    p {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+  }
+
+  /* Step Numbers */
+
+  .step-number {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    font-weight: 700;
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+
+    background: linear-gradient(
+      135deg,
+      var(--theme-primary),
+      var(--theme-accent)
+    );
+  }
+
+  .step-1,
+  .step-2,
+  .step-3 {
+    background: linear-gradient(
+      135deg,
+      var(--theme-primary),
+      var(--theme-accent)
+    );
+  }
+
+  .step-image {
+    width: 80px;
+    height: auto;
+    margin: 15px auto 20px;
+    display: block;
+  }
+
+  /* ================= FEATURES ================= */
+
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .feature-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    background: #ffffff;
+
+    padding: 18px 20px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+
+    transition: all 0.25s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px var(--theme-shadow);
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #111827;
+    }
+
+    p {
+      font-size: 13px;
+      color: #6b7280;
+    }
+  }
+
+  /* ================= RESPONSIVE ================= */
+
+  @media (max-width: 992px) {
+    &__steps {
+      grid-template-columns: 1fr;
+    }
+
+    &__features {
+      grid-template-columns: 1fr;
+    }
+  }
+}

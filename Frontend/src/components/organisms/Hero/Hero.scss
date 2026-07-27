@@ -1,0 +1,584 @@
+.hero {
+  padding: 0.5rem 0 4rem;
+  background: #ffffff;
+
+  &__container {
+    width: min(1400px, 92%);
+    margin: 0 auto;
+  }
+
+  /* =================================
+     HERO BANNER
+  ================================= */
+
+  &__banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
+    min-height: 300px;
+
+    padding: 1rem 2rem;
+
+    border-radius: 24px;
+
+    background: linear-gradient(
+      135deg,
+      var(--theme-hero-bg) 0%,
+      var(--theme-hero-bg2) 100%
+    );
+
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__content {
+    max-width: 520px;
+    z-index: 2;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.5rem 0.8rem;
+
+    border-radius: 999px;
+
+    background: color-mix(
+      in srgb,
+      var(--theme-primary) 10%,
+      white
+    );
+
+    color: var(--theme-primary);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    margin-bottom: 1rem;
+
+    svg {
+      font-size: 0.9rem;
+    }
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
+    margin-bottom: 1rem;
+  }
+
+  &__title-line {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #10203f;
+  }
+
+  &__title-highlight {
+    font-size: 2.6rem;
+    font-weight: 900;
+
+    background: linear-gradient(
+      90deg,
+      var(--theme-accent),
+      var(--theme-primary)
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    margin: 0.25rem 0;
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+    max-width: 350px;
+  }
+
+  &__popular-btn {
+    border: none;
+    cursor: pointer;
+
+    padding: 0.5rem 1rem;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+      90deg,
+      var(--theme-primary),
+      var(--theme-accent)
+    );
+
+    color: #fff;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    transition: 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--theme-shadow);
+    }
+  }
+
+  /* =================================
+     HERO IMAGE
+  ================================= */
+
+  &__image-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__circle {
+    position: absolute;
+    border-radius: 70%;
+    margin-right: 40px;
+  }
+
+  &__circle--1 {
+    width: 270px;
+    height: 270px;
+
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--theme-primary) 20%, white),
+      transparent
+    );
+  }
+
+  &__circle--2 {
+    width: 380px;
+    height: 380px;
+
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  &__image {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 320px;
+
+    object-fit: contain;
+  }
+
+  /* =================================
+     CELEBRITIES
+  ================================= */
+  &__celebrities-section {
+    margin-top: 1rem;
+  }
+
+  &__section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 1rem;
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #10203f;
+    }
+  }
+
+  &__arrows {
+    display: flex;
+    gap: 0.75rem;
+
+    button {
+      width: 44px;
+      height: 44px;
+
+      border-radius: 50%;
+      border: 1px solid #e5e7eb;
+
+      background: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      cursor: default;
+      transition: all 0.3s ease;
+
+      svg {
+        font-size: 1rem;
+      }
+
+      &:hover {
+        border-color: var(--theme-border);
+        color: var(--theme-primary);
+      }
+    }
+  }
+
+  &__celebrities {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  &__celeb-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+
+    border: 1px solid #f1f5f9;
+
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-6px);
+      border-color: var(--theme-border);
+      box-shadow: 0 12px 30px var(--theme-shadow);
+    }
+
+    &:hover .hero__celeb-overlay {
+      opacity: 1;
+    }
+  }
+
+  &__celeb-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &__celeb-image {
+    position: relative;
+    height: 140px;
+
+    img {
+      width: 45%;
+      height: 100%;
+
+      object-fit: cover;
+      object-position: center;
+
+      margin-left: 30px;
+
+      display: block;
+    }
+  }
+
+  &__celeb-content {
+    padding: 0.8rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #10203f;
+
+      margin-bottom: 0.2rem;
+    }
+
+    p {
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__celeb-icon {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    background: var(--theme-primary-light);
+    color: var(--theme-primary);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    transition: all 0.3s ease;
+
+    svg {
+      font-size: 1rem;
+    }
+  }
+
+  /* =================================
+     ACTION CARDS
+  ================================= */
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 1rem;
+
+    margin-top: 1rem;
+  }
+
+  &__action-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 0.8rem;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+      135deg,
+      var(--theme-hero-bg),
+      var(--theme-hero-bg2)
+    );
+  }
+
+  &__action-card--pink {
+    background: var(--theme-card-bg);
+  }
+
+  &__action-image {
+    img {
+      width: 80px;
+      height: auto;
+      display: block;
+    }
+  }
+
+  &__action-content {
+    flex: 1;
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #10203f;
+
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #64748b;
+      line-height: 1.5;
+
+      margin-bottom: 1rem;
+
+      font-size: 0.85rem;
+    }
+  }
+
+  &__action-btn {
+    border: none;
+    cursor: pointer;
+
+    padding: 0.7rem 1rem;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+      90deg,
+      var(--theme-primary),
+      var(--theme-accent)
+    );
+
+    color: #fff;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    transition: 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--theme-shadow);
+    }
+  }
+
+  &__action-btn--light {
+    background: #ffffff;
+    color: var(--theme-primary);
+
+    border: 1px solid var(--theme-primary-light);
+
+    &:hover {
+      border-color: var(--theme-primary);
+      box-shadow: 0 8px 20px var(--theme-shadow);
+    }
+  }
+}
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 992px) {
+  .hero {
+    &__banner {
+      grid-template-columns: 1fr;
+      text-align: center;
+
+      padding: 3rem 2rem;
+    }
+
+    &__content {
+      max-width: 100%;
+    }
+
+    &__subtitle {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    &__image {
+      max-width: 450px;
+      margin-top: 2rem;
+    }
+
+    &__celebrities {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__actions {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 1rem;
+
+    &__banner {
+      padding: 2rem 1.5rem;
+      min-height: auto;
+    }
+
+    &__title-line,
+    &__title-highlight {
+      font-size: 3.2rem;
+    }
+
+    &__subtitle {
+      font-size: 1rem;
+    }
+
+    &__popular-btn {
+      width: 100%;
+    }
+
+    &__section-header {
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
+
+    &__arrows {
+      display: none;
+    }
+
+    &__celebrities {
+      display: flex;
+      overflow-x: auto;
+
+      gap: 1rem;
+
+      padding-bottom: 0.5rem;
+
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__celeb-card {
+      min-width: 260px;
+    }
+
+    &__action-card {
+      flex-direction: row;
+      gap: 1rem;
+
+      padding: 1.5rem;
+    }
+
+    &__action-image img {
+      width: 90px;
+    }
+
+    &__action-content {
+      h3 {
+        font-size: 1.6rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+    }
+
+    &__action-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 480px) {
+  .hero {
+    &__title-line,
+    &__title-highlight {
+      font-size: 2.6rem;
+    }
+
+    &__action-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    &__action-image img {
+      width: 110px;
+    }
+
+    &__action-btn {
+      width: 100%;
+    }
+  }
+}

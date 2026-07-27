@@ -1,0 +1,43 @@
+.work-card {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+
+
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.06),
+    0 18px 35px rgba(0, 0, 0, 0.10);
+
+  transition: all 0.35s ease;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 10px 20px rgba(0, 0, 0, 0.08),
+      0 25px 50px rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    margin-bottom: 24px;
+
+    img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+  }
+
+  &__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #111827;
+  }
+
+  &__description {
+    font-size: 17px;
+    color: #4b5563;
+    line-height: 1.75;
+  }
+}
