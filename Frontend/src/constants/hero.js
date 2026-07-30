@@ -7,7 +7,7 @@ export const HERO_CONTENT = {
     line3: "HAIRSTYLE",
   },
 
-  subtitle: "Site will be down for 12 hours on 27-07-26",
+  subtitle: "Try everyday something new",
   popularButton: "POPULAR NOW",
   celebritiesHeading: "EXPLORE CELEBRITY STYLES",
 
