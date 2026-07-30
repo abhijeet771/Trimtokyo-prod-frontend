@@ -31,6 +31,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ShopPage from "./pages/ShopPage";
 import Profile from "./pages/Profile";
 import Bookings from "./pages/Bookings";
+import SearchPage from "./pages/SearchPage";
+import BarberSlugPage from "./pages/BarberSlugPage/BarberSlugPage";
 
 import BlogDetailSection from "./sections/BlogDetailSection/BlogDetailSection";
 import BarberOrderSection from "./sections/BarberOrderSection/BarberOrderSection";
@@ -99,6 +101,15 @@ export default function App() {
         <Route
           path="/contact"
           element={<Contact />}
+        />
+        <Route
+           path="/search"
+           element={<SearchPage />}
+        />
+
+        <Route
+           path="/barber/:slug"
+           element={<BarberSlugPage />}
         />
 
         {/* ================= EMAIL VERIFICATION ================= */}

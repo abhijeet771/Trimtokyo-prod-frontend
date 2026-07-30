@@ -1,8 +1,17 @@
-import React, {  useEffect,  useState,} from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 import "./HeaderSection.scss";
 
-import {  FiSearch,  FiMapPin,  FiChevronDown,} from "react-icons/fi";
+import {
+  FiSearch,
+  FiMapPin,
+  FiChevronDown,
+} from "react-icons/fi";
+
 import { useNavigate } from "react-router-dom";
+
 import { HEADER_DATA } from "../../constants/header";
 
 const HeaderSection = () => {
@@ -11,19 +20,12 @@ const HeaderSection = () => {
   const [location, setLocation] =
     useState("Detecting...");
 
-  // ================= SEARCH =================
-
   const [searchTerm, setSearchTerm] =
     useState("");
 
   useEffect(() => {
-    if (
-      !navigator.geolocation
-    ) {
-      setLocation(
-        "Select Location"
-      );
-
+    if (!navigator.geolocation) {
+      setLocation("Select Location");
       return;
     }
 
@@ -62,7 +64,6 @@ const HeaderSection = () => {
           );
         }
       },
-
       () => {
         setLocation(
           "Select Location"
@@ -71,22 +72,23 @@ const HeaderSection = () => {
     );
   }, []);
 
-  // ================= SEARCH HANDLER =================
+  // ================= SEARCH =================
 
   const handleSearch = () => {
     const trimmed =
       searchTerm.trim();
 
-    if (!trimmed) return;
+    if (!trimmed) {
+      navigate("/search");
+      return;
+    }
 
     navigate(
-      `/shop?search=${encodeURIComponent(
+      `/search?q=${encodeURIComponent(
         trimmed
       )}`
     );
   };
-
-  // ================= ENTER KEY =================
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -96,23 +98,32 @@ const HeaderSection = () => {
 
   return (
     <header className="header">
-
       <div className="header__container">
         <div className="header__left">
           <div className="header__logo-wrapper">
-            <img  src={HEADER_DATA.logo}  alt="TrimTokyo"   className="header__logo"/>
-            <h2 className="header__brand">{HEADER_DATA.brand}</h2>
+            <img
+              src={HEADER_DATA.logo}
+              alt="TrimTokyo"
+              className="header__logo"
+            />
+
+            <h2 className="header__brand">
+              {HEADER_DATA.brand}
+            </h2>
           </div>
+
           <button className="header__location">
             <FiMapPin className="header__location-icon" />
+
             <span className="header__location-text">
               {location}
             </span>
-            <FiChevronDown size={16}/>
+
+            <FiChevronDown size={16} />
           </button>
         </div>
-        <div className="header__search">
 
+        <div className="header__search">
           <FiSearch className="header__search-icon" />
 
           <input
@@ -130,22 +141,39 @@ const HeaderSection = () => {
             }
           />
 
-          <button  className="header__search-btn"  onClick={ handleSearch}>
+          <button
+            className="header__search-btn"
+            onClick={handleSearch}
+          >
             <FiSearch size={18} />
           </button>
         </div>
 
         <div className="header__right">
-
-          <button className="header__become-btn"   onClick={() => navigate("/auth")}>
+          <button
+            className="header__become-btn"
+            onClick={() =>
+              navigate("/auth")
+            }
+          >
             Become a Barber
           </button>
 
-          <button className="header__login-btn" onClick={() =>  navigate("/auth")}>
+          <button
+            className="header__login-btn"
+            onClick={() =>
+              navigate("/auth")
+            }
+          >
             Login
           </button>
 
-          <button className="header__register-btn"   onClick={() => navigate("/auth")}>
+          <button
+            className="header__register-btn"
+            onClick={() =>
+              navigate("/auth")
+            }
+          >
             Register
           </button>
         </div>
