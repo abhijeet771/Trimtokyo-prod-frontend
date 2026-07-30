@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import {  Routes,  Route,  Navigate,} from "react-router-dom";
 import { Toaster } from "sonner";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
@@ -12,8 +12,9 @@ import { getSettings } from "./services/api";
 function AppLayout({ children }) {
   return (
     <div className="app-root">
-      <main className="app-container">{children}</main>
-
+      <main className="app-container">
+        {children}
+      </main>
     </div>
   );
 }
@@ -30,16 +31,32 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ShopPage from "./pages/ShopPage";
 import Profile from "./pages/Profile";
 import Bookings from "./pages/Bookings";
+
 import BlogDetailSection from "./sections/BlogDetailSection/BlogDetailSection";
+import BarberOrderSection from "./sections/BarberOrderSection/BarberOrderSection";
+import BarberProfileSection from "./sections/BarberProfileSection/BarberProfileSection";
+import BarberServiceSection from "./sections/BarberServiceSection/BarberServiceSection";
+import BarberCmsSection from "./sections/BarberCmsSection/BarberCmsSection";
+import BarberSettingSection from "./sections/BarberSettingSection/BarberSettingSection";
+import SlotSection from "./sections/SlotSection/SlotSection";
 
 export default function App() {
   useEffect(() => {
     const fetchTheme = async () => {
       try {
-        const { data } = await getSettings();
-        applyTheme(data.homepageTheme || "pink");
+        const { data } =
+          await getSettings();
+
+        applyTheme(
+          data.homepageTheme ||
+            "pink"
+        );
       } catch (err) {
-        console.error("Failed to load theme", err);
+        console.error(
+          "Failed to load theme",
+          err
+        );
+
         applyTheme("pink");
       }
     };
@@ -51,27 +68,65 @@ export default function App() {
     <AppLayout>
       <Routes>
         {/* ================= PUBLIC ROUTES ================= */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:slug" element={<BlogDetailSection />} />
-        <Route path="/contact" element={<Contact />} />
-     
+
+        <Route
+          path="/"
+          element={<HomePage />}
+        />
+
+        <Route
+          path="/auth"
+          element={<AuthPage />}
+        />
+
+        <Route
+          path="/about"
+          element={<About />}
+        />
+
+        <Route
+          path="/blog"
+          element={<Blog />}
+        />
+
+        <Route
+          path="/blog/:slug"
+          element={
+            <BlogDetailSection />
+          }
+        />
+
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+
         {/* ================= EMAIL VERIFICATION ================= */}
 
         <Route
           path="/user"
-          element={<Navigate to="/auth" replace />}
+          element={
+            <Navigate
+              to="/auth"
+              replace
+            />
+          }
         />
 
         {/* ================= USER ROUTES ================= */}
+
         <Route
-          element={<ProtectedRoute roles={["user"]} />}
+          element={
+            <ProtectedRoute
+              roles={["user"]}
+            />
+          }
         >
           <Route
             path="/dashboard"
-            element={<UserDashboard />}
+            element={
+              <UserDashboard />
+            }
           />
 
           <Route
@@ -91,32 +146,77 @@ export default function App() {
         </Route>
 
         {/* ================= BARBER ROUTES ================= */}
+
         <Route
-          element={<ProtectedRoute roles={["barber"]} />}
+          element={
+            <ProtectedRoute
+              roles={["barber"]}
+            />
+          }
         >
           <Route
-            path="/barber/dashboard"
-            element={<BarberDashboard />}
-          />
+            path="/barber"
+            element={
+              <BarberDashboard />
+            }
+          >
+            <Route
+              path="dashboard"
+              element={null}
+            />
 
-          <Route
-            path="/barber/profile"
-            element={<Profile />}
-          />
+            <Route
+              path="service"
+              element={<BarberServiceSection />}
+            />
+
+            <Route
+              path="profile"
+              element={<BarberProfileSection />}
+            />
+
+            <Route
+              path="slots"
+              element={<SlotSection />}
+            />
+            <Route
+              path="website"
+              element={<BarberCmsSection/>}
+            />
+           <Route
+              path="settings"
+              element={<BarberSettingSection />}
+            />
+
+            <Route
+              path="orders"
+              element={
+                <BarberOrderSection />
+              }
+            />
+          </Route>
         </Route>
 
         {/* ================= ADMIN ROUTES ================= */}
+
         <Route
-          element={<ProtectedRoute roles={["admin"]} />}
+          element={
+            <ProtectedRoute
+              roles={["admin"]}
+            />
+          }
         >
           <Route
             path="/admin/dashboard"
-            element={<AdminDashboard />}
+            element={
+              <AdminDashboard />
+            }
           />
         </Route>
       </Routes>
 
       {/* ================= SONNER TOASTS ================= */}
+
       <Toaster
         theme="dark"
         position="top-right"

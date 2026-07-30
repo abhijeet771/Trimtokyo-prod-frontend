@@ -1,30 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
+import {
+  Outlet,
+  useLocation,
+} from "react-router-dom";
+
 import BarberHeaderSection from "../sections/BarberHeaderSection/BarberHeaderSection";
-import BarberTabSection from "../sections/BarberTabSection/BarberTabSection";
-import useBarberOrders from "../hooks/useBarberOrders";
-import SlotSection from "../sections/SlotSection/SlotSection";
+import BarberKpisSection from "../sections/BarberKpisSection/BarberKpisSection";
+import BarberSidebar from "../components/organisms/BarberSidebar/BarberSidebar";
+
 import "./BarberDashboard.scss";
 
 const BarberDashboard = () => {
-  const [activeTab, setActiveTab] = useState("profile");
-
-  const { orders, loading, error } =
-    useBarberOrders();
+  const { pathname } = useLocation();
 
   return (
-    <div className="barber-dashboard"> 
-      <BarberHeaderSection
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+    <div className="barber-dashboard">
+      <BarberHeaderSection />
 
-      <BarberTabSection
-        activeTab={activeTab}
-        orders={orders}
-        loading={loading}
-        error={error}
-        SlotSection={SlotSection}
-      />
+      <div className="barber-dashboard__body">
+        <BarberSidebar />
+
+        <main className="barber-dashboard__content">
+          {pathname ===
+            "/barber/dashboard" && (
+            <BarberKpisSection />
+          )}
+
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

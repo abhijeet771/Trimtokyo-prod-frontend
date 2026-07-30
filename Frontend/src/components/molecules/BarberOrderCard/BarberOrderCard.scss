@@ -1,206 +1,345 @@
 .barber-order-card {
-  background: white;
+  background: #fff;
+  border: 1px solid #e5e7eb;
   border-radius: 18px;
-  padding: 1.8rem;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
-  transition: 0.3s ease;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 22px;
+  transition: 0.25s ease;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
-  }
-
-  /* ================= HEADER ================= */
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h4 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-      color: #0f172a;
-    }
-
-    .customer-name {
-      font-size: 0.85rem;
-      color: #6b7280;
-    }
-
-    .status {
-      padding: 0.35rem 0.9rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    /* Status Colors */
-    .PENDING {
-      background: #fef9c3;
-      color: #92400e;
-    }
-
-    .CONFIRMED {
-      background: #dbeafe;
-      color: #1e40af;
-    }
-
-    .IN_PROGRESS {
-      background: #e0f2fe;
-      color: #0369a1;
-    }
-
-    .COMPLETED {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .CANCELLED {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-  }
-
-  /* ================= SERVICES ================= */
-
-  .services-list {
-    border-top: 1px solid #f1f1f1;
-    padding-top: 0.8rem;
-
-    .service-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.4rem 0;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #f8fafc;
-
-      span:last-child {
-        font-weight: 600;
-      }
-    }
-  }
-
-  /* ================= DELIVERY ================= */
-
-  .delivery-info {
-    background: #f9fafb;
-    padding: 1rem;
-    border-radius: 10px;
-
-    h5 {
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #374151;
-    }
-
-    p {
-      font-size: 0.8rem;
-      color: #6b7280;
-      line-height: 1.4;
-    }
-  }
-
-  /* ================= FOOTER ================= */
-
-  &__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-
-    p {
-      color: #6b7280;
-    }
-
-    .total {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #16a34a;
-    }
-  }
-
-  /* ================= ACTION BUTTONS ================= */
-
-  .actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
-
-    button {
-      flex: 1;
-      padding: 0.7rem;
-      border-radius: 10px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.25s ease;
-      font-size: 0.85rem;
-    }
-
-    .accept-btn {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: white;
-
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(34, 197, 94, 0.35);
-      }
-    }
-
-    .reject-btn {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
-      }
-    }
-
-    .progress-btn {
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
-      color: white;
-
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35);
-      }
-    }
-
-    .complete-btn {
-      background: linear-gradient(135deg, #16a34a, #15803d);
-      color: white;
-
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
-      }
-    }
-
-    button:disabled {
-      background: #d1d5db;
-      cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
-    }
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
   }
 }
 
-/* ================= Responsive ================= */
+/* ================= HEADER ================= */
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+
+  &__left {
+    h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .customer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      color: #6b7280;
+      font-size: 0.92rem;
+
+      svg {
+        color: #6366f1;
+      }
+    }
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+}
+
+/* ================= STATUS ================= */
+
+.status {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &.pending {
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  &.confirmed {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  &.in_progress {
+    background: #dbeafe;
+    color: #2563eb;
+  }
+
+  &.completed {
+    background: #ede9fe;
+    color: #6d28d9;
+  }
+
+  &.cancelled {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+}
+
+.auto-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #eef2ff;
+  color: #4f46e5;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ================= INFO ================= */
+
+.order-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  svg {
+    margin-top: 3px;
+    color: #6366f1;
+  }
+
+  small {
+    display: block;
+    color: #9ca3af;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin: 0;
+    color: #111827;
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+}
+
+/* ================= CARD SECTIONS ================= */
+
+.card-section {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 18px;
+
+  h4 {
+    margin: 0 0 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+  }
+}
+
+/* ================= SERVICES ================= */
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.service-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 14px 16px;
+  border-radius: 12px;
+
+  h5 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #111827;
+  }
+
+  span {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.82rem;
+    color: #6b7280;
+  }
+
+  strong {
+    font-size: 1rem;
+    color: #111827;
+  }
+}
+
+/* ================= ADDRESS ================= */
+
+.address-card {
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.address-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: #374151;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  svg {
+    margin-top: 3px;
+    color: #6366f1;
+    flex-shrink: 0;
+  }
+
+  span {
+    line-height: 1.5;
+  }
+}
+
+.address-full {
+  align-items: flex-start;
+}
+
+/* ================= TOTAL ================= */
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eef2ff;
+  border-radius: 14px;
+  padding: 18px 22px;
+
+  span {
+    font-size: 0.95rem;
+    color: #4b5563;
+    font-weight: 500;
+  }
+
+  h2 {
+    margin: 0;
+    color: #4f46e5;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+/* ================= ACTIONS ================= */
+
+.order-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.btn {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: 0.25s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.btn-success {
+  background: #22c55e;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #16a34a;
+  }
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #dc2626;
+  }
+}
+
+.btn-primary {
+  background: #4f46e5;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: #4338ca;
+  }
+}
+
+/* ================= COMPLETED ================= */
+
+.completed-banner,
+.cancelled-banner {
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.completed-banner {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.cancelled-banner {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
-  .barber-order-card {
-    padding: 1.4rem;
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
 
-    .actions {
-      flex-direction: column;
+    &__right {
+      align-items: flex-start;
     }
+  }
+
+  .order-info {
+    grid-template-columns: 1fr;
+  }
+
+  .order-total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .order-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
   }
 }

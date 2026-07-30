@@ -1,75 +1,67 @@
 import React from "react";
-import { BARBER_TEXT } from "../../constants/barber";
+import {
+  Bell,
+  Menu,
+  Search,
+  ChevronDown,
+} from "lucide-react";
+
 import "./BarberHeaderSection.scss";
-import { useAuth } from "../../context/AuthContext";
 
-const BarberHeaderSection = ({
-  activeTab,
-  setActiveTab,
-}) => {
-  const { logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-  };
-
+const BarberHeaderSection = () => {
   return (
-    <div className="barber-header">
-      <h2>
-        {BARBER_TEXT.welcome}, Barber
-      </h2>
+    <header className="barber-header">
+      {/* Left */}
+      <div className="barber-header__left">
+        <div className="barber-header__brand">
+          <div className="barber-header__logo">
+            ✂️
+          </div>
 
-      <div className="tabs">
-        <button
-          className={
-            activeTab === "profile"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("profile")
-          }
-        >
-          {BARBER_TEXT.tabs.profile}
+          <div>
+            <h2>TrimTokyo</h2>
+            <span>Barber Dashboard</span>
+          </div>
+        </div>
+
+        <button className="menu-btn">
+          <Menu size={22} />
         </button>
 
-        <button
-          className={
-            activeTab === "orders"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("orders")
-          }
-        >
-          {BARBER_TEXT.tabs.orders}
-        </button>
+        <div className="search-box">
+          <Search size={18} />
 
-        {/* Slots Tab */}
-        <button
-          className={
-            activeTab === "slots"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("slots")
-          }
-        >
-          {BARBER_TEXT.tabs.slots || "Slots"}
-        </button>
-
-        {/* ✅ Logout Button */}
-        <button
-          className="logout-btn"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-
+          <input
+            type="text"
+            placeholder="Search anything..."
+          />
+        </div>
       </div>
-    </div>
+
+      {/* Right */}
+      <div className="barber-header__right">
+        <button className="notification-btn">
+          <Bell size={22} />
+
+          <span className="badge">3</span>
+        </button>
+
+        <div className="profile">
+          <img
+            src="https://i.pravatar.cc/100"
+            alt="Profile"
+          />
+
+          <div className="profile__info">
+            <h4>Naturica Unisex Salon</h4>
+
+            <span>Purnia, Bihar</span>
+          </div>
+
+          <ChevronDown size={18} />
+        </div>
+      </div>
+    </header>
   );
 };
 
