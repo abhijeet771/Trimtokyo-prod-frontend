@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  CalendarDays,
-  MapPin,
-  Phone,
-  User,
-  BadgeCheck,
-} from "lucide-react";
+import {  CalendarDays,  MapPin,  Phone,  User,  BadgeCheck,} from "lucide-react";
 
 import { updateOrderStatus } from "../../../services/api";
 
