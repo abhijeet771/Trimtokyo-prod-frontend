@@ -1,27 +1,53 @@
-import { useState } from "react";
-
-import {
-  Store,
-  MapPin,
-  Phone,
-  Mail,
-  Globe,
-  Clock,
-} from "lucide-react";
-
+import { useEffect, useState } from "react";
+import {  Store,  MapPin,  Phone,  Mail,  Globe,  Clock,} from "lucide-react";
+import { toast } from "sonner";
+import useUpdateBarberCms from "../../../hooks/useUpdateBarberCms";
 import "./CmsDetails.scss";
+import {  updateBarberCmsDetails,} from "../../../services/api";
 
-const CmsDetails = () => {
-  const [form, setForm] = useState({
-    salonName: "",
-    description: "",
-    address: "",
-    phone: "",
-    email: "",
-    website: "",
-    openingTime: "",
-    closingTime: "",
-  });
+const CmsDetails = ({
+  cms,
+  refetch,
+}) => {
+  const [form, setForm] =
+    useState({
+      salonName: "",
+      description: "",
+      address: "",
+      phone: "",
+      email: "",
+      website: "",
+      openingTime: "",
+      closingTime: "",
+    });
+
+const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
+
+  useEffect(() => {
+    if (cms?.details) {
+      setForm({
+        salonName:
+          cms.details.salonName || "",
+        description:
+          cms.details.description ||
+          "",
+        address:
+          cms.details.address || "",
+        phone:
+          cms.details.phone || "",
+        email:
+          cms.details.email || "",
+        website:
+          cms.details.website || "",
+        openingTime:
+          cms.details.openingTime ||
+          "",
+        closingTime:
+          cms.details.closingTime ||
+          "",
+      });
+    }
+  }, [cms]);
 
   const handleChange = (e) => {
     const { name, value } =
@@ -33,12 +59,32 @@ const CmsDetails = () => {
     }));
   };
 
+  const handleSave = () => {
+    mutate(form, {
+      onSuccess: (response) => {
+        toast.success(
+          response?.message ||
+            "Details updated successfully."
+        );
+
+        refetch?.();
+      },
+
+      onError: (error) => {
+        toast.error(
+          error?.response?.data
+            ?.message ||
+            "Failed to update details."
+        );
+      },
+    });
+  };
+
   return (
     <section className="cms-details">
       <div className="cms-details__header">
         <div>
           <h3>Salon Details</h3>
-
           <p>
             Update the information
             displayed on your public
@@ -165,8 +211,8 @@ const CmsDetails = () => {
       </div>
 
       <div className="save-bar">
-        <button className="save-btn">
-          Save Details
+        <button className="save-btn" onClick={handleSave} disabled={isPending}>
+          {isPending  ? "Saving..." : "Save Details"}
         </button>
       </div>
     </section>

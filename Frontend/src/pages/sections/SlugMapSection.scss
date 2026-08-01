@@ -5,16 +5,175 @@
 
 .slug-container {
   max-width: 1280px;
-  margin: auto;
+  margin: 0 auto;
   padding: 0 24px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+
+  span {
+    display: inline-block;
+    margin-bottom: 12px;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    color: #4f46e5;
+  }
 
   h2 {
-    margin-bottom: 12px;
+    margin: 0 0 14px;
+
+    font-size: 2.3rem;
+    font-weight: 700;
+
     color: #111827;
   }
 
   p {
+    max-width: 650px;
+    margin: 0 auto;
+
     color: #6b7280;
     line-height: 1.7;
+  }
+}
+
+.map-wrapper {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 32px;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+
+  box-shadow: 0 8px 30px
+    rgba(0, 0, 0, 0.05);
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 4px;
+
+    color: #4f46e5;
+  }
+
+  h4 {
+    margin: 0 0 6px;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    color: #111827;
+  }
+
+  p {
+    margin: 0;
+
+    color: #6b7280;
+    line-height: 1.6;
+
+    word-break: break-word;
+  }
+}
+
+.map-card {
+  overflow: hidden;
+
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+
+  min-height: 500px;
+
+  box-shadow: 0 8px 30px
+    rgba(0, 0, 0, 0.05);
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+
+    border: none;
+  }
+}
+
+.map-placeholder {
+  height: 500px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f9fafb;
+
+  color: #9ca3af;
+  font-weight: 500;
+  text-align: center;
+}
+
+@media (max-width: 992px) {
+  .map-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .map-card {
+    min-height: 420px;
+
+    iframe {
+      min-height: 420px;
+    }
+  }
+
+  .map-placeholder {
+    height: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slug-map-section {
+    padding: 60px 0;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+
+    h2 {
+      font-size: 1.9rem;
+    }
+  }
+
+  .contact-card {
+    padding: 24px;
+  }
+
+  .map-card {
+    min-height: 320px;
+
+    iframe {
+      min-height: 320px;
+    }
+  }
+
+  .map-placeholder {
+    height: 320px;
   }
 }

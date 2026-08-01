@@ -356,5 +356,42 @@ export const updateReel = (id, data) =>
 export const deleteReel = (id) =>
   api.delete(`/api/v1/reels/admin/${id}`);
 
+/* -------------------------------------------------------------------------- */
+/*                             BARBER CMS APIs                                */
+/* -------------------------------------------------------------------------- */
+
+export const createBarberCms = () =>
+  api.post("/api/v1/barber-cms");
+
+export const getBarberCms = () =>
+  api.get("/api/v1/barber-cms");
+
+export const getPublicBarberCms = (slug) =>
+  api.get(`/api/v1/barber-cms/public/${slug}`);
+
+export const updateBarberCmsImages = (images) =>
+  api.put("/api/v1/barber-cms/images", {
+    images,
+  });
+
+export const updateBarberCmsDetails = (details) =>
+  api.put("/api/v1/barber-cms/details", {
+    details,
+  });
+
+export const updateBarberCmsServices = (services) =>
+  api.put("/api/v1/barber-cms/services", {
+    services,
+  });
+
+export const updateBarberCmsBarbers = (barbers) =>
+  api.put("/api/v1/barber-cms/barbers", {
+    barbers,
+  });
+
+export const updateBarberCmsOthers = (others) =>
+  api.put("/api/v1/barber-cms/others", {
+    others,
+  });
 
 export default api;

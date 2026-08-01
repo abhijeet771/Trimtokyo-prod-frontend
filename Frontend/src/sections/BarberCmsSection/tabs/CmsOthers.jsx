@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Globe,
@@ -8,16 +8,55 @@ import {
   MapPinned,
 } from "lucide-react";
 
+import { toast } from "sonner";
+
+import useUpdateBarberCms from "../../../hooks/useUpdateBarberCms";
+
+import {
+  updateBarberCmsOthers,
+} from "../../../services/api";
+
 import "./CmsOthers.scss";
 
-const CmsOthers = () => {
-  const [form, setForm] = useState({
-    website: "",
-    instagram: "",
-    facebook: "",
-    youtube: "",
-    googleMaps: "",
-  });
+const CmsOthers = ({
+  cms,
+  refetch,
+}) => {
+  const [form, setForm] =
+    useState({
+      website: "",
+      instagram: "",
+      facebook: "",
+      youtube: "",
+      googleMaps: "",
+    });
+
+  const {
+    mutate,
+    isPending,
+  } = useUpdateBarberCms(
+    updateBarberCmsOthers
+  );
+
+  useEffect(() => {
+    if (cms?.others) {
+      setForm({
+        website:
+          cms.others.website || "",
+        instagram:
+          cms.others.instagram ||
+          "",
+        facebook:
+          cms.others.facebook ||
+          "",
+        youtube:
+          cms.others.youtube || "",
+        googleMaps:
+          cms.others.googleMaps ||
+          "",
+      });
+    }
+  }, [cms]);
 
   const handleChange = (e) => {
     const { name, value } =
@@ -29,6 +68,27 @@ const CmsOthers = () => {
     }));
   };
 
+ const handleSave = () => {
+  mutate(form, {
+    onSuccess: (response) => {
+      toast.success(
+        response?.message ||
+          "Settings updated successfully."
+      );
+
+      refetch?.();
+    },
+
+    onError: (error) => {
+      toast.error(
+        error?.response?.data
+          ?.message ||
+          "Failed to update settings."
+      );
+    },
+  });
+};
+
   return (
     <section className="cms-others">
       <div className="cms-others__header">
@@ -36,8 +96,9 @@ const CmsOthers = () => {
           <h3>Other Settings</h3>
 
           <p>
-            Manage your social media,
-            website and map links.
+            Manage your social
+            media, website and map
+            links.
           </p>
         </div>
       </div>
@@ -120,8 +181,14 @@ const CmsOthers = () => {
       </div>
 
       <div className="save-bar">
-        <button className="save-btn">
-          Save Settings
+        <button
+          className="save-btn"
+          onClick={handleSave}
+          disabled={isPending}
+        >
+          {isPending
+            ? "Saving..."
+            : "Save Settings"}
         </button>
       </div>
     </section>

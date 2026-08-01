@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Images,
@@ -7,6 +7,10 @@ import {
   Users,
   Settings2,
 } from "lucide-react";
+
+import useGetBarberCms from "../../hooks/useGetBarberCms";
+import useGetBarberServicesCms from "../../hooks/useGetBarberServicesCms";
+import useCreateBarberCms from "../../hooks/useCreateBarberCms";
 
 import CmsImages from "./tabs/CmsImages";
 import CmsDetails from "./tabs/CmsDetails";
@@ -48,27 +52,128 @@ const BarberCmsSection = () => {
   const [activeTab, setActiveTab] =
     useState("images");
 
+  const {
+    data,
+    isLoading,
+    error,
+    refetch,
+  } = useGetBarberCms();
+
+  const {
+    data: servicesData,
+    isLoading: servicesLoading,
+    error: servicesError,
+  } = useGetBarberServicesCms();
+
+  const {
+    mutate: createCms,
+    isPending: creatingCms,
+  } = useCreateBarberCms();
+
+  useEffect(() => {
+    if (
+      error?.response?.status === 404
+    ) {
+      createCms(undefined, {
+        onSuccess: () => {
+          refetch();
+        },
+      });
+    }
+  }, [
+    error,
+    createCms,
+    refetch,
+  ]);
+
+  const cms = data?.data;
+
+  const allServices =
+    servicesData?.data || [];
+
   const renderContent = () => {
     switch (activeTab) {
       case "images":
-        return <CmsImages />;
+        return (
+          <CmsImages
+            cms={cms}
+            refetch={refetch}
+          />
+        );
 
       case "details":
-        return <CmsDetails />;
+        return (
+          <CmsDetails
+            cms={cms}
+            refetch={refetch}
+          />
+        );
 
       case "services":
-        return <CmsServices />;
+        return (
+          <CmsServices
+            cms={cms}
+            allServices={allServices}
+            refetch={refetch}
+          />
+        );
 
       case "barbers":
-        return <CmsBarbers />;
+        return (
+          <CmsBarbers
+            cms={cms}
+            refetch={refetch}
+          />
+        );
 
       case "others":
-        return <CmsOthers />;
+        return (
+          <CmsOthers
+            cms={cms}
+            refetch={refetch}
+          />
+        );
 
       default:
-        return <CmsImages />;
+        return (
+          <CmsImages
+            cms={cms}
+            refetch={refetch}
+          />
+        );
     }
   };
+
+  if (
+    isLoading ||
+    servicesLoading ||
+    creatingCms
+  ) {
+    return (
+      <section className="barber-cms-section">
+        Loading...
+      </section>
+    );
+  }
+
+  if (
+    error &&
+    error?.response?.status !== 404
+  ) {
+    return (
+      <section className="barber-cms-section">
+        Failed to load CMS.
+      </section>
+    );
+  }
+
+  if (servicesError) {
+    return (
+      <section className="barber-cms-section">
+        Failed to load services.
+      </section>
+    );
+  }
 
   return (
     <section className="barber-cms-section">

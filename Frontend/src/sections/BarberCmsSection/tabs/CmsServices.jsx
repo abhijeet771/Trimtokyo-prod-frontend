@@ -1,59 +1,85 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { Scissors } from "lucide-react";
+
+import { toast } from "sonner";
+
+import useUpdateBarberCms from "../../../hooks/useUpdateBarberCms";
 
 import {
-  Plus,
-  Trash2,
-  Scissors,
-} from "lucide-react";
+  updateBarberCmsServices,
+} from "../../../services/api";
 
 import "./CmsServices.scss";
 
-const CmsServices = () => {
-  const [services, setServices] =
-    useState([
-      {
-        id: 1,
-        name: "Hair Cut",
-        price: "300",
-        duration: "30",
-      },
-    ]);
+const CmsServices = ({
+  cms,
+  allServices = [],
+  refetch,
+}) => {
+  const [selectedServices, setSelectedServices] =
+    useState([]);
 
-  const handleChange = (
-    id,
-    field,
-    value
-  ) => {
-    setServices((prev) =>
-      prev.map((service) =>
-        service.id === id
-          ? {
-              ...service,
-              [field]: value,
-            }
-          : service
-      )
+  const {
+    mutate,
+    isPending,
+  } = useUpdateBarberCms(
+    updateBarberCmsServices
+  );
+
+  useEffect(() => {
+    if (cms?.services) {
+      setSelectedServices(
+        cms.services.map(
+          (service) => service._id
+        )
+      );
+    }
+  }, [cms]);
+
+  const services =
+    allServices?.services ||
+    allServices?.data ||
+    allServices ||
+    [];
+
+  const toggleService = (id) => {
+    setSelectedServices((prev) =>
+      prev.includes(id)
+        ? prev.filter(
+            (serviceId) =>
+              serviceId !== id
+          )
+        : [...prev, id]
     );
   };
 
-  const addService = () => {
-    setServices((prev) => [
-      ...prev,
+  const handleSave = () => {
+    mutate(
       {
-        id: Date.now(),
-        name: "",
-        price: "",
-        duration: "",
+        services:
+          selectedServices,
       },
-    ]);
-  };
+      {
+        onSuccess: (
+          response
+        ) => {
+          toast.success(
+            response?.message ||
+              "Services updated successfully."
+          );
 
-  const deleteService = (id) => {
-    setServices((prev) =>
-      prev.filter(
-        (service) =>
-          service.id !== id
-      )
+          refetch?.();
+        },
+
+        onError: (error) => {
+          toast.error(
+            error?.response?.data
+              ?.message ||
+              "Failed to update services."
+          );
+        },
+      }
     );
   };
 
@@ -61,92 +87,69 @@ const CmsServices = () => {
     <section className="cms-services">
       <div className="cms-services__header">
         <div>
-          <h3>Services</h3>
+          <h3>Website Services</h3>
 
           <p>
-            Manage the services
-            displayed on your salon
-            website.
+            Choose which services
+            should appear on your
+            public website.
           </p>
         </div>
-
-        <button
-          className="add-btn"
-          onClick={addService}
-        >
-          <Plus size={18} />
-          Add Service
-        </button>
       </div>
 
       <div className="service-list">
-        {services.map((service) => (
-          <div
-            key={service.id}
-            className="service-card"
-          >
-            <div className="service-icon">
-              <Scissors size={26} />
-            </div>
-
-            <div className="service-fields">
-              <input
-                type="text"
-                placeholder="Service Name"
-                value={service.name}
-                onChange={(e) =>
-                  handleChange(
-                    service.id,
-                    "name",
-                    e.target.value
-                  )
-                }
-              />
-
-              <input
-                type="number"
-                placeholder="Price"
-                value={service.price}
-                onChange={(e) =>
-                  handleChange(
-                    service.id,
-                    "price",
-                    e.target.value
-                  )
-                }
-              />
-
-              <input
-                type="number"
-                placeholder="Duration (mins)"
-                value={service.duration}
-                onChange={(e) =>
-                  handleChange(
-                    service.id,
-                    "duration",
-                    e.target.value
-                  )
-                }
-              />
-            </div>
-
-            <button
-              className="delete-btn"
-              onClick={() =>
-                deleteService(
-                  service.id
-                )
-              }
-            >
-              <Trash2 size={18} />
-            </button>
+        {services.length === 0 ? (
+          <div className="empty-state">
+            No services found.
+            Create services first
+            from the Services module.
           </div>
-        ))}
+        ) : (
+          services.map((service) => (
+            <label
+              key={service._id}
+              className="service-card"
+            >
+              <div className="service-icon">
+                <Scissors size={24} />
+              </div>
+
+              <div className="service-info">
+                <h4>
+                  {service.name}
+                </h4>
+
+                <p>
+                  ₹{service.price} •{" "}
+                  {service.duration} mins
+                </p>
+              </div>
+
+              <input
+                type="checkbox"
+                checked={selectedServices.includes(
+                  service._id
+                )}
+                onChange={() =>
+                  toggleService(
+                    service._id
+                  )
+                }
+              />
+            </label>
+          ))
+        )}
       </div>
 
       <div className="save-bar">
-        <button className="save-btn">
-          Save Services
+        <button
+          className="save-btn"
+          onClick={handleSave}
+          disabled={isPending}
+        >
+          {isPending
+            ? "Saving..."
+            : "Save Services"}
         </button>
       </div>
     </section>
