@@ -15,6 +15,8 @@ const useGetBarberCms = () => {
 
     enabled: !!user?.tenantId,
 
+    retry: false,
+
     queryFn: async () => {
       const response =
         await getBarberCms();

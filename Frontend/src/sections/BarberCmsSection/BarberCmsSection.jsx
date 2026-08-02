@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Images,
@@ -70,24 +70,14 @@ const BarberCmsSection = () => {
     isPending: creatingCms,
   } = useCreateBarberCms();
 
-  useEffect(() => {
-    if (
-      error?.response?.status === 404
-    ) {
-      createCms(undefined, {
-        onSuccess: () => {
-          refetch();
-        },
-      });
-    }
-  }, [
-    error,
-    createCms,
-    refetch,
-  ]);
-
   const cms = data?.data;
-
+console.log({
+  isLoading,
+  servicesLoading,
+  error,
+  status: error?.response?.status,
+  data,
+});
   const allServices =
     servicesData?.data || [];
 
@@ -146,8 +136,7 @@ const BarberCmsSection = () => {
 
   if (
     isLoading ||
-    servicesLoading ||
-    creatingCms
+    servicesLoading
   ) {
     return (
       <section className="barber-cms-section">
@@ -156,21 +145,68 @@ const BarberCmsSection = () => {
     );
   }
 
-  if (
-    error &&
-    error?.response?.status !== 404
-  ) {
-    return (
-      <section className="barber-cms-section">
-        Failed to load CMS.
-      </section>
-    );
-  }
-
   if (servicesError) {
     return (
       <section className="barber-cms-section">
         Failed to load services.
+      </section>
+    );
+  }
+
+  if (
+    error?.response?.status === 404
+  ) {
+    return (
+      <section className="barber-cms-section">
+        <div className="page-header">
+          <div>
+            <h2>Brand Website CMS</h2>
+
+            <p>
+              Your website has not been
+              created yet.
+            </p>
+          </div>
+        </div>
+
+        <div className="cms-empty-state">
+          <h3>
+            Create Your Brand Website
+          </h3>
+
+          <p>
+            Click the button below to
+            generate your website CMS.
+            After that you'll be able
+            to manage images, services,
+            barbers and other website
+            content.
+          </p>
+
+          <button
+            className="create-cms-btn"
+            disabled={creatingCms}
+            onClick={() =>
+              createCms(undefined, {
+                onSuccess: () => {
+                  refetch();
+                },
+              })
+            }
+          >
+            {creatingCms
+              ? "Creating..."
+              : "Create Website"}
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="barber-cms-section">
+        Failed to load CMS.
       </section>
     );
   }
