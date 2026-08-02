@@ -1,38 +1,42 @@
-import React, {  createContext,  useContext,  useEffect,  useState,} from "react";
+import React, {  createContext,  useContext,  useEffect,useState,} from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useQueryClient } from "@tanstack/react-query";
 import API from "../services/api";
 import { getFCMToken } from "../utils/notification";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+export const AuthProvider = ({  children,}) => {
+  const [user, setUser] =
+    useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
 
   const navigate = useNavigate();
 
+  const queryClient =
+    useQueryClient();
+
   const fetchUser = async () => {
     try {
-      const res = await API.get(
-        "/api/v1/auth/me",
+      const res = await API.get( "/api/v1/auth/me",
         {
           withCredentials: true,
         }
       );
 
-      // ✅ Backend now returns { success, data }
       setUser(res.data.data);
 
-      // Save FCM token
       try {
         const token =
           await getFCMToken();
 
         if (token) {
-          await API.post(
-            "/api/v1/auth/save-token",
-            { token },
+          await API.post("/api/v1/auth/save-token",
+            {
+              token,
+            },
             {
               withCredentials: true,
             }
@@ -57,13 +61,14 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await API.post(
-        "/api/v1/auth/logout",
+      await API.post("/api/v1/auth/logout",
         {},
         {
           withCredentials: true,
         }
       );
+
+      queryClient.clear();
 
       setUser(null);
 
@@ -80,14 +85,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        loading,
-        logout,
-        refreshUser: fetchUser,
-      }}
-    >
+      value={{ user, setUser, loading, logout,refreshUser: fetchUser,}}>
       {children}
     </AuthContext.Provider>
   );
