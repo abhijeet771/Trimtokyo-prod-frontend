@@ -5,35 +5,40 @@ import {
   ChevronDown,
 } from "lucide-react";
 
+import { useAuth } from "../../context/AuthContext";
+import useBarberProfile from "../../hooks/useBarberProfile";
+
 import BarberNotifications from "../../components/molecules/BarberNotification/BarberNotification";
 import BarberProfileMenu from "../../components/molecules/BarberProfileMenu/BarberProfileMenu";
 
 import "./BarberHeaderSection.scss";
 
 const BarberHeaderSection = () => {
-  const [
-    notificationOpen,
-    setNotificationOpen,
-  ] = useState(false);
+  const [notificationOpen, setNotificationOpen] =
+    useState(false);
 
-  const [
-    profileOpen,
-    setProfileOpen,
-  ] = useState(false);
+  const [profileOpen, setProfileOpen] =
+    useState(false);
 
-  const handleLogout = () => {
-    console.log("Logout");
+  const {
+    profile,
+    loading,
+  } = useBarberProfile();
 
-    // Later
-    // logout();
-    // navigate("/auth");
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
 
   return (
     <>
       <header className="barber-header">
         {/* Left */}
-
         <div className="barber-header__left">
           <div className="barber-header__brand">
             <div className="barber-header__logo">
@@ -55,7 +60,6 @@ const BarberHeaderSection = () => {
         </div>
 
         {/* Right */}
-
         <div className="barber-header__right">
           <button
             className="notification-btn"
@@ -80,24 +84,37 @@ const BarberHeaderSection = () => {
               }
             >
               <img
-                src="https://i.pravatar.cc/100"
-                alt="Profile"
+                src={
+                  profile?.profileImage ||
+                  "https://i.pravatar.cc/100"
+                }
+                alt={
+                  profile?.shopName ||
+                  "Profile"
+                }
               />
 
               <div className="profile__info">
                 <h4>
-                  Naturica Unisex
-                  Salon
+                  {loading
+                    ? "Loading..."
+                    : profile?.shopName ||
+                      "TrimTokyo"}
                 </h4>
 
                 <span>
-                  Purnia, Bihar
+                  {loading
+                    ? "Loading..."
+                    : `${profile?.city || ""}${
+                        profile?.city &&
+                        profile?.state
+                          ? ", "
+                          : ""
+                      }${profile?.state || ""}`}
                 </span>
               </div>
 
-              <ChevronDown
-                size={18}
-              />
+              <ChevronDown size={18} />
             </div>
 
             <BarberProfileMenu

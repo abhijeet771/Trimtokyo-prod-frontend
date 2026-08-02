@@ -1,5 +1,6 @@
 import { LogOut, UserCircle } from "lucide-react";
 
+import useBarberProfile from "../../../hooks/useBarberProfile";
 import "./BarberProfileMenu.scss";
 
 const BarberProfileMenu = ({
@@ -7,6 +8,9 @@ const BarberProfileMenu = ({
   onClose,
   onLogout,
 }) => {
+  const { profile, loading } =
+    useBarberProfile();
+
   if (!open) return null;
 
   return (
@@ -19,17 +23,33 @@ const BarberProfileMenu = ({
       <div className="profile-menu">
         <div className="profile-menu__user">
           <img
-            src="https://i.pravatar.cc/120"
-            alt="Profile"
+            src={
+              profile?.profileImage ||
+              "https://i.pravatar.cc/120"
+            }
+            alt={
+              profile?.shopName ||
+              "Profile"
+            }
           />
 
           <div>
             <h4>
-              Naturica Unisex Salon
+              {loading
+                ? "Loading..."
+                : profile?.shopName ||
+                  "TrimTokyo"}
             </h4>
 
             <span>
-              Purnia, Bihar
+              {loading
+                ? "Loading..."
+                : `${profile?.city || ""}${
+                    profile?.city &&
+                    profile?.state
+                      ? ", "
+                      : ""
+                  }${profile?.state || ""}`}
             </span>
           </div>
         </div>
@@ -38,12 +58,9 @@ const BarberProfileMenu = ({
 
         <button
           className="profile-menu__item"
-          onClick={() => {
-            onClose();
-          }}
+          onClick={onClose}
         >
           <UserCircle size={18} />
-
           <span>My Profile</span>
         </button>
 
@@ -55,7 +72,6 @@ const BarberProfileMenu = ({
           }}
         >
           <LogOut size={18} />
-
           <span>Logout</span>
         </button>
       </div>
