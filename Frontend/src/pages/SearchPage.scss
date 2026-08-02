@@ -1,127 +1,65 @@
 .search-page {
-  max-width: 1400px;
-
-  margin: auto;
-
-  padding: 40px 24px 70px;
+  min-height: 100vh;
 
   display: flex;
   flex-direction: column;
 
-  gap: 40px;
-}
+  background: #f8f9fb;
 
-.search-hero {
-  text-align: center;
+  &__container {
+    width: 100%;
+    max-width: 1500px;
 
-  h1 {
-    margin: 0;
+    margin: 30px auto;
 
-    font-size: 3rem;
-    font-weight: 700;
+    padding: 0 24px;
 
-    color: #111827;
+    display: grid;
+
+    grid-template-columns: 320px 1fr;
+
+    gap: 30px;
+
+    align-items: start;
   }
 
-  p {
-    margin: 18px auto 0;
+  &__filters {
+    position: sticky;
 
-    max-width: 650px;
-
-    color: #6b7280;
-
-    line-height: 1.7;
-  }
-}
-
-.search-box {
-  margin: 36px auto 0;
-
-  max-width: 700px;
-
-  height: 60px;
-
-  border: 1px solid #d1d5db;
-
-  border-radius: 999px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 14px;
-
-  padding: 0 22px;
-
-  background: white;
-
-  transition: .25s;
-
-  &:focus-within {
-    border-color: #4f46e5;
-
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, .1);
+    top: 90px;
   }
 
-  svg {
-    color: #6b7280;
-  }
+  &__results {
+    width: 100%;
 
-  input {
-    flex: 1;
-
-    border: none;
-    outline: none;
-
-    font-size: 1rem;
-
-    background: transparent;
+    min-width: 0;
   }
 }
 
-.results-header {
-  display: flex;
+/* ------------------------ Tablet ------------------------ */
 
-  justify-content: space-between;
-
-  align-items: center;
-
-  h2 {
-    margin: 0;
-
-    font-size: 1.5rem;
-
-    color: #111827;
-  }
-}
-
-.search-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fill,
-      minmax(340px, 1fr)
-    );
-
-  gap: 28px;
-}
-
-@media (max-width:768px) {
+@media (max-width: 992px) {
   .search-page {
-    padding: 24px 18px 50px;
-  }
+    &__container {
+      grid-template-columns: 1fr;
 
-  .search-hero {
-    h1 {
-      font-size: 2.1rem;
+      gap: 20px;
+    }
+
+    &__filters {
+      position: static;
     }
   }
+}
 
-  .search-box {
-    height: 54px;
-  }
+/* ------------------------ Mobile ------------------------ */
 
-  .search-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .search-page {
+    &__container {
+      padding: 0 16px;
+
+      margin: 20px auto;
+    }
   }
 }

@@ -398,4 +398,18 @@ export const updateBarberCmsOthers = (others) =>
     others,
   });
 
+/* -------------------------------------------------------------------------- */
+/*                              SEARCH APIs                                   */
+/* -------------------------------------------------------------------------- */
+
+export const searchBarbers = (params = {}) =>
+  api.get("/api/v1/search", { params, });
+
+export const getSearchFilters = () =>
+  api.get("/api/v1/search/filters");
+
+export const getSearchSuggestions = (  search,  limit = 10) =>
+  api.get(    `/api/v1/search/suggestions?search=${encodeURIComponent(search )}&limit=${limit}`
+  );
+
 export default api;
