@@ -5,10 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import { MdPalette } from "react-icons/md";
 
 import { applyTheme } from "../../theme/applyTheme";
-import {
-  getSettings,
-  updateSettings,
-} from "../../services/api";
+import {  getSettings,  updateSettings,} from "../../services/api";
 
 const AdminHeaderSection = ({
   activeTab,

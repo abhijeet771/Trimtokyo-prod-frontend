@@ -266,6 +266,10 @@ export const getAdminKPIs = () =>
 export const getLatestUsers = () =>
   api.get("/api/v1/admin-kpis/latest-users");
 
+export const getAdminBarbers = ({  page = 1,  limit = 5,
+  search = "",} = {}) => api.get("/api/v1/admin-kpis/barbers", {
+    params: {page, limit, search, },});
+
 /* -------------------------------------------------------------------------- */
 /*                            ADMIN KPI USERS APIs                            */
 /* -------------------------------------------------------------------------- */
