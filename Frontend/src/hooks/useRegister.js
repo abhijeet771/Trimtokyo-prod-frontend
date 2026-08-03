@@ -15,13 +15,9 @@ const useRegister = () => {
         name: formData.name,
         email:
           formData.email || undefined,
-        password: formData.password,
         phone: formData.phone,
-        role: formData.role || "user",
-        tenantId:
-          formData.tenantId ||
-          import.meta.env
-            .VITE_DEFAULT_TENANT_ID,
+        password: formData.password,
+        role: "user",
       };
 
       const res = await registerUser(
@@ -32,20 +28,11 @@ const useRegister = () => {
         loadingToast
       );
 
-      const user = res.data.data;
-      const role = user?.role;
+      setUser(res.data.data);
 
-      if (role === "barber") {
-        toast.success(
-          "Barber Account Created Successfully"
-        );
-      } else {
-        toast.success(
-          "User Account Created Successfully"
-        );
-      }
-
-      setUser(user);
+      toast.success(
+        "Account created successfully."
+      );
 
       return res.data;
     } catch (error) {
@@ -56,14 +43,10 @@ const useRegister = () => {
       toast.error(
         error?.response?.data
           ?.message ||
-          error?.message ||
-          "Registration Failed"
+          "Registration failed."
       );
 
-      throw (
-        error?.response?.data ||
-        error
-      );
+      throw error;
     }
   };
 
@@ -71,3 +54,71 @@ const useRegister = () => {
 };
 
 export default useRegister;
+
+/* -------------------------------------------------------------------------- */
+/*                              OLD OTP VERSION                               */
+/* -------------------------------------------------------------------------- */
+
+/*
+const register = async (formData) => {
+  const loadingToast = toast.loading(
+    "Creating Account..."
+  );
+
+  try {
+    const payload = {
+      name: formData.name,
+      email:
+        formData.email || undefined,
+      password: formData.password,
+      phone: formData.phone,
+      role: formData.role || "user",
+      tenantId:
+        formData.tenantId ||
+        import.meta.env
+          .VITE_DEFAULT_TENANT_ID,
+    };
+
+    const res = await registerUser(
+      payload
+    );
+
+    toast.dismiss(
+      loadingToast
+    );
+
+    const user = res.data.data;
+    const role = user?.role;
+
+    if (role === "barber") {
+      toast.success(
+        "Barber Account Created Successfully"
+      );
+    } else {
+      toast.success(
+        "User Account Created Successfully"
+      );
+    }
+
+    setUser(user);
+
+    return res.data;
+  } catch (error) {
+    toast.dismiss(
+      loadingToast
+    );
+
+    toast.error(
+      error?.response?.data
+        ?.message ||
+        error?.message ||
+        "Registration Failed"
+    );
+
+    throw (
+      error?.response?.data ||
+      error
+    );
+  }
+};
+*/

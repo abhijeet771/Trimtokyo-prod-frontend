@@ -1,82 +1,95 @@
-import React, {  useEffect,  useState,} from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
+
+import {
+  MdPerson,
+  MdEmail,
+  MdPhone,
+  MdLock,
+} from "react-icons/md";
+
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+} from "react-icons/ai";
+
 import { toast } from "sonner";
-import {  MdEmail,  MdLock,  MdPerson,  MdPhone,} from "react-icons/md";
-import {  AiOutlineEye,  AiOutlineEyeInvisible,} from "react-icons/ai";
+
+import authBg from "../assets/images/auth-bg.jpg";
+
 import { useAuth } from "../context/AuthContext";
+
 import useLogin from "../hooks/useLogin";
 import useRegister from "../hooks/useRegister";
-import useOtp from "../hooks/useOtp";
-import usePassword from "../hooks/usePassword";
 
 import "./AuthPage.scss";
 
 const AuthPage = () => {
   const navigate = useNavigate();
+
   const { user } = useAuth();
+
   const { login } = useLogin();
   const { register } = useRegister();
-  const {sendOtp,verifyOtp,} = useOtp();
-  const {forgotPassword, resetPassword,  } = usePassword();
-  const [mode, setMode] =    useState("login");
-  /*      login      register      forgot  */
 
-  /* =======================================================
-      REGISTER STEP
-  ======================================================= */
+  const [mode, setMode] =
+    useState("login");
 
-  const [ registerStep, setRegisterStep, ] = useState(1);
+  const [showPassword, setShowPassword] =
+    useState(false);
 
-  /* =======================================================
-      FORGOT PASSWORD STEP
-  ======================================================= */
+  const [
+    showConfirmPassword,
+    setShowConfirmPassword,
+  ] = useState(false);
 
-  const [ forgotStep, setForgotStep,  ] = useState(1);
-  const [ showPassword, setShowPassword, ] = useState(false);
-  const [otp, setOtp] =    useState("");
+  const [loading, setLoading] =
+    useState(false);
 
-  const [formData, setFormData] =    useState({
+  const [formData, setFormData] =
+    useState({
       name: "",
       email: "",
-      password: "",
       phone: "",
+      password: "",
+      confirmPassword: "",
       role: "user",
-      tenantId: import.meta.env.VITE_DEFAULT_TENANT_ID ||        "",
     });
 
-  /* =======================================================
-      REDIRECT AFTER LOGIN
-  ======================================================= */
+  /* ======================================================
+      REDIRECT
+  ====================================================== */
 
   useEffect(() => {
     if (!user) return;
 
     if (user.role === "admin") {
-      navigate(
-        "/admin/dashboard",
-        {
-          replace: true,
-        }
-      );
-    } else if (
-      user.role === "barber"
-    ) {
-      navigate(
-        "/barber/dashboard",
-        {
-          replace: true,
-        }
-      );
-    } else {
-      navigate("/shop", {
+      navigate("/admin/dashboard", {
         replace: true,
       });
+
+      return;
     }
+
+    if (user.role === "barber") {
+      navigate("/barber/dashboard", {
+        replace: true,
+      });
+
+      return;
+    }
+
+    navigate("/shop", {
+      replace: true,
+    });
   }, [user, navigate]);
 
-  /* =======================================================
+  /* ======================================================
       INPUT CHANGE
-  ======================================================= */
+  ====================================================== */
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -86,348 +99,205 @@ const AuthPage = () => {
     }));
   };
 
-  /* =======================================================
-      SEND OTP
-  ======================================================= */
+  /* ======================================================
+      RESET FORM
+  ====================================================== */
 
-  const handleSendOtp =
-    async () => {
-      if (!/^[6-9]\d{9}$/.test(
-          formData.phone
-        )
-      ) {
-        toast.error(
-          "Enter a valid phone number."
-        );
-
-        return;
-      }
-
-      try {
-        if (mode === "register") {
-          await sendOtp(
-            formData.phone,
-            formData.tenantId
-          );
-
-          setRegisterStep(2);
-        } else {
-          await forgotPassword(
-            formData.phone,
-            formData.tenantId
-          );
-
-          setForgotStep(2);
-        }
-      } catch {}
-    };
-
-  /* =======================================================
-      VERIFY OTP
-  ======================================================= */
-
-  const handleVerifyOtp =async () => {
-      if (otp.trim().length !== 6) {
-        toast.error("Enter valid OTP.");
-
-        return;
-      }
-
-      try {
-        await verifyOtp(
-          formData.phone,
-          otp,
-          formData.tenantId
-        );
-
-        if (
-          mode === "register"
-        ) {
-          setRegisterStep(3);
-        } else {
-          setForgotStep(3);
-        }
-      } catch {}
-    };
-
-  /* =======================================================
-      LOGIN
-  ======================================================= */
-
-  const handleLogin =
-    async (e) => {
-      e.preventDefault();
-
-      try {
-        await login({
-          phone:formData.phone,
-          password:formData.password,
-          tenantId: formData.tenantId,
-        });
-      } catch {}
-    };
-
-  /* =======================================================
-      REGISTER
-  ======================================================= */
-
-  const handleRegister =
-    async (e) => {
-      e.preventDefault();
-
-      try {
-        await register({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          phone: formData.phone,
-          role: formData.role,
-          tenantId: formData.tenantId,
-        });
-      } catch {}
-    };
-
-  /* =======================================================
-      RESET PASSWORD
-  ======================================================= */
-
-  const handleResetPassword =
-    async (e) => {
-      e.preventDefault();
-
-      try {
-        await resetPassword(
-          formData.phone,
-          formData.password,
-          formData.tenantId
-        );
-
-        setMode("login");
-        setForgotStep(1);
-        setOtp("");
-
-        toast.success(
-          "Password reset successfully."
-        );
-      } catch {}
-    };
-
-  /* =======================================================
-      RESET PAGE
-  ======================================================= */
-
-  const resetPage = () => {
-    setOtp("");
-    setRegisterStep(1);
-    setForgotStep(1);
+  const resetForm = () => {
     setFormData({
       name: "",
       email: "",
-      password: "",
       phone: "",
+      password: "",
+      confirmPassword: "",
       role: "user",
-      tenantId:
-        import.meta.env
-          .VITE_DEFAULT_TENANT_ID ||
-        "",
     });
+
+    setShowPassword(false);
+    setShowConfirmPassword(false);
   };
 
-  /* =======================================================
+  /* ======================================================
+      LOGIN
+  ====================================================== */
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!formData.phone.trim()) {
+      toast.error(
+        "Phone number is required."
+      );
+      return;
+    }
+
+    if (!formData.password.trim()) {
+      toast.error(
+        "Password is required."
+      );
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await login({
+        phone: formData.phone,
+        password: formData.password,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /* ======================================================
+      REGISTER
+  ====================================================== */
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    if (!formData.name.trim()) {
+      toast.error("Name is required.");
+      return;
+    }
+
+    if (!/^[6-9]\d{9}$/.test(formData.phone)) {
+      toast.error(
+        "Enter a valid phone number."
+      );
+      return;
+    }
+
+    if (
+      formData.email &&
+      !/^\S+@\S+\.\S+$/.test(
+        formData.email
+      )
+    ) {
+      toast.error(
+        "Enter a valid email."
+      );
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error(
+        "Password should be at least 6 characters."
+      );
+      return;
+    }
+
+    if (
+      formData.password !==
+      formData.confirmPassword
+    ) {
+      toast.error(
+        "Passwords do not match."
+      );
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await register({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        role: "user",
+      });
+
+      resetForm();
+    } finally {
+      setLoading(false);
+    }
+  };
+  /* ======================================================
       RETURN
-  ======================================================= */
+  ====================================================== */
 
   return (
-<>
-  <div className="auth-page">
-    <div className="auth-bg">
-      <div className="bg-shape bg-shape--one"></div>
-      <div className="bg-shape bg-shape--two"></div>
-    </div>
+    <div className="auth-page">
+      <div
+        className="auth-left"
+        style={{
+          backgroundImage: `url(${authBg})`,
+        }}
+      >
+        <div className="auth-overlay">
+          <div className="brand-content">
+            <h1>TrimTokyo</h1>
 
-    <div className="auth-container">
-      <div className="auth-card">
-
-        {/* ================= LOGO ================= */}
-
-        <div  className="auth-logo" onClick={() => navigate("/")}>
-          <img src="/scissor.png" alt="TrimTokyo"/>
-          <h2>Trim
-            <span>Tokyo</span>
-          </h2>
+            <p>
+              Book premium barber
+              services instantly.
+            </p>
+          </div>
         </div>
+      </div>
 
-        {/* ================= TITLE ================= */}
+      <div className="auth-right">
+        <div className="auth-card">
 
-        <h3 className="auth-title">
-          {mode === "login" && "Welcome Back"}
+          <div className="auth-header">
 
-          {mode === "register" &&
-            (registerStep === 1
-              ? "Create Account"
-              : registerStep === 2
-              ? "Verify OTP"
-              : "Complete Registration")}
+            <h2>
+              {mode === "login"
+                ? "Welcome Back"
+                : "Create Account"}
+            </h2>
 
-          {mode === "forgot" &&
-            (forgotStep === 1
-              ? "Forgot Password"
-              : forgotStep === 2
-              ? "Verify OTP"
-              : "Reset Password")}
-        </h3>
+            <p>
+              {mode === "login"
+                ? "Login to continue."
+                : "Create your account to get started."}
+            </p>
 
-        {/* ================= LOGIN ================= */}
+          </div>
 
-        {mode === "login" && (
+          <div className="auth-toggle">
+
+            <button
+              className={
+                mode === "login"
+                  ? "active"
+                  : ""
+              }
+              onClick={() => {
+                resetForm();
+                setMode("login");
+              }}
+            >
+              Login
+            </button>
+
+            <button
+              className={
+                mode === "register"
+                  ? "active"
+                  : ""
+              }
+              onClick={() => {
+                resetForm();
+                setMode("register");
+              }}
+            >
+              Register
+            </button>
+
+          </div>
           <form
             className="auth-form"
             onSubmit={
-              handleLogin
+              mode === "login"
+                ? handleLogin
+                : handleRegister
             }
           >
-            <div className="form-group">
-              <MdPhone className="input-icon" />
-
-              <input type="tel" name="phone" placeholder="Phone Number"
-                value={ formData.phone}
-                onChange={ handleChange}
-                required
-              />
-            </div>
-
-            <div className="form-group password-group">
-              <MdLock className="input-icon" />
-
-              <input type={ showPassword? "text": "password"}
-                name="password" placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}required
-              />
-
-              <span className="password-toggle" onClick={() =>
-                  setShowPassword(!showPassword)
-                }>
-                {showPassword ? (<AiOutlineEyeInvisible />) : (
-                  <AiOutlineEye />
-                )}
-              </span>
-            </div>
-
-            <div className="forgot-password">
-              <span onClick={() => { resetPage();
-                  setMode("forgot");
-                }}
-                style={{cursor:"pointer",}}>
-                Forgot Password?
-              </span>
-            </div>
-
-            <button className="auth-button" type="submit">
-              Login
-            </button>
-          </form>
-        )}
-        {/* ================= REGISTER ================= */}
-
-        {mode === "register" &&
-          registerStep === 1 && (
-            <form
-              className="auth-form"
-              onSubmit={(e) =>
-                e.preventDefault()
-              }
-            >
-              <div className="form-group">
-                <MdPhone className="input-icon" />
-
-                <input type="tel" name="phone" placeholder="Phone Number"
-                  value={ formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <button type="button" className="auth-button" onClick={  handleSendOtp}>
-                Send OTP
-              </button>
-
-              <p className="auth-switch"
-                style={{  marginTop: 20,}}>
-                Already have an account?
-                <span  onClick={() => {    resetPage();    setMode(  "login");}}>
-                  Login
-                </span>
-              </p>
-            </form>
-          )}
-
-        {/* ================= REGISTER STEP 2 ================= */}
-
-        {mode === "register" &&
-          registerStep === 2 && (
-            <form
-              className="auth-form"
-              onSubmit={(e) =>
-                e.preventDefault()
-              }
-            >
-              <div className="form-group">
-                <MdLock className="input-icon" />
-
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  maxLength={6}
-                  onChange={(e) =>
-                    setOtp(
-                      e.target.value
-                    )
-                  }
-                  required
-                />
-              </div>
-
-              <button
-                type="button"
-                className="auth-button"
-                onClick={
-                  handleVerifyOtp
-                }
-              >
-                Verify OTP
-              </button>
-
-              <button
-                type="button"
-                className="auth-button"
-                style={{
-                  marginTop: 10,
-                  background:
-                    "#6b7280",
-                }}
-                onClick={() =>
-                  setRegisterStep(
-                    1
-                  )
-                }
-              >
-                Back
-              </button>
-            </form>
-          )}
-        {/* ================= REGISTER STEP 3 ================= */}
-
-        {mode === "register" &&
-          registerStep === 3 && (
-            <form
-              className="auth-form"
-              onSubmit={
-                handleRegister
-              }
-            >
-              <div className="form-group">
+            {mode === "register" && (
+              <div className="input-group">
                 <MdPerson className="input-icon" />
 
                 <input
@@ -436,11 +306,12 @@ const AuthPage = () => {
                   placeholder="Full Name"
                   value={formData.name}
                   onChange={handleChange}
-                  required
                 />
               </div>
+            )}
 
-              <div className="form-group">
+            {mode === "register" && (
+              <div className="input-group">
                 <MdEmail className="input-icon" />
 
                 <input
@@ -451,318 +322,143 @@ const AuthPage = () => {
                   onChange={handleChange}
                 />
               </div>
+            )}
 
-              <div className="form-group password-group">
+            <div className="input-group">
+              <MdPhone className="input-icon" />
+
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                maxLength={10}
+                value={formData.phone}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="input-group">
+              <MdLock className="input-icon" />
+
+              <input
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() =>
+                  setShowPassword(
+                    !showPassword
+                  )
+                }
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible />
+                ) : (
+                  <AiOutlineEye />
+                )}
+              </button>
+            </div>
+
+            {mode === "register" && (
+              <div className="input-group">
                 <MdLock className="input-icon" />
 
                 <input
                   type={
-                    showPassword
+                    showConfirmPassword
                       ? "text"
                       : "password"
                   }
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={
+                    formData.confirmPassword
+                  }
                   onChange={handleChange}
-                  required
                 />
 
-                <span
+                <button
+                  type="button"
                   className="password-toggle"
                   onClick={() =>
-                    setShowPassword(
-                      !showPassword
+                    setShowConfirmPassword(
+                      !showConfirmPassword
                     )
                   }
                 >
-                  {showPassword ? (
+                  {showConfirmPassword ? (
                     <AiOutlineEyeInvisible />
                   ) : (
                     <AiOutlineEye />
                   )}
+                </button>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="submit-btn"
+              disabled={loading}
+            >
+              {loading
+                ? mode === "login"
+                  ? "Logging In..."
+                  : "Creating Account..."
+                : mode === "login"
+                ? "Login"
+                : "Create Account"}
+            </button>
+          </form>
+
+          <div className="auth-footer">
+            {mode === "login" ? (
+              <>
+                <span>
+                  Don't have an account?
                 </span>
-              </div>
 
-              <div className="form-group">
-                <MdPerson className="input-icon" />
-
-                <select
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">
-                    Select Role
-                  </option>
-
-                  <option value="USER">
-                    Customer
-                  </option>
-
-                  <option value="BARBER">
-                    Barber
-                  </option>
-                </select>
-              </div>
-
-              <button
-                type="submit"
-                className="auth-button"
-              >
-                Create Account
-              </button>
-
-              <button
-                type="button"
-                className="auth-button"
-                style={{
-                  marginTop: 10,
-                  background:
-                    "#6b7280",
-                }}
-                onClick={() =>
-                  setRegisterStep(2)
-                }
-              >
-                Back
-              </button>
-
-              <p
-                className="auth-switch"
-                style={{
-                  marginTop: 20,
-                }}
-              >
-                Already have an account?
-
-                <span
+                <button
+                  type="button"
                   onClick={() => {
-                    resetPage();
+                    resetForm();
+                    setMode("register");
+                  }}
+                >
+                  Register
+                </button>
+              </>
+            ) : (
+              <>
+                <span>
+                  Already have an account?
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    resetForm();
                     setMode("login");
                   }}
                 >
                   Login
-                </span>
-              </p>
-            </form>
-          )}
-        {/* ================= FORGOT PASSWORD STEP 1 ================= */}
-
-        {mode === "forgot" &&
-          forgotStep === 1 && (
-            <form
-              className="auth-form"
-              onSubmit={(e) =>
-                e.preventDefault()
-              }
-            >
-              <div className="form-group">
-                <MdPhone className="input-icon" />
-
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <button
-                type="button"
-                className="auth-button"
-                onClick={handleVerifyOtp}
-              >
-                Send OTP
-              </button>
-
-              <p
-                className="auth-switch"
-                style={{ marginTop: 20 }}
-              >
-                Remember your password?
-
-                <span
-                  onClick={() => {
-                    resetPage();
-                    setMode("login");
-                  }}
-                >
-                  Login
-                </span>
-              </p>
-            </form>
-          )}
-
-        {/* ================= FORGOT PASSWORD STEP 2 ================= */}
-
-        {mode === "forgot" &&
-          forgotStep === 2 && (
-            <form
-              className="auth-form"
-              onSubmit={(e) =>
-                e.preventDefault()
-              }
-            >
-              <div className="form-group">
-                <MdLock className="input-icon" />
-
-                <input
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  maxLength={6}
-                  onChange={(e) =>
-                    setOtp(e.target.value)
-                  }
-                  required
-                />
-              </div>
-
-              <button
-                type="button"
-                className="auth-button"
-                onClick={
-                  handleVerifyForgotOtp
-                }
-              >
-                Verify OTP
-              </button>
-
-              <button
-                type="button"
-                className="auth-button"
-                style={{
-                  marginTop: 10,
-                  background: "#6b7280",
-                }}
-                onClick={() =>
-                  setForgotStep(1)
-                }
-              >
-                Back
-              </button>
-            </form>
-          )}
-
-        {/* ================= FORGOT PASSWORD STEP 3 ================= */}
-
-        {mode === "forgot" &&
-          forgotStep === 3 && (
-            <form
-              className="auth-form"
-              onSubmit={
-                handleResetPassword
-              }
-            >
-              <div className="form-group password-group">
-                <MdLock className="input-icon" />
-
-                <input
-                  type={
-                    showPassword
-                      ? "text"
-                      : "password"
-                  }
-                  name="password"
-                  placeholder="New Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-
-                <span
-                  className="password-toggle"
-                  onClick={() =>
-                    setShowPassword(
-                      !showPassword
-                    )
-                  }
-                >
-                  {showPassword ? (
-                    <AiOutlineEyeInvisible />
-                  ) : (
-                    <AiOutlineEye />
-                  )}
-                </span>
-              </div>
-
-              <button
-                type="submit"
-                className="auth-button"
-              >
-                Reset Password
-              </button>
-
-              <button
-                type="button"
-                className="auth-button"
-                style={{
-                  marginTop: 10,
-                  background: "#6b7280",
-                }}
-                onClick={() =>
-                  setForgotStep(2)
-                }
-              >
-                Back
-              </button>
-            </form>
-          )}
-        {/* ================= MODE SWITCHES ================= */}
-
-        {mode === "login" && (
-          <p className="auth-switch">
-            Don't have an account?
-
-            <span
-              onClick={() => {
-                resetPage();
-                setMode("register");
-              }}
-            >
-              Register
-            </span>
-          </p>
-        )}
-
-        {mode === "register" && (
-          <p className="auth-switch">
-            Already have an account?
-
-            <span
-              onClick={() => {
-                resetPage();
-                setMode("login");
-              }}
-            >
-              Login
-            </span>
-          </p>
-        )}
-
-        {mode === "forgot" && (
-          <p className="auth-switch">
-            Back to
-
-            <span
-              onClick={() => {
-                resetPage();
-                setMode("login");
-              }}
-            >
-              Login
-            </span>
-          </p>
-        )}
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</>
-);
+  );
 };
 
 export default AuthPage;

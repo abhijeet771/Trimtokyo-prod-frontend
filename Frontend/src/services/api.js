@@ -40,6 +40,7 @@ export const registerUser = (data) =>
 export const loginUser = (data) =>
   api.post("/api/v1/auth/login", data);
 
+/*
 export const sendOtp = (data) =>
   api.post("/api/v1/auth/send-otp", data);
 
@@ -51,6 +52,7 @@ export const forgotPassword = (data) =>
 
 export const resetPassword = (data) =>
   api.post("/api/v1/auth/reset-password", data);
+*/
 
 export const logoutUser = () =>
   api.post("/api/v1/auth/logout");
