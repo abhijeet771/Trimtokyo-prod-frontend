@@ -53,106 +53,44 @@ const AdminHeaderSection = ({
     <div className="admin-header">
       <div className="tabs">
 
-        <button
-          className={
-            activeTab === "dashboard"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("dashboard")
-          }
-        >
+        <button  className={ activeTab === "dashboard" ? "active" : "" }
+          onClick={() => setActiveTab("dashboard")}>
           {ADMIN_TEXT.tabs.dashboard}
         </button>
 
-        <button
-          className={
-            activeTab === "approvals"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("approvals")
-          }
-        >
+        <button className={ activeTab === "approvals" ? "active"  : "" }
+          onClick={() => setActiveTab("approvals") }>
           {ADMIN_TEXT.tabs.approvals}
         </button>
 
-        <button
-          className={
-            activeTab === "slots"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("slots")
-          }
-        >
-          {ADMIN_TEXT.tabs.slots ||
-            "Bookings"}
+        <button className={ activeTab === "slots" ? "active"  : "" }
+          onClick={() => setActiveTab("slots")}>
+          {ADMIN_TEXT.tabs.slots || "Bookings"}
         </button>
 
-        <button
-          className={
-            activeTab === "statistics"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("statistics")
-          }
-        >
-          {ADMIN_TEXT.tabs.statistics ||
-            "Statistics"}
+        <button className={ activeTab === "statistics" ? "active" : "" }
+          onClick={() =>setActiveTab("statistics")}>
+          {ADMIN_TEXT.tabs.statistics || "Statistics"}
         </button>
 
-        <button
-          className={
-            activeTab === "blogs"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("blogs")
-          }
-        >
-          {ADMIN_TEXT.tabs.blogs ||
-            "Blogs"}
+        <button className={ activeTab === "blogs" ? "active" : "" }
+          onClick={() => setActiveTab("blogs")}>
+          {ADMIN_TEXT.tabs.blogs || "Blogs"}
         </button>
-
-        {/* NEW REELS TAB */}
-
-        <button
-          className={
-            activeTab === "reels"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("reels")
-          }
-        >
+        <button className={ activeTab === "reels" ? "active" : "" }
+          onClick={() => setActiveTab("reels")}>
           Reels
         </button>
 
-        <button
-          className={
-            activeTab === "campaign"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setActiveTab("campaign")
-          }
-        >
+        <button className={ activeTab === "campaign" ? "active" : ""}
+          onClick={() => setActiveTab("campaign")}>
           Campaign
         </button>
-
-        <button
-          className="logout-btn"
-          onClick={handleLogout}
-        >
+        <button className={ activeTab === "cms" ? "active" : "" }
+          onClick={() =>  setActiveTab("cms")}>
+          CMS
+        </button>
+        <button className="logout-btn" onClick={handleLogout} >
           Logout
         </button>
 

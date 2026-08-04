@@ -7,6 +7,7 @@ import AdminSlotSection from "../AdminSlotSection/AdminSlotSection";
 import StatisticsSection from "../StatsSection/StatsSection";
 import AdminCampaignSection from "../AdminCampaignSection/AdminCampaignSection";
 import AdminReelSection from "../AdminReelSection/AdminReelSection";
+import AdminCMSSection from "../AdminCMSSection/AdminCMSSection";
 
 import "./AdminTabSection.scss";
 
@@ -73,7 +74,7 @@ const AdminTabSection = ({
   if (activeTab === "reels") {
     return (
       <div className="admin-tab-section">
-        <AdminReelSection />
+        <AdminCMSSection />
       </div>
     );
   }
@@ -84,6 +85,15 @@ const AdminTabSection = ({
     return (
       <div className="admin-tab-section">
         <AdminCampaignSection />
+      </div>
+    );
+  }
+ /* ================= CMS TAB ================= */
+
+  if (activeTab === "cms") {
+    return (
+      <div className="admin-tab-section">
+        <AdminCMSSection />
       </div>
     );
   }

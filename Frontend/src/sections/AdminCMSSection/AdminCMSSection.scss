@@ -1,0 +1,163 @@
+.admin-cms {
+  padding: 32px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    h1 {
+      font-size: 34px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    p {
+      color: #64748b;
+      font-size: 15px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 14px;
+  }
+
+  &__tabs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    overflow-x: auto;
+
+    padding: 10px;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__content {
+    min-height: 550px;
+  }
+}
+
+.tab-btn {
+  border: none;
+
+  background: transparent;
+
+  padding: 12px 22px;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  color: #475569;
+
+  white-space: nowrap;
+
+  transition: 0.25s;
+
+  &:hover {
+    background: #eef2ff;
+    color: #4f46e5;
+  }
+
+  &.active {
+    background: linear-gradient(
+      135deg,
+      #4f46e5,
+      #6366f1
+    );
+
+    color: #fff;
+
+    box-shadow: 0 8px 18px rgba(99, 102, 241, 0.3);
+  }
+}
+
+.primary-btn {
+  border: none;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1
+  );
+
+  color: #fff;
+
+  font-weight: 600;
+
+  padding: 13px 28px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.secondary-btn {
+  background: #fff;
+
+  border: 1px solid #dbe2ef;
+
+  color: #4f46e5;
+
+  font-weight: 600;
+
+  padding: 13px 28px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+
+  &:hover {
+    background: #f8faff;
+  }
+}
+
+.cms-card {
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 32px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    color: #1e293b;
+  }
+
+  p {
+    color: #64748b;
+    font-size: 15px;
+  }
+}

@@ -136,7 +136,7 @@ export const MAIN_FOOTER_CONTENT = {
 
     {
       label: "Instagram",
-      href: "https://instagram.com",
+      href: "https://www.instagram.com/trimtokyo?igsh=dXZ6OG5kbDBhM2Nr",
       Icon: FaInstagram,
     },
 
