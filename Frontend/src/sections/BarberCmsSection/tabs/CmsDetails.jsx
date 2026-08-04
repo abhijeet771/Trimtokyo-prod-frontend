@@ -5,10 +5,7 @@ import useUpdateBarberCms from "../../../hooks/useUpdateBarberCms";
 import "./CmsDetails.scss";
 import {  updateBarberCmsDetails,} from "../../../services/api";
 
-const CmsDetails = ({
-  cms,
-  refetch,
-}) => {
+const CmsDetails = ({  cms,  refetch,}) => {
   const [form, setForm] =
     useState({
       salonName: "",
@@ -26,25 +23,14 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
   useEffect(() => {
     if (cms?.details) {
       setForm({
-        salonName:
-          cms.details.salonName || "",
-        description:
-          cms.details.description ||
-          "",
-        address:
-          cms.details.address || "",
-        phone:
-          cms.details.phone || "",
-        email:
-          cms.details.email || "",
-        website:
-          cms.details.website || "",
-        openingTime:
-          cms.details.openingTime ||
-          "",
-        closingTime:
-          cms.details.closingTime ||
-          "",
+        salonName:cms.details.salonName || "",
+        description:cms.details.description || "",
+        address:cms.details.address || "",
+        phone:cms.details.phone || "",
+        email:cms.details.email || "",
+        website:cms.details.website || "",
+        openingTime:cms.details.openingTime || "",
+        closingTime:cms.details.closingTime || "",
       });
     }
   }, [cms]);
@@ -99,26 +85,12 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
             <Store size={18} />
             Salon Name
           </label>
-
-          <input
-            type="text"
-            name="salonName"
-            value={form.salonName}
-            onChange={handleChange}
-            placeholder="Enter salon name"
-          />
+          <input type="text" name="salonName" value={form.salonName} onChange={handleChange} placeholder="Enter salon name"/>
         </div>
 
         <div className="input-group full">
           <label>Description</label>
-
-          <textarea
-            rows="5"
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            placeholder="Tell customers about your salon..."
-          />
+          <textarea rows="5" name="description" value={form.description} onChange={handleChange} placeholder="Tell customers about your salon..." />
         </div>
 
         <div className="input-group">
@@ -126,14 +98,7 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
             <MapPin size={18} />
             Address
           </label>
-
-          <input
-            type="text"
-            name="address"
-            value={form.address}
-            onChange={handleChange}
-            placeholder="Salon address"
-          />
+          <input type="text" name="address" value={form.address} onChange={handleChange} placeholder="Salon address"/>
         </div>
 
         <div className="input-group">
@@ -142,13 +107,7 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
             Phone
           </label>
 
-          <input
-            type="text"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-            placeholder="+91 XXXXX XXXXX"
-          />
+          <input type="text" name="phone" value={form.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX"/>
         </div>
 
         <div className="input-group">
@@ -156,14 +115,7 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
             <Mail size={18} />
             Email
           </label>
-
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="support@email.com"
-          />
+          <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="support@email.com"/>
         </div>
 
         <div className="input-group">
@@ -171,14 +123,7 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
             <Globe size={18} />
             Website
           </label>
-
-          <input
-            type="text"
-            name="website"
-            value={form.website}
-            onChange={handleChange}
-            placeholder="https://..."
-          />
+          <input type="text" name="website" value={form.website} onChange={handleChange} placeholder="https://..."/>
         </div>
 
         <div className="input-group">
@@ -186,13 +131,7 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
             <Clock size={18} />
             Opening Time
           </label>
-
-          <input
-            type="time"
-            name="openingTime"
-            value={form.openingTime}
-            onChange={handleChange}
-          />
+          <input type="time" name="openingTime" value={form.openingTime} onChange={handleChange}/>
         </div>
 
         <div className="input-group">
@@ -200,13 +139,7 @@ const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsDetails);
             <Clock size={18} />
             Closing Time
           </label>
-
-          <input
-            type="time"
-            name="closingTime"
-            value={form.closingTime}
-            onChange={handleChange}
-          />
+          <input type="time" name="closingTime" value={form.closingTime} onChange={handleChange}/>
         </div>
       </div>
 

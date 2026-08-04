@@ -4,14 +4,14 @@ const FooterCMSTab = () => {
   return (
     <div className="footer-cms-tab">
       {/* Footer Settings */}
-      <div className="footer-card">
-        <div className="footer-card__header">
+      <div className="footer-cms-card">
+        <div className="footer-cms-card__header">
           <div>
             <h2>Footer Settings</h2>
             <p>Manage your website footer.</p>
           </div>
 
-          <label className="switch">
+          <label className="footer-cms-switch">
             <span>Enable Footer</span>
             <input
               type="checkbox"
@@ -20,8 +20,8 @@ const FooterCMSTab = () => {
           </label>
         </div>
 
-        <div className="footer-grid">
-          <div className="form-group">
+        <div className="footer-cms-grid">
+          <div className="footer-cms-form-group">
             <label>Logo URL</label>
 
             <input
@@ -30,7 +30,7 @@ const FooterCMSTab = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="footer-cms-form-group">
             <label>Brand Name</label>
 
             <input
@@ -39,7 +39,7 @@ const FooterCMSTab = () => {
             />
           </div>
 
-          <div className="form-group full">
+          <div className="footer-cms-form-group full">
             <label>Description</label>
 
             <textarea
@@ -48,7 +48,7 @@ const FooterCMSTab = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="footer-cms-form-group">
             <label>Background Color</label>
 
             <input
@@ -57,7 +57,7 @@ const FooterCMSTab = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="footer-cms-form-group">
             <label>Text Color</label>
 
             <input
@@ -69,30 +69,29 @@ const FooterCMSTab = () => {
       </div>
 
       {/* Footer Columns */}
-      <div className="footer-card">
-        <div className="footer-card__header">
+      <div className="footer-cms-card">
+        <div className="footer-cms-card__header">
           <div>
             <h2>Footer Columns</h2>
             <p>Manage footer navigation columns.</p>
           </div>
 
-          <button className="add-btn">
+          <button className="footer-cms-add-btn">
             + Add Column
           </button>
         </div>
 
-        {/* Column */}
-        <div className="footer-column">
-          <div className="footer-column__header">
+        <div className="footer-cms-column">
+          <div className="footer-cms-column__header">
             <h3>Column 1</h3>
 
-            <button className="add-btn small">
+            <button className="footer-cms-add-btn small">
               + Add Link
             </button>
           </div>
 
-          <div className="footer-grid">
-            <div className="form-group">
+          <div className="footer-cms-grid">
+            <div className="footer-cms-form-group">
               <label>Column Title</label>
 
               <input
@@ -101,7 +100,7 @@ const FooterCMSTab = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="footer-cms-form-group">
               <label>Display Order</label>
 
               <input
@@ -110,7 +109,7 @@ const FooterCMSTab = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="footer-cms-form-group">
               <label>Enabled</label>
 
               <select>
@@ -121,9 +120,9 @@ const FooterCMSTab = () => {
           </div>
 
           {/* Link 1 */}
-          <div className="footer-link">
-            <div className="footer-grid">
-              <div className="form-group">
+          <div className="footer-cms-link">
+            <div className="footer-cms-grid">
+              <div className="footer-cms-form-group">
                 <label>Link Title</label>
 
                 <input
@@ -132,7 +131,7 @@ const FooterCMSTab = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="footer-cms-form-group">
                 <label>Link URL</label>
 
                 <input
@@ -141,7 +140,7 @@ const FooterCMSTab = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="footer-cms-form-group">
                 <label>Display Order</label>
 
                 <input
@@ -150,7 +149,7 @@ const FooterCMSTab = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="footer-cms-form-group">
                 <label>Enabled</label>
 
                 <select>
@@ -162,9 +161,9 @@ const FooterCMSTab = () => {
           </div>
 
           {/* Link 2 */}
-          <div className="footer-link">
-            <div className="footer-grid">
-              <div className="form-group">
+          <div className="footer-cms-link">
+            <div className="footer-cms-grid">
+              <div className="footer-cms-form-group">
                 <label>Link Title</label>
 
                 <input
@@ -173,7 +172,7 @@ const FooterCMSTab = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="footer-cms-form-group">
                 <label>Link URL</label>
 
                 <input
@@ -182,7 +181,7 @@ const FooterCMSTab = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="footer-cms-form-group">
                 <label>Display Order</label>
 
                 <input
@@ -191,7 +190,7 @@ const FooterCMSTab = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="footer-cms-form-group">
                 <label>Enabled</label>
 
                 <select>
@@ -205,20 +204,20 @@ const FooterCMSTab = () => {
       </div>
 
       {/* Social Media */}
-      <div className="footer-card">
-        <div className="footer-card__header">
+      <div className="footer-cms-card">
+        <div className="footer-cms-card__header">
           <div>
             <h2>Social Media</h2>
             <p>Manage footer social links.</p>
           </div>
 
-          <button className="add-btn">
+          <button className="footer-cms-add-btn">
             + Add Social
           </button>
         </div>
 
-        <div className="footer-grid">
-          <div className="form-group">
+        <div className="footer-cms-grid">
+          <div className="footer-cms-form-group">
             <label>Platform</label>
 
             <input
@@ -227,7 +226,7 @@ const FooterCMSTab = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="footer-cms-form-group">
             <label>Lucide Icon</label>
 
             <input
@@ -236,7 +235,7 @@ const FooterCMSTab = () => {
             />
           </div>
 
-          <div className="form-group full">
+          <div className="footer-cms-form-group full">
             <label>URL</label>
 
             <input
@@ -248,16 +247,16 @@ const FooterCMSTab = () => {
       </div>
 
       {/* Bottom Footer */}
-      <div className="footer-card">
-        <div className="footer-card__header">
+      <div className="footer-cms-card">
+        <div className="footer-cms-card__header">
           <div>
             <h2>Bottom Footer</h2>
             <p>Manage copyright and bottom links.</p>
           </div>
         </div>
 
-        <div className="footer-grid">
-          <div className="form-group full">
+        <div className="footer-cms-grid">
+          <div className="footer-cms-form-group full">
             <label>Copyright</label>
 
             <input
@@ -266,7 +265,7 @@ const FooterCMSTab = () => {
             />
           </div>
 
-          <div className="form-group full">
+          <div className="footer-cms-form-group full">
             <label>Bottom Links</label>
 
             <textarea

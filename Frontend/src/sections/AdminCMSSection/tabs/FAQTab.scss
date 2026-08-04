@@ -1,10 +1,10 @@
-.footer-cms-tab {
+.faq-tab {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.footer-cms-card {
+.faq-card {
   background: #fff;
   border-radius: 18px;
   padding: 30px;
@@ -30,13 +30,13 @@
   }
 }
 
-.footer-cms-grid {
+.faq-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 22px;
 }
 
-.footer-cms-column {
+.faq-item {
   margin-top: 24px;
   padding: 24px;
   border: 1px solid #e2e8f0;
@@ -44,9 +44,6 @@
   background: #fafbff;
 
   &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 24px;
 
     h3 {
@@ -57,19 +54,7 @@
   }
 }
 
-.footer-cms-link {
-  margin-top: 18px;
-  padding: 20px;
-  border: 1px dashed #cbd5e1;
-  border-radius: 12px;
-  background: #fff;
-
-  &:not(:last-child) {
-    margin-bottom: 18px;
-  }
-}
-
-.footer-cms-form-group {
+.form-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -97,6 +82,7 @@
 
     &:focus {
       border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
     }
   }
 
@@ -105,7 +91,7 @@
   }
 }
 
-.footer-cms-switch {
+.switch {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -119,9 +105,13 @@
   }
 }
 
-.footer-cms-add-btn {
+.add-btn {
   border: none;
-  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #6366f1
+  );
   color: #fff;
   padding: 12px 22px;
   border-radius: 12px;
@@ -132,35 +122,14 @@
   &:hover {
     transform: translateY(-2px);
   }
-
-  &.small {
-    padding: 9px 16px;
-    font-size: 14px;
-  }
-}
-
-.footer-cms-delete-btn {
-  border: none;
-  background: #ef4444;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.25s;
-
-  &:hover {
-    background: #dc2626;
-  }
 }
 
 @media (max-width: 900px) {
-  .footer-cms-grid {
+  .faq-grid {
     grid-template-columns: 1fr;
   }
 
-  .footer-cms-card__header,
-  .footer-cms-column__header {
+  .faq-card__header {
     flex-direction: column;
     align-items: flex-start;
     gap: 18px;

@@ -93,9 +93,7 @@ const CmsImages = ({  cms,  refetch,}) => {
     <section className="cms-images">
       <div className="cms-images__header">
         <div>
-          <h3>
-            Image Management
-          </h3>
+          <h3> Image Management</h3>
           <p>
             Manage cover and gallery images for your salon website.
           </p>
@@ -110,8 +108,7 @@ const CmsImages = ({  cms,  refetch,}) => {
       <div className="image-list">
         {images.map(
           (image, index) => (
-            <div
-              className="image-card"
+            <div  className="image-card"
               key={
                 image._id ??
                 `new-${index}`
@@ -119,32 +116,20 @@ const CmsImages = ({  cms,  refetch,}) => {
             >
               <div className="image-preview">
                 {image.url ? (
-                  <img
-                    src={image.url}
-                    alt=""
-                  />
-                ) : (
+                  <img src={image.url} alt=""/> ) : (
                   <div className="placeholder">
-                    <Image
-                      size={42}
-                    />
+                    <Image size={42}/>
                   </div>
                 )}
               </div>
 
               <div className="image-info">
                 <label>
-                  {image.isCover
-                    ? "Cover Image"
-                    : "Gallery Image"}
+                  {image.isCover ? "Cover Image" : "Gallery Image"}
                 </label>
 
-                <input
-                  type="text"
-                  placeholder="Paste image URL..."
-                  value={
-                    image.url
-                  }
+                <input type="text" placeholder="Paste image URL..."
+                  value={ image.url}
                   onChange={(e) =>
                     handleChange(
                       index,
@@ -157,50 +142,33 @@ const CmsImages = ({  cms,  refetch,}) => {
 
               <div className="image-actions">
                 <button
-                  className={
-                    image.isFeatured
-                      ? "featured active"
-                      : "featured"
-                  }
+                  className={image.isFeatured ? "featured active" : "featured"}
                   onClick={() =>
-                    setFeatured(
-                      index
-                    )
+                    setFeatured(index)
                   }
                 >
-                  <Star
-                    size={18}
-                  />
+                  <Star   size={18}/>
                 </button>
 
                 <button
-                  className={
-                    image.isVisible
-                      ? "active"
-                      : ""
-                  }
+                  className={ image.isVisible ? "active" : ""}
                   onClick={() =>
                     toggleVisible(
                       index
                     )
                   }
                 >
-                  <Eye
-                    size={18}
-                  />
+                  <Eye   size={18} />
                 </button>
 
-                <button
-                  className="delete"
+                <button  className="delete"
                   onClick={() =>
                     removeImage(
                       index
                     )
                   }
                 >
-                  <Trash2
-                    size={18}
-                  />
+                  <Trash2 size={18} />
                 </button>
               </div>
             </div>

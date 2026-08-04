@@ -6,9 +6,7 @@ import "./CmsBarbers.scss";
 import {  updateBarberCmsBarbers,} from "../../../services/api";
 
 const CmsBarbers = ({  cms,  refetch,}) => {
-  const [barbers, setBarbers] =
-    useState([]);
-
+  const [barbers, setBarbers] =    useState([]);
  const {  mutate,  isPending,} = useUpdateBarberCms(  updateBarberCmsBarbers);
 
   useEffect(() => {
@@ -93,13 +91,7 @@ const CmsBarbers = ({  cms,  refetch,}) => {
       <div className="barber-list">
         {barbers.map(
           (barber, index) => (
-            <div
-              key={
-                barber._id ??
-                `new-${index}`
-              }
-              className="barber-card"
-            >
+            <div key={ barber._id ?? `new-${index}`} className="barber-card">
               <div className="avatar">
                 {barber.image ? (
                   <img  src={barber.image}  alt=""/>
@@ -109,12 +101,7 @@ const CmsBarbers = ({  cms,  refetch,}) => {
               </div>
 
               <div className="barber-fields">
-                <input
-                  type="text"
-                  placeholder="Barber Name"
-                  value={
-                    barber.name
-                  }
+                <input type="text" placeholder="Barber Name" value={barber.name}
                   onChange={(e) =>
                     handleChange(
                       index,
@@ -124,14 +111,9 @@ const CmsBarbers = ({  cms,  refetch,}) => {
                   }
                 />
 
-                <input
-                  type="text"
-                  placeholder="Designation"
-                  value={
-                    barber.designation
-                  }
-                  onChange={(e) =>
-                    handleChange(
+                <input type="text" placeholder="Designation"
+                  value={ barber.designation }
+                  onChange={(e) =>handleChange(
                       index,
                       "designation",
                       e.target.value
@@ -139,12 +121,8 @@ const CmsBarbers = ({  cms,  refetch,}) => {
                   }
                 />
 
-                <input
-                  type="text"
-                  placeholder="Specialization"
-                  value={
-                    barber.specialization
-                  }
+                <input type="text" placeholder="Specialization"
+                  value={  barber.specialization}
                   onChange={(e) =>
                     handleChange(
                       index,
@@ -154,12 +132,8 @@ const CmsBarbers = ({  cms,  refetch,}) => {
                   }
                 />
 
-                <input
-                  type="number"
-                  placeholder="Experience (Years)"
-                  value={
-                    barber.experience
-                  }
+                <input type="number"  placeholder="Experience (Years)"
+                  value={ barber.experience }
                   onChange={(e) =>
                     handleChange(
                       index,
@@ -169,12 +143,7 @@ const CmsBarbers = ({  cms,  refetch,}) => {
                   }
                 />
 
-                <input
-                  type="text"
-                  placeholder="Profile Image URL"
-                  value={
-                    barber.image
-                  }
+                <input type="text" placeholder="Profile Image URL"   value={barber.image }
                   onChange={(e) =>
                     handleChange(
                       index,
@@ -185,9 +154,7 @@ const CmsBarbers = ({  cms,  refetch,}) => {
                 />
               </div>
 
-              <button
-                className="delete-btn"
-                onClick={() =>
+              <button  className="delete-btn" onClick={() =>
                   deleteBarber(
                     index
                   )
@@ -201,14 +168,8 @@ const CmsBarbers = ({  cms,  refetch,}) => {
       </div>
 
       <div className="save-bar">
-        <button
-          className="save-btn"
-          onClick={handleSave}
-          disabled={isPending}
-        >
-          {isPending
-            ? "Saving..."
-            : "Save Barbers"}
+        <button className="save-btn" onClick={handleSave} disabled={isPending}>
+          {isPending ? "Saving..." : "Save Barbers"}
         </button>
       </div>
     </section>

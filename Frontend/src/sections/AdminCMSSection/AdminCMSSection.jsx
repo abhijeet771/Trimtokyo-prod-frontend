@@ -5,7 +5,9 @@ import { useState } from "react";
 import HeroTab from "./tabs/HeroTab";
 import ExploreStylesTab from "./tabs/ExploreStylesTab";
 import WhyChooseTab from "./tabs/WhyChooseTab";
-
+import AboutHeroTab from "./tabs/AboutHeroTab";
+import FAQTab from "./tabs/FAQTab";
+import ContactTab from "./tabs/ContactTab";
 // import HowItWorksTab from "./tabs/HowItWorksTab";
 // import TestimonialsTab from "./tabs/TestimonialsTab";
 
@@ -16,7 +18,10 @@ const TABS = [
   "Hero",
   "Explore Styles",
   "Why Choose Tab",
+  "About Hero",
+  "FAQ",
   "How it works",
+  "Contact",
   "Footer",
 ];
 
@@ -37,8 +42,16 @@ const AdminCMSSection = () => {
        case "Why Choose Tab":
          return <WhyChooseTab/>;
 
+       case "About Hero":
+         return <AboutHeroTab/>;
+      case "FAQ":
+         return <FAQTab/>;
+
       // case "How it works":
       //   return <HowItWorksTab />;
+
+       case "Contact":
+           return <ContactTab />;
 
         case "Footer":
          return <FooterCMSTabs />;

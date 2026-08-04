@@ -1,12 +1,6 @@
 import { useState } from "react";
 
-import {
-  Images,
-  Building2,
-  Scissors,
-  Users,
-  Settings2,
-} from "lucide-react";
+import {  Images,  Building2,  Scissors,  Users,  Settings2,} from "lucide-react";
 
 import useGetBarberCms from "../../hooks/useGetBarberCms";
 import useGetBarberServicesCms from "../../hooks/useGetBarberServicesCms";
@@ -52,34 +46,12 @@ const BarberCmsSection = () => {
   const [activeTab, setActiveTab] =
     useState("images");
 
-  const {
-    data,
-    isLoading,
-    error,
-    refetch,
-  } = useGetBarberCms();
-
-  const {
-    data: servicesData,
-    isLoading: servicesLoading,
-    error: servicesError,
-  } = useGetBarberServicesCms();
-
-  const {
-    mutate: createCms,
-    isPending: creatingCms,
-  } = useCreateBarberCms();
+  const { data, isLoading, error, refetch,  } = useGetBarberCms();
+  const { data: servicesData, isLoading: servicesLoading, error: servicesError,  } = useGetBarberServicesCms();
+  const { mutate: createCms,  isPending: creatingCms,  } = useCreateBarberCms();
 
   const cms = data?.data;
-console.log({
-  isLoading,
-  servicesLoading,
-  error,
-  status: error?.response?.status,
-  data,
-});
-  const allServices =
-    servicesData?.data || [];
+  const allServices =    servicesData?.data || [];
 
   const renderContent = () => {
     switch (activeTab) {

@@ -1,9 +1,5 @@
 import "./WhyChooseTab.scss";
-import {
-  Clock3,
-  CircleCheckBig,
-  House,
-} from "lucide-react";
+import {  Clock3,  CircleCheckBig,  House,} from "lucide-react";
 
 const WhyChooseTab = () => {
   return (
@@ -20,10 +16,7 @@ const WhyChooseTab = () => {
 
           <label className="switch">
             <span>Enable Section</span>
-            <input
-              type="checkbox"
-              defaultChecked
-            />
+            <input type="checkbox" defaultChecked/>
           </label>
         </div>
 
@@ -31,19 +24,13 @@ const WhyChooseTab = () => {
           <div className="form-group full">
             <label>Section Title</label>
 
-            <input
-              type="text"
-              placeholder="Why Choose Our Service"
-            />
+            <input type="text" placeholder="Why Choose Our Service"/>
           </div>
 
           <div className="form-group full">
             <label>Section Description</label>
 
-            <textarea
-              rows={3}
-              placeholder="Tell users why they should choose your platform."
-            />
+            <textarea rows={3} placeholder="Tell users why they should choose your platform."/>
           </div>
         </div>
       </div>
@@ -53,9 +40,7 @@ const WhyChooseTab = () => {
         <div className="why-card__header">
           <div>
             <h2>Benefit Cards</h2>
-            <p>
-              Manage all benefit cards.
-            </p>
+            <p>Manage all benefit cards.</p>
           </div>
 
           <button className="add-btn">
@@ -73,43 +58,27 @@ const WhyChooseTab = () => {
           <div className="why-grid">
             <div className="form-group">
               <label>Lucide Icon</label>
-
-              <input
-                type="text"
-                placeholder="Clock3"
-              />
+              <input type="text"  placeholder="Clock3"/>
             </div>
 
             <div className="form-group">
               <label>Title</label>
-
-              <input
-                type="text"
-                placeholder="No Waiting"
-              />
+              <input type="text" placeholder="No Waiting" />
             </div>
 
             <div className="form-group full">
               <label>Description</label>
-
-              <textarea
-                rows={3}
-                placeholder="Skip long queues and get service exactly at your booked time."
+              <textarea  rows={3} placeholder="Skip long queues and get service exactly at your booked time."
               />
             </div>
 
             <div className="form-group">
               <label>Display Order</label>
-
-              <input
-                type="number"
-                placeholder="1"
-              />
+              <input type="number" placeholder="1"/>
             </div>
 
             <div className="form-group">
               <label>Enabled</label>
-
               <select>
                 <option>Yes</option>
                 <option>No</option>
@@ -128,38 +97,22 @@ const WhyChooseTab = () => {
           <div className="why-grid">
             <div className="form-group">
               <label>Lucide Icon</label>
-
-              <input
-                type="text"
-                placeholder="CircleCheckBig"
-              />
+              <input type="text" placeholder="CircleCheckBig"/>
             </div>
 
             <div className="form-group">
               <label>Title</label>
-
-              <input
-                type="text"
-                placeholder="Easy Booking"
-              />
+              <input type="text" placeholder="Easy Booking" />
             </div>
 
             <div className="form-group full">
               <label>Description</label>
-
-              <textarea
-                rows={3}
-                placeholder="Book your slot in seconds with a smooth and simple process."
-              />
+              <textarea rows={3} placeholder="Book your slot in seconds with a smooth and simple process."/>
             </div>
 
             <div className="form-group">
               <label>Display Order</label>
-
-              <input
-                type="number"
-                placeholder="2"
-              />
+              <input type="number" placeholder="2"/>
             </div>
 
             <div className="form-group">
@@ -183,38 +136,23 @@ const WhyChooseTab = () => {
           <div className="why-grid">
             <div className="form-group">
               <label>Lucide Icon</label>
-
-              <input
-                type="text"
-                placeholder="House"
-              />
+              <input type="text" placeholder="House"/>
             </div>
 
             <div className="form-group">
               <label>Title</label>
 
-              <input
-                type="text"
-                placeholder="At Home Comfort"
-              />
+              <input type="text" placeholder="At Home Comfort"/>
             </div>
 
             <div className="form-group full">
               <label>Description</label>
-
-              <textarea
-                rows={3}
-                placeholder="Enjoy professional grooming services at your home."
-              />
+              <textarea rows={3} placeholder="Enjoy professional grooming services at your home."/>
             </div>
 
             <div className="form-group">
               <label>Display Order</label>
-
-              <input
-                type="number"
-                placeholder="3"
-              />
+              <input type="number" placeholder="3"/>
             </div>
 
             <div className="form-group">
