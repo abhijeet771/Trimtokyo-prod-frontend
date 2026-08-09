@@ -1,14 +1,7 @@
 import "./ShopBannerSection.scss";
 import { SHOP_TEXT } from "../../constants/shop";
 
-import {  Scissors,  Cat, Sparkles,
-  Smile,
-  Brush,
-  Baby,
-  House,
-  Search,
-  ChevronDown,
-} from "lucide-react";
+import {  Scissors,  Cat, Sparkles,  Smile,  Brush,  Baby,  House,  Search,ChevronDown,} from "lucide-react";
 
 const categories = [
   {
@@ -123,9 +116,8 @@ const ShopBannerSection = ({
               className="shop-banner__select"
             >
               <option value="">All Locations</option>
-              <option value="Purnia">Purnia</option>
+              <option value="Purnea">Purnia</option>
               <option value="Katihar">Katihar</option>
-              <option value="Banmankhi">Banmankhi</option>
             </select>
 
             <ChevronDown size={18} />

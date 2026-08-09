@@ -1,10 +1,4 @@
-import {
-  Star,
-  MapPin,
-  IndianRupee,
-  Clock,
-  ChevronRight,
-} from "lucide-react";
+import {  Star,  MapPin,  IndianRupee,  Clock,ChevronRight,} from "lucide-react";
 
 import "./SearchCard.scss";
 
@@ -12,8 +6,7 @@ const SearchCard = ({
   image = "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1200",
   name = "Trim Tokyo Premium",
   rating = 4.8,
-  reviews = 523,
-  categories = [
+  reviews = 523,  categories = [
     "Haircut",
     "Beard",
     "Spa",

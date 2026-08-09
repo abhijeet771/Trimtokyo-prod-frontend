@@ -1,20 +1,12 @@
 import "./SearchFilterSection.scss";
 
-const SearchFilterSection = ({
-  filters,
-  query,
-  updateQuery,
-  clearFilters,
-}) => {
+const SearchFilterSection = ({  filters,  query,  updateQuery,  clearFilters,}) => {
   return (
     <div className="search-filter">
       <div className="search-filter__header">
         <h2>Filters</h2>
 
-        <button
-          type="button"
-          onClick={clearFilters}
-        >
+        <button   type="button" onClick={clearFilters} >
           Clear All
         </button>
       </div>
@@ -42,13 +34,8 @@ const SearchFilterSection = ({
       <div className="search-filter__group">
         <label>City</label>
 
-        <select
-          value={query.city}
-          onChange={(e) =>
-            updateQuery(
-              "city",
-              e.target.value
-            )
+        <select  value={query.city} onChange={(e) =>
+            updateQuery("city", e.target.value)
           }
         >
           <option value="">
