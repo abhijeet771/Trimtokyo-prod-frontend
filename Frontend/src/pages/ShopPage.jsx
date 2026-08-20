@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import Shopheader from "../sections/Shopheader/Shopheader";
-import ShopBannerSection from "../sections/ShopBannerSection/ShopBannerSection";
 import ShopFilterSection from "../sections/ShopFilterSection/ShopFilterSection";
 import BookingSection from "../sections/BookingSection/BookingSection";
 import MainFooterSection from "../sections/MainFooterSection/MainFooterSection";
@@ -20,18 +19,6 @@ const ShopPage = () => {
     <>
       {/* ================= HEADER ================= */}
       <Shopheader />
-
-      {/* ================= BANNER ================= */}
-      <ShopBannerSection
-        search={search}
-        setSearch={setSearch}
-        city={city}
-        setCity={setCity}
-        sort={sort}
-        setSort={setSort}
-        filter={filter}
-        setFilter={setFilter}
-      />
 
       {/* ================= MAIN CONTENT ================= */}
       <section className="shop-page-content">

@@ -23,20 +23,46 @@
     align-items: start;
   }
 
+  /* ========================================
+     DESKTOP FILTER
+  ======================================== */
+
   &__filters {
     position: sticky;
 
     top: 90px;
   }
 
+  /* ========================================
+     RESULTS
+  ======================================== */
+
   &__results {
     width: 100%;
 
     min-width: 0;
   }
+
+  /* ========================================
+     MOBILE TOOLBAR
+  ======================================== */
+
+  &__mobile-toolbar {
+    display: none;
+  }
+
+  /* ========================================
+     MOBILE FILTER OVERLAY
+  ======================================== */
+
+  &__filter-overlay {
+    display: none;
+  }
 }
 
-/* ------------------------ Tablet ------------------------ */
+/* ============================================
+   TABLET
+============================================ */
 
 @media (max-width: 992px) {
   .search-page {
@@ -46,13 +72,189 @@
       gap: 20px;
     }
 
+    /*
+      Hide the normal sidebar.
+      We will use the mobile filter button.
+    */
+
     &__filters {
-      position: static;
+      display: none;
+    }
+
+    &__mobile-toolbar {
+      display: flex;
+
+      width: 100%;
+
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    &__filter-btn,
+    &__sort-btn {
+      flex: 1;
+
+      height: 46px;
+
+      border: 1px solid #e5e7eb;
+
+      border-radius: 12px;
+
+      background: #ffffff;
+
+      color: #111827;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      transition: 0.2s;
+
+      &:hover {
+        border-color: #2563eb;
+        color: #2563eb;
+      }
+    }
+
+    &__filter-btn {
+      background: #2563eb;
+
+      border-color: #2563eb;
+
+      color: #ffffff;
+
+      &:hover {
+        background: #1d4ed8;
+
+        color: #ffffff;
+      }
+    }
+
+    &__filter-overlay {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 2000;
+
+      display: flex;
+
+      align-items: flex-end;
+
+      background: rgba(0, 0, 0, 0.45);
+
+      animation: filterOverlayFade 0.2s ease;
+    }
+
+    &__filter-sheet {
+      width: 100%;
+
+      max-height: 90vh;
+
+      background: #ffffff;
+
+      border-radius: 24px 24px 0 0;
+
+      overflow: hidden;
+
+      display: flex;
+
+      flex-direction: column;
+
+      animation: filterSheetSlideUp 0.3s ease;
+    }
+
+    &__filter-sheet-header {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 18px 20px;
+
+      border-bottom: 1px solid #eeeeee;
+
+      flex-shrink: 0;
+
+      h2 {
+        margin: 0;
+
+        font-size: 20px;
+
+        font-weight: 700;
+
+        color: #111827;
+      }
+
+      button {
+        width: 36px;
+
+        height: 36px;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: #f3f4f6;
+
+        color: #374151;
+
+        font-size: 18px;
+
+        cursor: pointer;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        transition: 0.2s;
+
+        &:hover {
+          background: #e5e7eb;
+        }
+      }
+    }
+
+    &__filter-sheet-content {
+      overflow-y: auto;
+
+      padding: 20px;
+
+      -webkit-overflow-scrolling: touch;
+
+      /*
+        Make sure the filter itself does not
+        have an unnecessarily large desktop shadow.
+      */
+
+      .search-filter {
+        box-shadow: none;
+
+        border-radius: 0;
+
+        padding: 0;
+      }
     }
   }
 }
 
-/* ------------------------ Mobile ------------------------ */
+/* ============================================
+   MOBILE
+============================================ */
 
 @media (max-width: 768px) {
   .search-page {
@@ -61,5 +263,93 @@
 
       margin: 20px auto;
     }
+
+    &__mobile-toolbar {
+      margin-bottom: 16px;
+    }
+
+    &__filter-btn,
+    &__sort-btn {
+      height: 44px;
+
+      font-size: 14px;
+    }
+
+    &__filter-sheet {
+      max-height: 92vh;
+
+      border-radius: 22px 22px 0 0;
+    }
+
+    &__filter-sheet-header {
+      padding: 16px 18px;
+    }
+
+    &__filter-sheet-content {
+      padding: 18px;
+    }
+  }
+}
+
+/* ============================================
+   SMALL MOBILE
+============================================ */
+
+@media (max-width: 520px) {
+  .search-page {
+    &__container {
+      padding: 0 12px;
+
+      margin: 16px auto;
+    }
+
+    &__mobile-toolbar {
+      gap: 8px;
+
+      margin-bottom: 14px;
+    }
+
+    &__filter-btn,
+    &__sort-btn {
+      height: 42px;
+
+      border-radius: 10px;
+
+      font-size: 13px;
+    }
+
+    &__filter-sheet {
+      max-height: 94vh;
+
+      border-radius: 20px 20px 0 0;
+    }
+
+    &__filter-sheet-content {
+      padding: 16px;
+    }
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+
+@keyframes filterSheetSlideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes filterOverlayFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

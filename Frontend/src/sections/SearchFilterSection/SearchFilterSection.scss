@@ -13,6 +13,10 @@
 
   gap: 20px;
 
+  width: 100%;
+
+  box-sizing: border-box;
+
   &__header {
     display: flex;
 
@@ -44,6 +48,8 @@
       font-weight: 600;
 
       font-size: 14px;
+
+      padding: 4px 0;
     }
   }
 
@@ -66,6 +72,8 @@
     select {
       width: 100%;
 
+      box-sizing: border-box;
+
       padding: 12px 14px;
 
       border: 1px solid #ddd;
@@ -76,10 +84,15 @@
 
       outline: none;
 
+      background: #fff;
+
       transition: 0.2s;
 
       &:focus {
         border-color: #2563eb;
+
+        box-shadow: 0 0 0 3px
+          rgba(37, 99, 235, 0.08);
       }
     }
   }
@@ -103,40 +116,75 @@
 
         height: 18px;
 
+        margin: 0;
+
         cursor: pointer;
+
+        flex-shrink: 0;
       }
-    }
-  }
-
-  &__btn {
-    margin-top: 10px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    padding: 14px;
-
-    background: #2563eb;
-
-    color: #fff;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-
-    &:hover {
-      background: #1d4ed8;
     }
   }
 }
 
+/* ============================================
+   MOBILE FILTER SHEET
+============================================ */
+
 @media (max-width: 992px) {
   .search-filter {
     position: static;
+
+    box-shadow: none;
+
+    border-radius: 0;
+
+    padding: 0;
+  }
+}
+
+/* ============================================
+   SMALL MOBILE
+============================================ */
+
+@media (max-width: 520px) {
+  .search-filter {
+    gap: 18px;
+
+    &__header {
+      padding-bottom: 14px;
+
+      h2 {
+        font-size: 19px;
+      }
+
+      button {
+        font-size: 13px;
+      }
+    }
+
+    &__group {
+      gap: 7px;
+
+      label {
+        font-size: 13px;
+      }
+
+      input,
+      select {
+        padding: 11px 12px;
+
+        font-size: 13px;
+
+        border-radius: 9px;
+      }
+    }
+
+    &__check {
+      label {
+        font-size: 14px;
+
+        gap: 9px;
+      }
+    }
   }
 }

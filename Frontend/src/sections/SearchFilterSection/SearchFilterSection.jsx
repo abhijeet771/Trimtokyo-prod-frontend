@@ -1,12 +1,23 @@
 import "./SearchFilterSection.scss";
 
-const SearchFilterSection = ({  filters,  query,  updateQuery,  clearFilters,}) => {
+const SearchFilterSection = ({
+  filters,
+  query,
+  updateQuery,
+  clearFilters,
+}) => {
   return (
     <div className="search-filter">
+
+      {/* Header */}
+
       <div className="search-filter__header">
         <h2>Filters</h2>
 
-        <button   type="button" onClick={clearFilters} >
+        <button
+          type="button"
+          onClick={clearFilters}
+        >
           Clear All
         </button>
       </div>
@@ -34,24 +45,27 @@ const SearchFilterSection = ({  filters,  query,  updateQuery,  clearFilters,}) 
       <div className="search-filter__group">
         <label>City</label>
 
-        <select  value={query.city} onChange={(e) =>
-            updateQuery("city", e.target.value)
+        <select
+          value={query.city}
+          onChange={(e) =>
+            updateQuery(
+              "city",
+              e.target.value
+            )
           }
         >
           <option value="">
             All Cities
           </option>
 
-          {filters?.cities?.map(
-            (city) => (
-              <option
-                key={city}
-                value={city}
-              >
-                {city}
-              </option>
-            )
-          )}
+          {filters?.cities?.map((city) => (
+            <option
+              key={city}
+              value={city}
+            >
+              {city}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -126,9 +140,7 @@ const SearchFilterSection = ({  filters,  query,  updateQuery,  clearFilters,}) 
         <label>
           <input
             type="checkbox"
-            checked={
-              query.featured
-            }
+            checked={query.featured}
             onChange={(e) =>
               updateQuery(
                 "featured",
@@ -141,15 +153,13 @@ const SearchFilterSection = ({  filters,  query,  updateQuery,  clearFilters,}) 
         </label>
       </div>
 
-      {/* Delivery */}
+      {/* Home Service */}
 
       <div className="search-filter__check">
         <label>
           <input
             type="checkbox"
-            checked={
-              query.delivery
-            }
+            checked={query.delivery}
             onChange={(e) =>
               updateQuery(
                 "delivery",
@@ -161,14 +171,6 @@ const SearchFilterSection = ({  filters,  query,  updateQuery,  clearFilters,}) 
           Home Service Available
         </label>
       </div>
-
-      <button
-        className="search-filter__btn"
-        type="button"
-        onClick={clearFilters}
-      >
-        Reset Filters
-      </button>
     </div>
   );
 };
