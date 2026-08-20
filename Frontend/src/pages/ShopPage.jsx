@@ -3,8 +3,7 @@ import { useState } from "react";
 import Shopheader from "../sections/Shopheader/Shopheader";
 import ShopFilterSection from "../sections/ShopFilterSection/ShopFilterSection";
 import BookingSection from "../sections/BookingSection/BookingSection";
-import MainFooterSection from "../sections/MainFooterSection/MainFooterSection";
-
+import MainFooter from "../components/organisms/MainFooter/MainFooter";
 const ShopPage = () => {
   /* =========================
      GLOBAL FILTER STATE
@@ -37,7 +36,7 @@ const ShopPage = () => {
       </section>
 
       {/* ================= FOOTER ================= */}
-      <MainFooterSection />
+      <MainFooter />
     </>
   );
 };

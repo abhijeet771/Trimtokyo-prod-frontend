@@ -1,5 +1,3 @@
-// src/constants/footer.js
-
 import {
   FaTwitter,
   FaFacebookF,
@@ -8,12 +6,17 @@ import {
 } from "react-icons/fa";
 
 export const MAIN_FOOTER_CONTENT = {
+  /* =================================
+     BRAND
+  ================================= */
+
   brand: {
     name: "TrimTokyo",
-
-    description:
-      "India’s modern barber & salon booking platform for premium grooming services at salons or at home.",
   },
+
+  /* =================================
+     FOOTER COLUMNS
+  ================================= */
 
   columns: [
     {
@@ -33,11 +36,6 @@ export const MAIN_FOOTER_CONTENT = {
         {
           label: "Careers",
           href: "/careers",
-        },
-
-        {
-          label: "Press",
-          href: "/press",
         },
       ],
     },
@@ -60,11 +58,6 @@ export const MAIN_FOOTER_CONTENT = {
           label: "FAQs",
           href: "/faqs",
         },
-
-        {
-          label: "Cancellation Policy",
-          href: "/cancellation-policy",
-        },
       ],
     },
 
@@ -86,40 +79,13 @@ export const MAIN_FOOTER_CONTENT = {
           label: "Barber Dashboard",
           href: "/barber-dashboard",
         },
-
-        {
-          label: "Business Support",
-          href: "/business-support",
-        },
-      ],
-    },
-
-    {
-      title: "Legal",
-
-      links: [
-        {
-          label: "Privacy Policy",
-          href: "/privacy",
-        },
-
-        {
-          label: "Terms of Service",
-          href: "/terms",
-        },
-
-        {
-          label: "Refund Policy",
-          href: "/refund-policy",
-        },
-
-        {
-          label: "Cookies Policy",
-          href: "/cookies",
-        },
       ],
     },
   ],
+
+  /* =================================
+     SOCIAL MEDIA
+  ================================= */
 
   socials: [
     {
@@ -147,6 +113,10 @@ export const MAIN_FOOTER_CONTENT = {
     },
   ],
 
+  /* =================================
+     LEGAL
+  ================================= */
+
   legalLinks: [
     {
       label: "Privacy",
@@ -163,6 +133,10 @@ export const MAIN_FOOTER_CONTENT = {
       href: "/cookies",
     },
   ],
+
+  /* =================================
+     COPYRIGHT
+  ================================= */
 
   copyright:
     "© 2026 TrimTokyo. All rights reserved.",

@@ -1,29 +1,116 @@
 .footer-column {
   display: flex;
+
   flex-direction: column;
+
   gap: 12px;
+
+  /* =================================
+     TITLE
+  ================================= */
 
   &__title {
     font-size: 14px;
+
     font-weight: 600;
+
     color: #ffffff;
   }
 
+  /* =================================
+     LINKS
+  ================================= */
+
   &__links {
     display: flex;
+
     flex-direction: column;
+
     gap: 8px;
   }
 
   &__link {
     display: inline-flex;
+
     font-size: 13px;
+
     color: #94a3b8;
+
     white-space: nowrap;
+
     transition: color 0.3s ease;
 
     &:hover {
       color: #ffffff;
+    }
+  }
+}
+
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 992px) {
+  .footer-column {
+    gap: 10px;
+
+    &__title {
+      font-size: 13px;
+    }
+
+    &__links {
+      gap: 7px;
+    }
+
+    &__link {
+      font-size: 12px;
+    }
+  }
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+  .footer-column {
+    gap: 8px;
+
+    &__title {
+      font-size: 12px;
+    }
+
+    &__links {
+      gap: 6px;
+    }
+
+    &__link {
+      font-size: 11px;
+    }
+  }
+}
+
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 480px) {
+  .footer-column {
+    gap: 7px;
+
+    &__title {
+      font-size: 11px;
+    }
+
+    &__links {
+      gap: 5px;
+    }
+
+    &__link {
+      font-size: 10px;
     }
   }
 }

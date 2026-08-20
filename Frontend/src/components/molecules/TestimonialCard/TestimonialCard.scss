@@ -30,6 +30,10 @@
     border-color: rgba(99, 102, 241, 0.18);
   }
 
+  /* =================================
+     FEATURED
+  ================================= */
+
   &--featured {
     border: 2px solid #5b5cf0;
 
@@ -43,6 +47,10 @@
     }
   }
 
+  /* =================================
+     QUOTE
+  ================================= */
+
   &__quote {
     position: absolute;
 
@@ -55,6 +63,10 @@
 
     pointer-events: none;
   }
+
+  /* =================================
+     BADGE
+  ================================= */
 
   &__badge {
     position: absolute;
@@ -81,6 +93,10 @@
     z-index: 2;
   }
 
+  /* =================================
+     TOP
+  ================================= */
+
   &__top {
     display: flex;
 
@@ -90,6 +106,10 @@
 
     margin-bottom: 20px;
   }
+
+  /* =================================
+     IMAGE
+  ================================= */
 
   &__image {
     width: 78px;
@@ -117,6 +137,10 @@
     }
   }
 
+  /* =================================
+     STARS
+  ================================= */
+
   &__stars {
     display: flex;
 
@@ -131,6 +155,10 @@
     font-size: 16px;
   }
 
+  /* =================================
+     NAME
+  ================================= */
+
   &__name {
     font-size: 28px;
 
@@ -142,6 +170,10 @@
 
     line-height: 1.2;
   }
+
+  /* =================================
+     META
+  ================================= */
 
   &__meta {
     display: flex;
@@ -174,6 +206,10 @@
     background: #cbd5e1;
   }
 
+  /* =================================
+     DESCRIPTION
+  ================================= */
+
   &__description {
     color: #475569;
 
@@ -191,6 +227,10 @@
 
     overflow: hidden;
   }
+
+  /* =================================
+     FOOTER
+  ================================= */
 
   &__footer {
     display: flex;
@@ -217,26 +257,275 @@
   }
 }
 
-@media (max-width: 768px) {
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 1100px) {
   .testimonial-card {
-    min-height: auto;
+    border-radius: 22px;
 
-    padding: 28px 22px;
+    padding: 24px 22px;
 
-    border-radius: 24px;
+    min-height: 380px;
+
+    &__quote {
+      top: 22px;
+      right: 20px;
+
+      font-size: 60px;
+    }
+
+    &__badge {
+      top: 20px;
+      right: 20px;
+
+      padding: 7px 12px;
+
+      font-size: 11px;
+    }
+
+    &__top {
+      margin-bottom: 16px;
+    }
+
+    &__image {
+      width: 68px;
+      height: 68px;
+
+      padding: 3px;
+    }
+
+    &__stars {
+      gap: 3px;
+
+      margin-bottom: 14px;
+
+      font-size: 14px;
+    }
 
     &__name {
-      font-size: 24px;
+      font-size: 23px;
+
+      margin-bottom: 8px;
+    }
+
+    &__meta {
+      gap: 7px;
+
+      margin-bottom: 17px;
+
+      font-size: 13px;
+
+      svg {
+        font-size: 13px;
+      }
     }
 
     &__description {
       font-size: 15px;
 
-      line-height: 1.8;
+      line-height: 1.75;
+
+      margin-bottom: 24px;
+
+      -webkit-line-clamp: 5;
+    }
+
+    &__footer {
+      gap: 8px;
+
+      padding-top: 18px;
+
+      font-size: 13px;
+
+      svg {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    min-height: auto;
+
+    padding: 20px 16px;
+
+    border-radius: 18px;
+
+    &--featured {
+      transform: none;
     }
 
     &__quote {
-      font-size: 56px;
+      top: 17px;
+      right: 15px;
+
+      font-size: 48px;
+    }
+
+    &__badge {
+      top: 15px;
+      right: 15px;
+
+      padding: 5px 9px;
+
+      font-size: 0.6rem;
+    }
+
+    &__top {
+      margin-bottom: 13px;
+    }
+
+    &__image {
+      width: 58px;
+      height: 58px;
+
+      padding: 3px;
+    }
+
+    &__stars {
+      gap: 2px;
+
+      margin-bottom: 11px;
+
+      font-size: 12px;
+    }
+
+    &__name {
+      font-size: 19px;
+
+      margin-bottom: 6px;
+    }
+
+    &__meta {
+      gap: 6px;
+
+      margin-bottom: 14px;
+
+      font-size: 11px;
+
+      svg {
+        font-size: 11px;
+      }
+    }
+
+    &__dot {
+      width: 3px;
+      height: 3px;
+    }
+
+    &__description {
+      font-size: 12px;
+
+      line-height: 1.65;
+
+      margin-bottom: 18px;
+
+      -webkit-line-clamp: 5;
+    }
+
+    &__footer {
+      gap: 6px;
+
+      padding-top: 14px;
+
+      font-size: 11px;
+
+      svg {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 480px) {
+  .testimonial-card {
+    padding: 16px 13px;
+
+    border-radius: 15px;
+
+    &__quote {
+      top: 13px;
+      right: 12px;
+
+      font-size: 40px;
+    }
+
+    &__badge {
+      top: 12px;
+      right: 12px;
+
+      padding: 4px 7px;
+
+      font-size: 0.52rem;
+    }
+
+    &__top {
+      margin-bottom: 10px;
+    }
+
+    &__image {
+      width: 50px;
+      height: 50px;
+
+      padding: 2px;
+    }
+
+    &__stars {
+      margin-bottom: 9px;
+
+      font-size: 10px;
+    }
+
+    &__name {
+      font-size: 16px;
+
+      margin-bottom: 5px;
+    }
+
+    &__meta {
+      gap: 5px;
+
+      margin-bottom: 11px;
+
+      font-size: 9px;
+
+      svg {
+        font-size: 9px;
+      }
+    }
+
+    &__description {
+      font-size: 10px;
+
+      line-height: 1.55;
+
+      margin-bottom: 14px;
+    }
+
+    &__footer {
+      gap: 5px;
+
+      padding-top: 11px;
+
+      font-size: 9px;
+
+      svg {
+        font-size: 12px;
+      }
     }
   }
 }

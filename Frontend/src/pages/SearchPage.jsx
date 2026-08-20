@@ -6,7 +6,6 @@ import MainFooter from "../components/organisms/MainFooter/MainFooter";
 
 import SearchFilterSection from "../sections/SearchFilterSection/SearchFilterSection";
 import SearchResultSection from "../sections/SearchResultSection/SearchResultSection";
-
 import useShopSearch from "../hooks/useShopSearch";
 
 const SearchPage = () => {

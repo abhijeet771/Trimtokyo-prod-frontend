@@ -4,7 +4,7 @@ import AboutHeroSection from "../sections/AboutHeroSection/AboutHeroSection";
 import AboutRolesSection from "../sections/AboutRolesSection/AboutRolesSection";
 import AboutWhyChooseSection from "../sections/AboutWhyChooseSection/AboutWhyChooseSection";
 import FAQSection from "../sections/FAQSection/FAQSection";
-import MainFooterSection from "../sections/MainFooterSection/MainFooterSection";
+import MainFooter from "../components/organisms/MainFooter/MainFooter";
 
 
 const About = () => {
@@ -15,7 +15,7 @@ const About = () => {
       <AboutRolesSection/>
       <AboutWhyChooseSection/>
       <FAQSection/>
-      <MainFooterSection/>  
+      <MainFooter/>  
     </>
   );
 };

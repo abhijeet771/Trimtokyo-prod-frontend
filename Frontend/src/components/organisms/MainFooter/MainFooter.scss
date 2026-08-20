@@ -1,5 +1,3 @@
-// src/components/organisms/MainFooter/MainFooter.scss
-
 .main-footer {
   background: linear-gradient(
     180deg,
@@ -11,7 +9,8 @@
 
   color: #ffffff;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid
+    rgba(255, 255, 255, 0.06);
 
   /* ========================================
      CONTAINER
@@ -19,6 +18,7 @@
 
   &__container {
     max-width: 1380px;
+
     margin: 0 auto;
   }
 
@@ -51,18 +51,22 @@
 
   &__brand-top {
     display: flex;
+
     align-items: center;
+
     gap: 12px;
   }
 
   &__logo {
     width: 42px;
     height: 42px;
+
     object-fit: contain;
   }
 
   &__brand-name {
     font-size: 1.8rem;
+
     font-weight: 800;
 
     letter-spacing: -0.5px;
@@ -97,7 +101,9 @@
     margin-top: 24px;
 
     display: flex;
+
     align-items: center;
+
     gap: 14px;
   }
 
@@ -107,12 +113,20 @@
 
     border-radius: 12px;
 
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(
+      255,
+      255,
+      255,
+      0.04
+    );
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid
+      rgba(255, 255, 255, 0.08);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     color: #cbd5e1;
@@ -151,7 +165,9 @@
     padding-top: 22px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     gap: 20px;
@@ -161,6 +177,7 @@
 
   &__copy {
     font-size: 0.85rem;
+
     color: #64748b;
 
     margin: 0;
@@ -172,8 +189,11 @@
 
   &__legal-links {
     display: flex;
+
     align-items: center;
+
     gap: 22px;
+
     flex-wrap: wrap;
   }
 
@@ -198,9 +218,11 @@
       position: absolute;
 
       left: 0;
+
       bottom: -4px;
 
       width: 0%;
+
       height: 1px;
 
       background: linear-gradient(
@@ -216,59 +238,303 @@
       width: 100%;
     }
   }
+}
 
-  /* ========================================
-     RESPONSIVE
-  ======================================== */
 
-  @media (max-width: 1200px) {
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1200px) {
+  .main-footer {
+    padding: 62px 20px 26px;
+
     &__columns {
       grid-template-columns:
         repeat(3, 1fr);
 
-      gap: 50px;
+      gap: 44px;
+
+      margin-bottom: 44px;
+    }
+
+    &__brand-name {
+      font-size: 1.6rem;
+    }
+
+    &__brand-description {
+      margin-top: 15px;
+
+      font-size: 0.88rem;
+
+      line-height: 1.7;
+    }
+
+    &__social-icons {
+      margin-top: 20px;
+
+      gap: 11px;
+    }
+
+    &__social-link {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 10px;
+
+      svg {
+        font-size: 0.9rem;
+      }
+    }
+
+    &__bottom {
+      padding-top: 19px;
+    }
+
+    &__copy {
+      font-size: 0.78rem;
+    }
+
+    &__legal-links {
+      gap: 18px;
+    }
+
+    &__legal-link {
+      font-size: 0.8rem;
     }
   }
+}
 
-  @media (max-width: 900px) {
-    padding: 60px 20px 24px;
+
+/* ========================================
+   SMALL TABLET
+======================================== */
+
+@media (max-width: 900px) {
+  .main-footer {
+    padding: 52px 18px 24px;
 
     &__columns {
       grid-template-columns:
         repeat(2, 1fr);
 
-      gap: 42px;
+      gap: 34px;
+
+      margin-bottom: 38px;
+    }
+
+    &__brand {
+      max-width: 300px;
+    }
+
+    &__brand-top {
+      gap: 9px;
+    }
+
+    &__logo {
+      width: 38px;
+      height: 38px;
+    }
+
+    &__brand-name {
+      font-size: 1.45rem;
+    }
+
+    &__brand-description {
+      margin-top: 12px;
+
+      font-size: 0.8rem;
+
+      line-height: 1.65;
+    }
+
+    &__social-icons {
+      margin-top: 17px;
+
+      gap: 9px;
+    }
+
+    &__social-link {
+      width: 35px;
+      height: 35px;
+
+      border-radius: 9px;
+
+      svg {
+        font-size: 0.82rem;
+      }
     }
 
     &__bottom {
       flex-direction: column;
+
       align-items: flex-start;
+
+      gap: 14px;
+    }
+
+    &__copy {
+      font-size: 0.72rem;
+    }
+
+    &__legal-links {
+      gap: 14px;
+    }
+
+    &__legal-link {
+      font-size: 0.74rem;
     }
   }
+}
 
-  @media (max-width: 640px) {
-    padding: 52px 18px 24px;
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 640px) {
+  .main-footer {
+    padding: 42px 14px 20px;
 
     &__columns {
       grid-template-columns: 1fr;
 
-      gap: 36px;
+      gap: 28px;
+
+      margin-bottom: 30px;
     }
 
     &__brand {
       max-width: 100%;
     }
 
+    &__brand-top {
+      gap: 8px;
+    }
+
+    &__logo {
+      width: 34px;
+      height: 34px;
+    }
+
     &__brand-name {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
     }
 
     &__brand-description {
-      font-size: 0.9rem;
+      margin-top: 10px;
+
+      font-size: 0.72rem;
+
+      line-height: 1.6;
+    }
+
+    &__social-icons {
+      margin-top: 14px;
+
+      gap: 8px;
+    }
+
+    &__social-link {
+      width: 32px;
+      height: 32px;
+
+      border-radius: 8px;
+
+      svg {
+        font-size: 0.75rem;
+      }
+    }
+
+    &__bottom {
+      padding-top: 16px;
+
+      gap: 12px;
+    }
+
+    &__copy {
+      font-size: 0.65rem;
     }
 
     &__legal-links {
-      gap: 16px;
+      gap: 11px;
+    }
+
+    &__legal-link {
+      font-size: 0.68rem;
+    }
+  }
+}
+
+
+/* ========================================
+   SMALL MOBILE
+======================================== */
+
+@media (max-width: 480px) {
+  .main-footer {
+    padding: 34px 12px 18px;
+
+    &__columns {
+      gap: 24px;
+
+      margin-bottom: 24px;
+    }
+
+    &__brand-top {
+      gap: 7px;
+    }
+
+    &__logo {
+      width: 30px;
+      height: 30px;
+    }
+
+    &__brand-name {
+      font-size: 1.15rem;
+    }
+
+    &__brand-description {
+      margin-top: 8px;
+
+      font-size: 0.65rem;
+
+      line-height: 1.55;
+    }
+
+    &__social-icons {
+      margin-top: 12px;
+
+      gap: 7px;
+    }
+
+    &__social-link {
+      width: 29px;
+      height: 29px;
+
+      border-radius: 7px;
+
+      svg {
+        font-size: 0.68rem;
+      }
+    }
+
+    &__bottom {
+      padding-top: 13px;
+
+      gap: 10px;
+    }
+
+    &__copy {
+      font-size: 0.58rem;
+    }
+
+    &__legal-links {
+      gap: 9px;
+    }
+
+    &__legal-link {
+      font-size: 0.6rem;
     }
   }
 }

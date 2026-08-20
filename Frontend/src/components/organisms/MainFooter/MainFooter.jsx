@@ -24,9 +24,13 @@ const MainFooter = () => {
         {/* =========================
             TOP SECTION
         ========================== */}
+
         <div className="main-footer__columns">
 
-          {/* BRAND */}
+          {/* =========================
+              BRAND
+          ========================== */}
+
           <div className="main-footer__brand">
 
             <div className="main-footer__brand-top">
@@ -43,11 +47,8 @@ const MainFooter = () => {
 
             </div>
 
-            <p className="main-footer__brand-description">
-              {brand.description}
-            </p>
+            {/* SOCIAL ICONS */}
 
-            {/* SOCIALS */}
             <div className="main-footer__social-icons">
 
               {socials.map(
@@ -73,7 +74,10 @@ const MainFooter = () => {
 
           </div>
 
-          {/* FOOTER COLUMNS */}
+          {/* =========================
+              FOOTER COLUMNS
+          ========================== */}
+
           {columns.map(
             (column, index) => (
               <FooterColumn
@@ -89,6 +93,7 @@ const MainFooter = () => {
         {/* =========================
             BOTTOM BAR
         ========================== */}
+
         <div className="main-footer__bottom">
 
           <p className="main-footer__copy">

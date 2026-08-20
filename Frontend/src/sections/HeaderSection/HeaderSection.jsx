@@ -128,7 +128,7 @@ const HeaderSection = () => {
 
           <input
             type="text"
-            placeholder="Search salon, barber or service..."
+            placeholder="Search barber or service..."
             className="header__search-input"
             value={searchTerm}
             onChange={(e) =>

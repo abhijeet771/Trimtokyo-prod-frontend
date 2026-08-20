@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
+
 import SplashScreen from "../sections/SplashSection/SplashScreen";
 import HeaderSection from "../sections/HeaderSection/HeaderSection";
-import HeroSection from "../sections/HeroSection/HeroSection";
 import ReelSection from "../sections/ReelSection/ReelSection";
 import SoloBarbersSection from "../sections/SoloBarbersSection/SoloBarbersSection";
-import ServiceSection from "../sections/ServiceSection/ServiceSection";
-import TestimonialSection from "../sections/TestimonialSection/TestimonialSection";
-import MainFooterSection from "../sections/MainFooterSection/MainFooterSection";
-import WorkOfflineSection from "../sections/WorkOfflineSection/WorkOfflineSection";
+import Hero from "../components/organisms/Hero/Hero";
+import Services from "../components/organisms/Services/Services";
+import Testimonial from "../components/organisms/Testimonial/Testimonial";
+import MainFooter from "../components/organisms/MainFooter/MainFooter";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
@@ -27,13 +27,12 @@ const HomePage = () => {
       {!loading && (
         <>
           <HeaderSection />
-          <HeroSection />
+          <Hero/>
           <ReelSection/>
-          <ServiceSection />
+          <Services />
           <SoloBarbersSection />
-          <WorkOfflineSection />
-          <TestimonialSection />
-          <MainFooterSection />
+          <Testimonial/>
+          <MainFooter />
         </>
       )}
     </>
