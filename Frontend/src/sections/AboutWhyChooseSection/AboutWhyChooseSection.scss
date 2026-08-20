@@ -1,148 +1,385 @@
 .about-choose {
-  padding: 50px 20px; // reduced padding
-  background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
+  padding: 3.5rem 1.25rem;
+
+  background: linear-gradient(
+    to bottom,
+    #f9fafb,
+    #f3f4f6
+  );
 
   &__container {
     max-width: 1150px;
+
     margin: 0 auto;
   }
 
   /* ================= HEADER ================= */
+
   &__header {
     text-align: center;
-    margin-bottom: 40px;
+
+    margin-bottom: 2.5rem;
   }
 
   &__title {
-    font-size: 32px;
+    font-size: 2rem;
+
     font-weight: 700;
+
+    line-height: 1.2;
+
     color: #111827;
-    margin-bottom: 8px;
+
+    margin-bottom: 0.6rem;
   }
 
   &__subtitle {
-    font-size: 14px;
+    font-size: 0.875rem;
+
     color: #6b7280;
+
     max-width: 500px;
+
     margin: 0 auto;
+
     line-height: 1.5;
   }
 
   /* ================= TOP CARDS ================= */
+
   &__top {
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
+
     gap: 20px;
+
     margin-bottom: 25px;
   }
 
   /* ================= BOTTOM CARDS ================= */
+
   &__bottom {
     display: grid;
+
     grid-template-columns: repeat(4, 1fr);
+
     gap: 15px;
   }
 
   /* ================= CARD ================= */
+
   &__card {
     display: flex;
+
     align-items: flex-start;
+
     gap: 14px;
+
     background: #ffffff;
+
     border-radius: 14px;
-    padding: 18px 18px;
+
+    padding: 18px;
+
     position: relative;
+
     transition: all 0.25s ease;
+
     border-left: 4px solid transparent;
 
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+
+      box-shadow:
+        0 15px 35px
+        rgba(0, 0, 0, 0.06);
     }
 
     h3 {
-      font-size: 18px;
+      font-size: 1.125rem;
+
       font-weight: 600;
+
       margin-bottom: 5px;
+
       color: #111827;
     }
 
     h4 {
-      font-size: 15px;
+      font-size: 0.9375rem;
+
       font-weight: 600;
+
       margin-bottom: 4px;
+
       color: #111827;
     }
 
     p {
-      font-size: 13px;
+      font-size: 0.8125rem;
+
       color: #6b7280;
+
       line-height: 1.4;
     }
   }
 
   /* ================= LARGE CARD ================= */
+
   .large {
     padding: 22px;
+
     border-left: 4px solid #ff512f;
 
     &:hover {
-      border-left: 4px solid #ff0000;
+      border-left-color: #ff0000;
     }
   }
 
   /* ================= SMALL CARD ================= */
+
   .small {
     padding: 14px;
   }
 
   /* ================= ICON ================= */
+
   .icon {
     min-width: 40px;
+
+    width: 40px;
+
     height: 40px;
+
     border-radius: 10px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+    flex-shrink: 0;
+
     font-size: 18px;
-    color: #fff;
+
+    color: #ffffff;
 
     &.orange {
-      background: linear-gradient(135deg, #ff9a3c, #ff512f);
+      background: linear-gradient(
+        135deg,
+        #ff9a3c,
+        #ff512f
+      );
     }
 
     &.blue {
-      background: linear-gradient(135deg, #4facfe, #00c6ff);
+      background: linear-gradient(
+        135deg,
+        #4facfe,
+        #00c6ff
+      );
     }
 
     &.green {
-      background: linear-gradient(135deg, #43e97b, #38f9d7);
+      background: linear-gradient(
+        135deg,
+        #43e97b,
+        #38f9d7
+      );
     }
 
     &.purple {
-      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      background: linear-gradient(
+        135deg,
+        #a18cd1,
+        #fbc2eb
+      );
     }
   }
 
-  /* ================= RESPONSIVE ================= */
 
-  @media (max-width: 1024px) {
-    &__bottom {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+  /* =================================
+     TABLET
+  ================================= */
 
-  @media (max-width: 768px) {
-    &__top {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 992px) {
+    padding: 3rem 1.5rem;
 
-    &__bottom {
-      grid-template-columns: 1fr;
+    &__header {
+      margin-bottom: 2rem;
     }
 
     &__title {
-      font-size: 26px;
+      font-size: 1.8rem;
+    }
+
+    &__subtitle {
+      font-size: 0.8rem;
+
+      max-width: 520px;
+    }
+
+    &__top {
+      gap: 16px;
+
+      margin-bottom: 20px;
+    }
+
+    &__bottom {
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 14px;
+    }
+
+    &__card {
+      gap: 11px;
+
+      padding: 15px;
+
+      border-radius: 12px;
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      h4 {
+        font-size: 0.85rem;
+      }
+
+      p {
+        font-size: 0.75rem;
+      }
+    }
+
+    .large {
+      padding: 18px;
+    }
+
+    .small {
+      padding: 13px;
+    }
+
+    .icon {
+      min-width: 36px;
+
+      width: 36px;
+
+      height: 36px;
+
+      border-radius: 9px;
+
+      font-size: 16px;
+    }
+  }
+
+
+  /* =================================
+     MOBILE
+  ================================= */
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+
+    &__header {
+      margin-bottom: 1.5rem;
+    }
+
+    &__title {
+      font-size: 1.65rem;
+
+      line-height: 1.2;
+
+      margin-bottom: 0.55rem;
+    }
+
+    &__subtitle {
+      font-size: 0.72rem;
+
+      line-height: 1.45;
+
+      max-width: 340px;
+    }
+
+    /* =============================
+       TOP CARDS
+    ============================== */
+
+    &__top {
+      grid-template-columns: 1fr;
+
+      gap: 10px;
+
+      margin-bottom: 10px;
+    }
+
+    /* =============================
+       BOTTOM CARDS
+    ============================== */
+
+    &__bottom {
+      grid-template-columns: 1fr;
+
+      gap: 10px;
+    }
+
+    /* =============================
+       CARDS
+    ============================== */
+
+    &__card {
+      gap: 9px;
+
+      padding: 12px;
+
+      border-radius: 10px;
+
+      border-left-width: 3px;
+
+      h3 {
+        font-size: 0.85rem;
+
+        margin-bottom: 3px;
+      }
+
+      h4 {
+        font-size: 0.75rem;
+
+        margin-bottom: 2px;
+      }
+
+      p {
+        font-size: 0.65rem;
+
+        line-height: 1.4;
+      }
+    }
+
+    .large {
+      padding: 14px;
+
+      border-left-width: 3px;
+    }
+
+    .small {
+      padding: 11px;
+    }
+
+    /* =============================
+       ICON
+    ============================== */
+
+    .icon {
+      min-width: 32px;
+
+      width: 32px;
+
+      height: 32px;
+
+      border-radius: 8px;
+
+      font-size: 14px;
     }
   }
 }

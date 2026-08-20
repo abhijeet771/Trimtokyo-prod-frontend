@@ -23,19 +23,17 @@
     align-items: start;
   }
 
-  /* ========================================
-     DESKTOP FILTER
-  ======================================== */
+  /* =================================
+     DESKTOP FILTERS
+  ================================= */
 
   &__filters {
     position: sticky;
 
     top: 90px;
-  }
 
-  /* ========================================
-     RESULTS
-  ======================================== */
+    min-width: 0;
+  }
 
   &__results {
     width: 100%;
@@ -43,26 +41,90 @@
     min-width: 0;
   }
 
-  /* ========================================
+  /* =================================
      MOBILE TOOLBAR
-  ======================================== */
+  ================================= */
 
   &__mobile-toolbar {
     display: none;
   }
 
-  /* ========================================
+  &__filter-btn,
+  &__sort-btn {
+    border: 1px solid #e2e8f0;
+
+    background: #ffffff;
+
+    color: #0f172a;
+
+    border-radius: 12px;
+
+    min-height: 42px;
+
+    padding: 0 14px;
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+
+    &:hover {
+      border-color: var(--theme-primary);
+
+      color: var(--theme-primary);
+    }
+
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  &__filter-btn {
+    background: linear-gradient(
+      135deg,
+      var(--theme-primary),
+      var(--theme-accent)
+    );
+
+    border-color: transparent;
+
+    color: #ffffff;
+
+    &:hover {
+      color: #ffffff;
+
+      transform: translateY(-1px);
+    }
+  }
+
+  /* =================================
      MOBILE FILTER OVERLAY
-  ======================================== */
+  ================================= */
 
   &__filter-overlay {
     display: none;
   }
+
+  &__filter-sheet {
+    display: none;
+  }
 }
 
-/* ============================================
+
+/* =================================
    TABLET
-============================================ */
+================================= */
 
 @media (max-width: 992px) {
   .search-page {
@@ -70,76 +132,80 @@
       grid-template-columns: 1fr;
 
       gap: 20px;
-    }
 
-    /*
-      Hide the normal sidebar.
-      We will use the mobile filter button.
-    */
+      margin: 24px auto;
+
+      padding: 0 20px;
+    }
 
     &__filters {
       display: none;
     }
 
+    &__results {
+      width: 100%;
+    }
+
     &__mobile-toolbar {
       display: flex;
 
+      align-items: center;
+
+      justify-content: flex-end;
+
+      gap: 10px;
+
+      margin-bottom: 18px;
+    }
+
+    &__filter-btn,
+    &__sort-btn {
+      min-width: 100px;
+    }
+  }
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+  .search-page {
+    &__container {
       width: 100%;
 
-      gap: 12px;
+      margin: 18px auto;
 
-      margin-bottom: 20px;
+      padding: 0 16px;
+
+      gap: 16px;
+    }
+
+    &__mobile-toolbar {
+      justify-content: space-between;
+
+      gap: 8px;
+
+      margin-bottom: 14px;
     }
 
     &__filter-btn,
     &__sort-btn {
       flex: 1;
 
-      height: 46px;
+      min-height: 40px;
 
-      border: 1px solid #e5e7eb;
+      padding: 0 12px;
 
-      border-radius: 12px;
+      border-radius: 10px;
 
-      background: #ffffff;
-
-      color: #111827;
-
-      font-size: 14px;
-
-      font-weight: 600;
-
-      cursor: pointer;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 8px;
-
-      transition: 0.2s;
-
-      &:hover {
-        border-color: #2563eb;
-        color: #2563eb;
-      }
+      font-size: 0.7rem;
     }
 
-    &__filter-btn {
-      background: #2563eb;
-
-      border-color: #2563eb;
-
-      color: #ffffff;
-
-      &:hover {
-        background: #1d4ed8;
-
-        color: #ffffff;
-      }
-    }
+    /* =================================
+       FILTER OVERLAY
+    ================================= */
 
     &__filter-overlay {
       position: fixed;
@@ -152,68 +218,70 @@
 
       align-items: flex-end;
 
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(15, 23, 42, 0.45);
 
-      animation: filterOverlayFade 0.2s ease;
+      backdrop-filter: blur(3px);
     }
 
     &__filter-sheet {
-      width: 100%;
-
-      max-height: 90vh;
-
-      background: #ffffff;
-
-      border-radius: 24px 24px 0 0;
-
-      overflow: hidden;
-
       display: flex;
 
       flex-direction: column;
 
-      animation: filterSheetSlideUp 0.3s ease;
+      width: 100%;
+
+      max-height: 88vh;
+
+      background: #ffffff;
+
+      border-radius: 22px 22px 0 0;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 -10px 40px
+        rgba(15, 23, 42, 0.15);
+
+      animation: searchFilterSheetUp 0.25s ease-out;
     }
 
     &__filter-sheet-header {
+      flex-shrink: 0;
+
       display: flex;
 
       align-items: center;
 
       justify-content: space-between;
 
-      padding: 18px 20px;
+      padding: 16px 18px;
 
-      border-bottom: 1px solid #eeeeee;
-
-      flex-shrink: 0;
+      border-bottom: 1px solid #eef2f7;
 
       h2 {
         margin: 0;
 
-        font-size: 20px;
+        font-size: 1rem;
 
-        font-weight: 700;
+        font-weight: 800;
 
-        color: #111827;
+        color: #0f172a;
       }
 
       button {
-        width: 36px;
+        width: 32px;
 
-        height: 36px;
+        height: 32px;
 
         border: none;
 
         border-radius: 50%;
 
-        background: #f3f4f6;
+        background: #f1f5f9;
 
-        color: #374151;
+        color: #475569;
 
-        font-size: 18px;
-
-        cursor: pointer;
+        font-size: 0.85rem;
 
         display: flex;
 
@@ -221,10 +289,14 @@
 
         justify-content: center;
 
-        transition: 0.2s;
+        cursor: pointer;
+
+        transition: all 0.2s ease;
 
         &:hover {
-          background: #e5e7eb;
+          background: #e2e8f0;
+
+          color: #0f172a;
         }
       }
     }
@@ -232,124 +304,30 @@
     &__filter-sheet-content {
       overflow-y: auto;
 
-      padding: 20px;
+      padding: 14px 16px 24px;
 
-      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
 
-      /*
-        Make sure the filter itself does not
-        have an unnecessarily large desktop shadow.
-      */
-
-      .search-filter {
-        box-shadow: none;
-
-        border-radius: 0;
-
-        padding: 0;
+      &::-webkit-scrollbar {
+        display: none;
       }
     }
   }
 }
 
-/* ============================================
-   MOBILE
-============================================ */
 
-@media (max-width: 768px) {
-  .search-page {
-    &__container {
-      padding: 0 16px;
+/* =================================
+   FILTER SHEET ANIMATION
+================================= */
 
-      margin: 20px auto;
-    }
-
-    &__mobile-toolbar {
-      margin-bottom: 16px;
-    }
-
-    &__filter-btn,
-    &__sort-btn {
-      height: 44px;
-
-      font-size: 14px;
-    }
-
-    &__filter-sheet {
-      max-height: 92vh;
-
-      border-radius: 22px 22px 0 0;
-    }
-
-    &__filter-sheet-header {
-      padding: 16px 18px;
-    }
-
-    &__filter-sheet-content {
-      padding: 18px;
-    }
-  }
-}
-
-/* ============================================
-   SMALL MOBILE
-============================================ */
-
-@media (max-width: 520px) {
-  .search-page {
-    &__container {
-      padding: 0 12px;
-
-      margin: 16px auto;
-    }
-
-    &__mobile-toolbar {
-      gap: 8px;
-
-      margin-bottom: 14px;
-    }
-
-    &__filter-btn,
-    &__sort-btn {
-      height: 42px;
-
-      border-radius: 10px;
-
-      font-size: 13px;
-    }
-
-    &__filter-sheet {
-      max-height: 94vh;
-
-      border-radius: 20px 20px 0 0;
-    }
-
-    &__filter-sheet-content {
-      padding: 16px;
-    }
-  }
-}
-
-/* ============================================
-   ANIMATIONS
-============================================ */
-
-@keyframes filterSheetSlideUp {
+@keyframes searchFilterSheetUp {
   from {
     transform: translateY(100%);
+    opacity: 0.7;
   }
 
   to {
     transform: translateY(0);
-  }
-}
-
-@keyframes filterOverlayFade {
-  from {
-    opacity: 0;
-  }
-
-  to {
     opacity: 1;
   }
 }

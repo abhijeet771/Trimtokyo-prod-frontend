@@ -1,11 +1,15 @@
 .search-filter {
-  background: #fff;
+  width: 100%;
+
+  background: #ffffff;
 
   border-radius: 16px;
 
   padding: 24px;
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.05);
 
   display: flex;
 
@@ -13,9 +17,9 @@
 
   gap: 20px;
 
-  width: 100%;
-
-  box-sizing: border-box;
+  /* =================================
+     HEADER
+  ================================= */
 
   &__header {
     display: flex;
@@ -34,6 +38,8 @@
       font-size: 22px;
 
       font-weight: 700;
+
+      color: #0f172a;
     }
 
     button {
@@ -49,9 +55,13 @@
 
       font-size: 14px;
 
-      padding: 4px 0;
+      padding: 0;
     }
   }
+
+  /* =================================
+     INPUT / SELECT GROUP
+  ================================= */
 
   &__group {
     display: flex;
@@ -72,7 +82,7 @@
     select {
       width: 100%;
 
-      box-sizing: border-box;
+      min-width: 0;
 
       padding: 12px 14px;
 
@@ -84,18 +94,25 @@
 
       outline: none;
 
-      background: #fff;
+      background: #ffffff;
+
+      color: #111827;
 
       transition: 0.2s;
 
       &:focus {
         border-color: #2563eb;
 
-        box-shadow: 0 0 0 3px
+        box-shadow:
+          0 0 0 3px
           rgba(37, 99, 235, 0.08);
       }
     }
   }
+
+  /* =================================
+     CHECKBOXES
+  ================================= */
 
   &__check {
     label {
@@ -118,73 +135,114 @@
 
         margin: 0;
 
+        flex-shrink: 0;
+
         cursor: pointer;
 
-        flex-shrink: 0;
+        accent-color: #2563eb;
       }
+    }
+  }
+
+  /* =================================
+     RESET BUTTON
+  ================================= */
+
+  &__btn {
+    margin-top: 10px;
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    &:hover {
+      background: #1d4ed8;
+
+      transform: translateY(-1px);
     }
   }
 }
 
-/* ============================================
-   MOBILE FILTER SHEET
-============================================ */
 
-@media (max-width: 992px) {
+/* =================================
+   MOBILE FILTER SHEET
+================================= */
+
+@media (max-width: 768px) {
   .search-filter {
-    position: static;
+    border-radius: 0;
+
+    padding: 4px 2px 0;
 
     box-shadow: none;
 
-    border-radius: 0;
-
-    padding: 0;
-  }
-}
-
-/* ============================================
-   SMALL MOBILE
-============================================ */
-
-@media (max-width: 520px) {
-  .search-filter {
-    gap: 18px;
+    gap: 16px;
 
     &__header {
-      padding-bottom: 14px;
-
-      h2 {
-        font-size: 19px;
-      }
-
-      button {
-        font-size: 13px;
-      }
+      display: none;
     }
 
     &__group {
-      gap: 7px;
+      gap: 6px;
 
       label {
-        font-size: 13px;
+        font-size: 0.75rem;
+
+        font-weight: 700;
       }
 
       input,
       select {
-        padding: 11px 12px;
-
-        font-size: 13px;
+        padding: 10px 12px;
 
         border-radius: 9px;
+
+        font-size: 0.72rem;
+
+        min-height: 40px;
       }
     }
 
     &__check {
       label {
-        font-size: 14px;
-
         gap: 9px;
+
+        font-size: 0.78rem;
+
+        input {
+          width: 17px;
+
+          height: 17px;
+        }
       }
+    }
+
+    &__btn {
+      margin-top: 4px;
+
+      padding: 11px;
+
+      min-height: 42px;
+
+      border-radius: 10px;
+
+      font-size: 0.75rem;
     }
   }
 }
