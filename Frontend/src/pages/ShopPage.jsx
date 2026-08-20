@@ -24,7 +24,7 @@ const ShopPage = () => {
       <section className="shop-page-content">
 
         {/* FILTER SIDEBAR */}
-        <ShopFilterSection />
+        <ShopFilterSection/>
 
         {/* BOOKINGS / CARDS */}
         <BookingSection

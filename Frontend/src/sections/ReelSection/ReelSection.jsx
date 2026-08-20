@@ -4,12 +4,7 @@ import ReelViewer from "../../components/organisms/ReelViewer/ReelViewer";
 
 import useHomepageReels from "../../hooks/useHomepageReels";
 
-import {
-  REEL_SECTION_TITLE,
-  REEL_SECTION_SUBTITLE,
-  REEL_VIEW_ALL_TEXT,
-  DEFAULT_REEL_VIEWS,
-} from "../../constants/reel";
+import {  REEL_SECTION_TITLE,  REEL_SECTION_SUBTITLE,  REEL_VIEW_ALL_TEXT,  DEFAULT_REEL_VIEWS,} from "../../constants/reel";
 
 import "./ReelSection.scss";
 
@@ -66,9 +61,6 @@ const ReelSection = () => {
               <div className="reel-card__overlay">
                 <h4>{reel.title}</h4>
 
-                <span>
-                  ▶ {reel.views ?? DEFAULT_REEL_VIEWS}
-                </span>
               </div>
             </div>
           ))

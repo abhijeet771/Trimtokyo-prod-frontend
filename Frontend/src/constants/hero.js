@@ -8,61 +8,76 @@ export const HERO_CONTENT = {
   },
 
   subtitle: "Try everyday something new",
+
   popularButton: "POPULAR NOW",
-  celebritiesHeading: "EXPLORE CELEBRITY STYLES",
-
-  celebrities: [
-    {
-      id: 1,
-      name: "Samantha Ruth Prabhu",
-      style: "Textured Quiff",
-      image: "/hero/kriti.png",
-    },
-    {
-      id: 2,
-      name: "Kiara Advani",
-      style: "Messy Layered",
-      image: "/hero/kiara.png",
-    },
-    {
-      id: 3,
-      name: "Ranveer Singh",
-      style: "Slick Back Undercut",
-      image: "/hero/ranveer.png",
-    },
-    {
-      id: 4,
-      name: "Jason Momoa",
-      style: "Long Waves",
-      image: "/hero/jason.png",
-    },
-  ],
-
-  aiCard: {
-    image: "/hero/ai-face.png",
-
-    title: "Try AI Hairstyle for you",
-
-    subtitle:
-      "See the perfect hairstyle for your face with AI",
-
-    buttonText: "TRY FOR YOU",
-
-    link: "https://tokyo-bot-seven.vercel.app/",
-  },
-
-  cutCard: {
-    image: "/hero/scissors.png",
-
-    title: "Try your Cut now",
-
-    subtitle:
-      "Upload a selfie and try your next haircut",
-
-    buttonText: "TRY YOUR CUT NOW",
-
-    route: "/auth",
-  },
 
   heroImage: "/hero/virat.png",
+
+  styles: {
+    men: [
+      {
+        id: 1,
+        name: "Haircut",
+        image: "/tabs/men/m1.png",
+      },
+      {
+        id: 2,
+        name: "Beard Style",
+        image: "/tabs/men/m2.png",
+      },
+      {
+        id: 3,
+        name: "Buzz Cut",
+        image: "/tabs/men/m3.png",
+      },
+      {
+        id: 4,
+        name: "Quiff",
+        image: "/tabs/men/m4.png",
+      },
+      {
+        id: 5,
+        name: "Pompadour",
+        image: "/tabs/men/m5.png",
+      },
+      {
+        id: 6,
+        name: "Undercut",
+        image: "/tabs/men/m6.png",
+      },
+    ],
+
+    women: [
+      {
+        id: 1,
+        name: "Haircut",
+        image: "/tabs/women/w1.png",
+      },
+      {
+        id: 2,
+        name: "Bob Cut",
+        image: "/tabs/women/w2.png",
+      },
+      {
+        id: 3,
+        name: "Long Hair",
+        image: "/tabs/women/w3.png",
+      },
+      {
+        id: 4,
+        name: "Layered",
+        image: "/tabs/women/w4.png",
+      },
+      {
+        id: 5,
+        name: "Pixie",
+        image: "/tabs/women/w5.png",
+      },
+      {
+        id: 6,
+        name: "Braids",
+        image: "/tabs/women/w6.png",
+      },
+    ],
+  },
 };
