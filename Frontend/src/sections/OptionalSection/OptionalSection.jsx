@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-import { OPTIONAL_SECTION_CONTENT } from "../../constants/optionalSection";
+import {
+  OPTIONAL_SECTION_CONTENT,
+} from "../../constants/optionalSection";
 
 import "./OptionalSection.scss";
 
@@ -9,36 +11,33 @@ const OptionalSection = () => {
     useState("homeService");
 
   const activeSection =
-    OPTIONAL_SECTION_CONTENT[activeTab];
+    OPTIONAL_SECTION_CONTENT.tabs[activeTab];
 
   return (
     <section className="optional-section">
       <div className="optional-section__container">
 
-        {/* =========================
-            HEADER
-        ========================== */}
+        {/* HEADER */}
 
         <div className="optional-section__header">
 
-          <div>
+          <div className="optional-section__heading">
+
             <span className="optional-section__badge">
               GROOMING OPTIONS
             </span>
 
             <h2 className="optional-section__title">
-              Choose Your Service
+              {OPTIONAL_SECTION_CONTENT.title}
             </h2>
 
             <p className="optional-section__subtitle">
-              Get professional grooming at home or book
-              a slot at your favourite salon.
+              {OPTIONAL_SECTION_CONTENT.subtitle}
             </p>
+
           </div>
 
-          {/* =========================
-              TABS
-          ========================== */}
+          {/* TABS */}
 
           <div className="optional-section__tabs">
 
@@ -53,7 +52,10 @@ const OptionalSection = () => {
                 setActiveTab("homeService")
               }
             >
-              {OPTIONAL_SECTION_CONTENT.homeService.label}
+              {
+                OPTIONAL_SECTION_CONTENT.tabs
+                  .homeService.label
+              }
             </button>
 
             <button
@@ -67,16 +69,17 @@ const OptionalSection = () => {
                 setActiveTab("slotBooking")
               }
             >
-              {OPTIONAL_SECTION_CONTENT.slotBooking.label}
+              {
+                OPTIONAL_SECTION_CONTENT.tabs
+                  .slotBooking.label
+              }
             </button>
 
           </div>
 
         </div>
 
-        {/* =========================
-            SERVICE CARDS
-        ========================== */}
+        {/* CARDS */}
 
         <div className="optional-section__list">
 

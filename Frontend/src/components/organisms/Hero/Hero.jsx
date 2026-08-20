@@ -20,9 +20,7 @@ const Hero = () => {
         {/* ================= HERO BANNER ================= */}
 
         <div className="hero__banner">
-
           <div className="hero__content">
-
             <div className="hero__badge">
               <FiScissors />
 
@@ -51,21 +49,38 @@ const Hero = () => {
               {HERO_CONTENT.subtitle}
             </p>
 
-            <button
-              className="hero__popular-btn"
-              onClick={() => navigate("/auth")}
-            >
-              <span className="hero__popular-dot"></span>
+          <div className="hero__buttons">
 
-              {HERO_CONTENT.popularButton}
-            </button>
+  <button
+    className="hero__popular-btn"
+    onClick={() => navigate("/auth")}
+  >
+    <span className="hero__popular-dot"></span>
 
+    {HERO_CONTENT.popularButton}
+  </button>
+
+  <button
+    className="hero__AI-btn"
+    onClick={() =>
+      window.open(
+        "https://tokyo-bot-seven.vercel.app",
+        "_blank",
+        "noopener,noreferrer"
+      )
+    }
+  >
+    <span className="hero__popular-dot"></span>
+
+    {HERO_CONTENT.AIButton}
+  </button>
+
+</div>
           </div>
 
           <div className="hero__image-wrapper">
 
             <div className="hero__circle hero__circle--1"></div>
-
             <div className="hero__circle hero__circle--2"></div>
 
             <img

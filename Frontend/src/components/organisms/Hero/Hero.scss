@@ -1,5 +1,5 @@
 .hero {
-  padding: 0.5rem 0 4rem;
+  padding: 0.5rem 0 1rem;
   background: #ffffff;
 
   &__container {
@@ -15,13 +15,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-
     min-height: 300px;
-
     padding: 1rem 2rem;
-
     border-radius: 24px;
-
     background: linear-gradient(
       135deg,
       var(--theme-hero-bg) 0%,
@@ -37,15 +33,18 @@
     z-index: 2;
   }
 
+  &__buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
   &__badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-
     padding: 0.5rem 0.8rem;
-
     border-radius: 999px;
-
     background: color-mix(
       in srgb,
       var(--theme-primary) 10%,
@@ -56,7 +55,6 @@
 
     font-size: 0.75rem;
     font-weight: 700;
-
     margin-bottom: 1rem;
 
     svg {
@@ -67,9 +65,7 @@
   &__title {
     display: flex;
     flex-direction: column;
-
     line-height: 0.95;
-
     margin-bottom: 1rem;
   }
 
@@ -98,35 +94,49 @@
 
   &__subtitle {
     font-size: 1rem;
-
     color: #64748b;
-
     margin-bottom: 1rem;
-
     max-width: 350px;
   }
 
   &__popular-btn {
-    border: none;
-    cursor: pointer;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
 
-    padding: 0.5rem 1rem;
+  background: linear-gradient(
+    90deg,
+    var(--theme-primary),
+    var(--theme-accent)
+  );
 
-    border-radius: 12px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: 0.3s ease;
 
-    background: linear-gradient(
-      90deg,
-      var(--theme-primary),
-      var(--theme-accent)
-    );
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--theme-shadow);
+  }
+}
+
+&__AI-btn {
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #ec4899
+  );
 
     color: #fff;
-
     font-size: 0.85rem;
     font-weight: 700;
-
     transition: 0.3s ease;
-
     &:hover {
       transform: translateY(-2px);
 
@@ -141,20 +151,15 @@
 
   &__image-wrapper {
     position: relative;
-
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     height: 100%;
   }
 
   &__circle {
     position: absolute;
-
     border-radius: 70%;
-
     margin-right: 40px;
   }
 
@@ -176,19 +181,14 @@
   &__circle--2 {
     width: 380px;
     height: 380px;
-
     border: 1px solid rgba(0, 0, 0, 0.04);
   }
 
   &__image {
     position: relative;
-
     z-index: 2;
-
     width: 100%;
-
     max-width: 320px;
-
     object-fit: contain;
   }
 
@@ -206,27 +206,20 @@
 
   &__styles-header {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 1rem;
 
     h2 {
       margin: 0;
-
       font-size: 1.3rem;
-
       font-weight: 800;
-
       color: #10203f;
     }
 
     p {
       margin: 0.25rem 0 0;
-
       color: #64748b;
-
       font-size: 0.8rem;
     }
   }
@@ -237,43 +230,26 @@
 
   &__style-tabs {
     display: flex;
-
     align-items: center;
-
     gap: 0.35rem;
-
     padding: 4px;
-
     border-radius: 12px;
-
     background: #f1f5f9;
-
     button {
       border: none;
-
       background: transparent;
-
       color: #64748b;
-
       padding: 0.55rem 1.1rem;
-
       border-radius: 9px;
-
       font-size: 0.8rem;
-
       font-weight: 700;
-
       cursor: pointer;
-
       transition: all 0.25s ease;
 
       &.active {
         background: #ffffff;
-
         color: var(--theme-primary);
-
-        box-shadow:
-          0 3px 10px rgba(0, 0, 0, 0.08);
+        box-shadow:    0 3px 10px rgba(0, 0, 0, 0.08);
       }
 
       &:hover:not(.active) {
@@ -301,15 +277,10 @@
 
   &__style-card {
     background: #ffffff;
-
     border-radius: 18px;
-
     overflow: hidden;
-
     border: 1px solid #f1f5f9;
-
     cursor: pointer;
-
     transition:
       transform 0.25s ease,
       box-shadow 0.25s ease,
@@ -344,21 +315,14 @@
       );
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     overflow: hidden;
-
     img {
       width: 100%;
       height: 100%;
-
       object-fit: contain;
-
       display: block;
-
       transition:
         transform 0.3s ease;
     }
@@ -375,22 +339,15 @@
 
   &__style-content {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 0.5rem;
-
     padding: 0.7rem 0.75rem;
 
     h3 {
       margin: 0;
-
       color: #10203f;
-
       font-size: 0.82rem;
-
       font-weight: 800;
     }
   }
@@ -402,22 +359,16 @@
   &__style-icon {
     width: 30px;
     height: 30px;
-
     border-radius: 50%;
-
-    background:
-      var(--theme-primary-light);
+    background:   var(--theme-primary-light);
 
     color:
       var(--theme-primary);
 
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     flex-shrink: 0;
-
     svg {
       font-size: 0.8rem;
     }
@@ -433,9 +384,7 @@
   .hero {
     &__banner {
       grid-template-columns: 1fr 1fr;
-
       min-height: 260px;
-
       padding: 1rem 1.5rem;
     }
 
@@ -445,9 +394,7 @@
 
     &__badge {
       font-size: 0.7rem;
-
       padding: 0.4rem 0.7rem;
-
       margin-bottom: 0.7rem;
     }
 
@@ -461,21 +408,28 @@
 
     &__title-highlight {
       font-size: 2rem;
-
       margin: 0.2rem 0;
     }
 
     &__subtitle {
       font-size: 0.85rem;
-
       max-width: 300px;
-
       margin-bottom: 0.8rem;
     }
 
-    &__popular-btn {
-      padding: 0.45rem 0.8rem;
+    /* =========================
+       BUTTONS
+    ========================== */
 
+    &__buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    &__popular-btn,
+    &__AI-btn {
+      padding: 0.45rem 0.8rem;
       font-size: 0.75rem;
     }
 
@@ -516,15 +470,12 @@
     &__style-tabs {
       button {
         padding: 0.5rem 0.9rem;
-
         font-size: 0.75rem;
       }
     }
 
     &__styles {
-      grid-template-columns:
-        repeat(3, 1fr);
-
+      grid-template-columns: repeat(3, 1fr);
       gap: 0.8rem;
     }
 
@@ -558,23 +509,21 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding-top: 0.75rem;
-
-    padding-bottom: 2.5rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.1rem;
 
     &__container {
       width: 94%;
     }
 
-    /* HERO */
+    /* =========================
+       HERO
+    ========================== */
 
     &__banner {
       grid-template-columns: 1fr 1fr;
-
       min-height: 210px;
-
       padding: 1rem;
-
       border-radius: 18px;
     }
 
@@ -584,11 +533,8 @@
 
     &__badge {
       gap: 0.35rem;
-
       padding: 0.35rem 0.6rem;
-
       font-size: 0.6rem;
-
       margin-bottom: 0.55rem;
 
       svg {
@@ -598,7 +544,6 @@
 
     &__title {
       line-height: 0.98;
-
       margin-bottom: 0.55rem;
     }
 
@@ -608,31 +553,49 @@
 
     &__title-highlight {
       font-size: 1.55rem;
-
       margin: 0.15rem 0;
     }
 
     &__subtitle {
       font-size: 0.7rem;
-
       line-height: 1.35;
-
       max-width: 190px;
-
       margin-bottom: 0.6rem;
     }
 
-    &__popular-btn {
-      width: auto;
+    /* =========================
+       BUTTONS
+    ========================== */
 
-      padding: 0.4rem 0.65rem;
-
-      border-radius: 9px;
-
-      font-size: 0.65rem;
+    &__buttons {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: 100%;
     }
 
-    /* HERO IMAGE */
+    &__popular-btn,
+    &__AI-btn {
+      padding: 0.4rem 0.65rem;
+      border-radius: 9px;
+      font-size: 0.65rem;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__popular-btn {
+      flex: 0 0 88px;
+    }
+
+    &__AI-btn {
+      flex: 1;
+    }
+
+    /* =========================
+       HERO IMAGE
+    ========================== */
 
     &__image-wrapper {
       min-width: 0;
@@ -640,7 +603,6 @@
 
     &__image {
       max-width: 180px;
-
       margin-top: 0;
     }
 
@@ -680,16 +642,12 @@
 
     &__style-tabs {
       gap: 0.2rem;
-
       padding: 3px;
-
       border-radius: 10px;
 
       button {
         padding: 0.45rem 0.75rem;
-
         border-radius: 8px;
-
         font-size: 0.65rem;
       }
     }
@@ -698,11 +656,8 @@
 
     &__styles {
       display: flex;
-
       overflow-x: auto;
-
       gap: 0.7rem;
-
       padding-bottom: 0.4rem;
 
       scrollbar-width: none;
@@ -714,7 +669,6 @@
 
     &__style-card {
       min-width: 145px;
-
       border-radius: 14px;
     }
 
@@ -736,124 +690,6 @@
 
       svg {
         font-size: 0.7rem;
-      }
-    }
-  }
-}
-
-
-/* =================================
-   SMALL MOBILE
-================================= */
-
-@media (max-width: 480px) {
-  .hero {
-    &__container {
-      width: 94%;
-    }
-
-    &__banner {
-      min-height: 180px;
-
-      padding: 0.8rem;
-
-      border-radius: 16px;
-    }
-
-    &__badge {
-      font-size: 0.55rem;
-
-      padding: 0.3rem 0.5rem;
-    }
-
-    &__title-line {
-      font-size: 1.35rem;
-    }
-
-    &__title-highlight {
-      font-size: 1.25rem;
-    }
-
-    &__subtitle {
-      font-size: 0.62rem;
-
-      max-width: 160px;
-    }
-
-    &__popular-btn {
-      padding: 0.35rem 0.55rem;
-
-      font-size: 0.58rem;
-
-      border-radius: 8px;
-    }
-
-    /* HERO IMAGE */
-
-    &__image {
-      max-width: 150px;
-    }
-
-    &__circle--1 {
-      width: 125px;
-      height: 125px;
-    }
-
-    &__circle--2 {
-      width: 175px;
-      height: 175px;
-    }
-
-    /* =================================
-       EXPLORE STYLES
-    ================================= */
-
-    &__styles-header {
-      h2 {
-        font-size: 0.9rem;
-      }
-
-      p {
-        font-size: 0.6rem;
-      }
-    }
-
-    &__style-tabs {
-      button {
-        padding: 0.4rem 0.65rem;
-
-        font-size: 0.6rem;
-      }
-    }
-
-    &__styles {
-      gap: 0.6rem;
-    }
-
-    &__style-card {
-      min-width: 130px;
-
-      border-radius: 12px;
-    }
-
-    &__style-image {
-      height: 90px;
-    }
-
-    &__style-content {
-      padding: 0.45rem;
-
-      h3 {
-        font-size: 0.62rem;
-      }
-    }
-
-    &__style-icon {
-      width: 24px;
-      height: 24px;
-
-      svg {
-        font-size: 0.65rem;
       }
     }
   }

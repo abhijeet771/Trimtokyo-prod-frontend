@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import SplashScreen from "../sections/SplashSection/SplashScreen";
+import OptionalSection from "../sections/OptionalSection/OptionalSection";
 import HeaderSection from "../sections/HeaderSection/HeaderSection";
 import ReelSection from "../sections/ReelSection/ReelSection";
 import SoloBarbersSection from "../sections/SoloBarbersSection/SoloBarbersSection";
@@ -28,6 +29,7 @@ const HomePage = () => {
         <>
           <HeaderSection />
           <Hero/>
+          <OptionalSection/>
           <ReelSection/>
           <Services />
           <SoloBarbersSection />

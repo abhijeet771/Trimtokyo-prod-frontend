@@ -10,6 +10,7 @@ export const HERO_CONTENT = {
   subtitle: "Try everyday something new",
 
   popularButton: "POPULAR NOW",
+  AIButton: "TRY AI RECOMMENDATION",
 
   heroImage: "/hero/virat.png",
 
