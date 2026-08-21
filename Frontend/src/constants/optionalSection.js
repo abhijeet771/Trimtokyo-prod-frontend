@@ -52,37 +52,37 @@ export const OPTIONAL_SECTION_CONTENT = {
       items: [
         {
           id: 1,
-          name: "Classic Haircut",
+          name: "Try haircut at mannat",
           image: "/optional/slotBooking/s1.png",
-          avgPrice: 249,
+          avgPrice: 79,
         },
 
         {
           id: 2,
-          name: "Premium Haircut",
+          name: "Groom your beard",
           image: "/optional/slotBooking/s2.png",
-          avgPrice: 399,
+          avgPrice: 99,
         },
 
         {
           id: 3,
-          name: "Beard Grooming",
+          name: "Open 10 to 5",
           image: "/optional/slotBooking/s3.png",
-          avgPrice: 179,
+          avgPrice: 49,
         },
 
         {
           id: 4,
-          name: "Hair & Beard",
+          name: "Try new styles",
           image: "/optional/slotBooking/s4.png",
-          avgPrice: 499,
+          avgPrice: 99,
         },
 
         {
           id: 5,
-          name: "Premium Grooming",
+          name: "Near your home",
           image: "/optional/slotBooking/s5.png",
-          avgPrice: 699,
+          avgPrice: 89,
         },
       ],
     },

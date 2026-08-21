@@ -1,9 +1,4 @@
-import {
-  FaTwitter,
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa";
+import {  FaTwitter,  FaFacebookF,  FaInstagram,  FaLinkedinIn,} from "react-icons/fa";
 
 export const MAIN_FOOTER_CONTENT = {
   /* =================================
@@ -90,13 +85,13 @@ export const MAIN_FOOTER_CONTENT = {
   socials: [
     {
       label: "Twitter",
-      href: "https://twitter.com",
+      href: "https://x.com/trimtokyo",
       Icon: FaTwitter,
     },
 
     {
       label: "Facebook",
-      href: "https://facebook.com",
+      href: "https://www.facebook.com/profile.php?id=61593210549216",
       Icon: FaFacebookF,
     },
 
@@ -108,7 +103,7 @@ export const MAIN_FOOTER_CONTENT = {
 
     {
       label: "LinkedIn",
-      href: "https://linkedin.com",
+      href: "https://www.linkedin.com/in/trim-tokyo-17154642a",
       Icon: FaLinkedinIn,
     },
   ],
