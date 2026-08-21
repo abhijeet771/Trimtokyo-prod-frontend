@@ -39,41 +39,23 @@ const BarberSlugPage = () => {
       </main>
     );
   }
-console.log({
-  slug,
-  data,
-  isLoading,
-  error,
-});
+console.log({slug,data,isLoading,error,});
 
   return (
     <main className="barber-slug-page">
-      <SlugHeroSection
-        details={cms?.details}
-        images={cms?.images}
+      <SlugHeroSection details={cms?.details} images={cms?.images}
         others={cms?.others}
       />
 
-      <SlugGallerySection
-        images={cms?.images}
-      />
+      <SlugServicesSection services={cms?.services} />
 
-      <SlugServicesSection
-        services={cms?.services}
-      />
+      <SlugGallerySection images={cms?.images} />
 
-      <SlugTeamSection
-        barbers={cms?.barbers}
-      />
+      <SlugTeamSection barbers={cms?.barbers} />
 
-      <SlugTimingSection
-        details={cms?.details}
-      />
+      <SlugTimingSection details={cms?.details} />
 
-      <SlugMapSection
-        details={cms?.details}
-        others={cms?.others}
-      />
+      <SlugMapSection details={cms?.details} others={cms?.others} />
 
       <SlugReviewsSection />
     </main>

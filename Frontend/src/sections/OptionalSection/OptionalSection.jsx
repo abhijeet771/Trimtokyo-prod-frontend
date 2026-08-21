@@ -1,23 +1,27 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import {
-  OPTIONAL_SECTION_CONTENT,
-} from "../../constants/optionalSection";
-
+import {  OPTIONAL_SECTION_CONTENT,} from "../../constants/optionalSection";
 import "./OptionalSection.scss";
 
 const OptionalSection = () => {
   const [activeTab, setActiveTab] =
     useState("homeService");
 
+  const navigate = useNavigate();
+
   const activeSection =
     OPTIONAL_SECTION_CONTENT.tabs[activeTab];
+
+  const handleItemClick = () => {
+    navigate("/auth");
+  };
 
   return (
     <section className="optional-section">
       <div className="optional-section__container">
 
-        {/* HEADER */}
+        {/* ================= HEADER ================= */}
 
         <div className="optional-section__header">
 
@@ -37,7 +41,7 @@ const OptionalSection = () => {
 
           </div>
 
-          {/* TABS */}
+          {/* ================= TABS ================= */}
 
           <div className="optional-section__tabs">
 
@@ -79,7 +83,7 @@ const OptionalSection = () => {
 
         </div>
 
-        {/* CARDS */}
+        {/* ================= CARDS ================= */}
 
         <div className="optional-section__list">
 
@@ -88,7 +92,20 @@ const OptionalSection = () => {
             <div
               className="optional-section__card"
               key={item.id}
+              onClick={handleItemClick}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (
+                  e.key === "Enter" ||
+                  e.key === " "
+                ) {
+                  handleItemClick();
+                }
+              }}
             >
+
+              {/* IMAGE */}
 
               <div className="optional-section__image">
 
@@ -98,6 +115,8 @@ const OptionalSection = () => {
                 />
 
               </div>
+
+              {/* CONTENT */}
 
               <div className="optional-section__content">
 

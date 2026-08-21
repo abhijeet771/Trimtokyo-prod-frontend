@@ -1,102 +1,119 @@
 .slug-timing-section {
-  padding: 80px 0;
+  padding: 20px 0;
   background: #f9fafb;
 }
 
+/* =============   CONTAINER =============== */
+
 .slug-container {
-  max-width: 1280px;
+  width: min(1280px, 92%);
   margin: 0 auto;
-  padding: 0 24px;
 }
+
+/* =============  TIMING GRID ================ */
 
 .timing-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(320px, 1fr)
-  );
-  gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
+
+
+/* =============  TIMING CARD ============= */
 
 .timing-card {
   background: #ffffff;
-
   border: 1px solid #e5e7eb;
-  border-radius: 20px;
-
-  padding: 30px;
-
-  transition: 0.3s ease;
+  border-radius: 18px;
+  padding: 24px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 
   &:hover {
     transform: translateY(-5px);
-
-    box-shadow: 0 16px 40px
-      rgba(0, 0, 0, 0.08);
+    border-color: #e0e7ff;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.09);
   }
 }
+
+
+/* ============  CARD HEADER ========= */
 
 .card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-
-  margin-bottom: 24px;
-
+  gap: 10px;
+  margin-bottom: 18px;
   color: #4f46e5;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
 
   h3 {
     margin: 0;
-
-    font-size: 1.4rem;
+    font-size: 1.15rem;
+    line-height: 1.3;
     font-weight: 700;
-
     color: #111827;
   }
 }
+
+/* =============   TIMING ROW ============== */
 
 .timing-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  &:last-child {    border-bottom: none;
+    padding-bottom: 0;
+  }
 
-  padding: 16px 0;
-
-  border-bottom: 1px solid
-    #f1f5f9;
-
-  &:last-child {
-    border-bottom: none;
+  &:first-child {
+    padding-top: 0;
   }
 
   span {
     color: #6b7280;
+    font-size: 0.8rem;
     font-weight: 500;
   }
 
   strong {
     color: #111827;
+    font-size: 0.8rem;
     font-weight: 700;
+    text-align: right;
   }
 }
+
+
+/* ============   CONTACT LIST ================= */
 
 .contact-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 
   a {
     display: flex;
     align-items: center;
-    gap: 12px;
-
+    gap: 10px;
     color: #374151;
-
+    font-size: 0.82rem;
     text-decoration: none;
-
-    transition: 0.25s;
+    transition: color 0.25s ease;
 
     svg {
+      width: 17px;
+      height: 17px;
       color: #4f46e5;
       flex-shrink: 0;
     }
@@ -107,26 +124,125 @@
   }
 }
 
-@media (max-width: 768px) {
+
+/* ===============  TABLET =============== */
+
+@media (max-width: 992px) {
   .slug-timing-section {
     padding: 60px 0;
   }
 
+  .slug-container {
+    width: 94%;
+  }
+
   .timing-grid {
-    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .timing-card {
-    padding: 24px;
+    padding: 20px;
+
+    border-radius: 16px;
   }
 
-  .card-header h3 {
-    font-size: 1.2rem;
+  .card-header {
+    margin-bottom: 16px;
+
+    h3 {
+      font-size: 1rem;
+    }
+
+    svg {
+      width: 18px;
+
+      height: 18px;
+    }
   }
 
   .timing-row {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 10px 0;
+
+    span,
+    strong {
+      font-size: 0.75rem;
+    }
+  }
+
+  .contact-list {
+    gap: 10px;
+
+    a {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+  .slug-timing-section {
+    padding: 20px 0;
+  }
+
+  .timing-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .timing-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .card-header {
     gap: 8px;
+
+    margin-bottom: 14px;
+
+    h3 {
+      font-size: 0.92rem;
+    }
+
+    svg {
+      width: 17px;
+
+      height: 17px;
+    }
+  }
+
+  .timing-row {
+    padding: 9px 0;
+
+    gap: 12px;
+
+    span,
+    strong {
+      font-size: 0.7rem;
+    }
+
+    strong {
+      text-align: right;
+    }
+  }
+
+  .contact-list {
+    gap: 9px;
+
+    a {
+      gap: 8px;
+
+      font-size: 0.7rem;
+
+      svg {
+        width: 15px;
+
+        height: 15px;
+      }
+    }
   }
 }
