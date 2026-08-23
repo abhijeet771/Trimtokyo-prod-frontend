@@ -50,8 +50,8 @@ export const MAIN_FOOTER_CONTENT = {
         },
 
         {
-          label: "FAQs",
-          href: "/faqs",
+          label: "Referral Program",
+          href: "/referral",
         },
       ],
     },
@@ -66,13 +66,8 @@ export const MAIN_FOOTER_CONTENT = {
         },
 
         {
-          label: "Partner Program",
-          href: "/partner-program",
-        },
-
-        {
-          label: "Barber Dashboard",
-          href: "/barber-dashboard",
+          label: "Reports",
+          href: "/reports",
         },
       ],
     },
