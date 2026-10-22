@@ -3,8 +3,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {  Wallet,  Download,  Search,  CheckCircle2,  Clock3,IndianRupee,  Plus,Eye,  Pencil,  RefreshCw,} from "lucide-react";
 
 import useBarberSalaryCycle from "../../hooks/barber/useBarberSalaryCycle";
-import BarberSalaryCycleDialog from "../../components/organisms/BarberSalaryCycleDialog/BarberSalaryCycleDialog";
-import BarberSalaryCycleViewDialog from "../../components/organisms/BarberSalaryCycleViewDialog/BarberSalaryCycleViewDialog";
+import BarberSalaryCycleDialog from "../../components/barber/BarberSalaryCycleDialog/BarberSalaryCycleDialog";
+import BarberSalaryCycleViewDialog from "../../components/barber/BarberSalaryCycleViewDialog/BarberSalaryCycleViewDialog";
 
 import "./StaffSalaryCycle.scss";
 

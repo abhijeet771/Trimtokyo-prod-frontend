@@ -1,4 +1,4 @@
-import NavLink from "../../atoms/Navlink/Navlink";
+import NavLink from "../../atoms/NavLink/NavLink";
 import "./FooterColumn.scss";
 
 const FooterColumn = ({ title, links }) => {

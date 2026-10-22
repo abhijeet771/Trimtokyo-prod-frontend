@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { getMyOrders } from "../../api/order.api";
+import { getMyOrders } from "../../services/order.service.js";
 
 export default function useMyOrders() {
   const [orders, setOrders] = useState([]);

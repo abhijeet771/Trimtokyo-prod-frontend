@@ -12,7 +12,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { useCart } from "../../../context/CartContext";
 import UserProfileMenu from "../../../components/User/UserProfileMenu/UserProfileMenu";
 
-import "./ShopHeader.scss";
+import "./Shopheader.scss";
 
 const ShopHeader = ({ user: userProp, onOpenSidebar }) => {
   const navigate = useNavigate();

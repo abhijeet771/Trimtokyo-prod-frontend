@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { updateOrderStatus } from "../../api/order.api";
+import { updateOrderStatus } from "../../services/order.service.js";
 
 export default function useCancelOrder() {
   const [loading, setLoading] = useState(false);

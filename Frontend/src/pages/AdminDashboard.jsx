@@ -11,14 +11,10 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <AdminSidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+      <AdminSidebar activeTab={activeTab} setActiveTab={setActiveTab}/>
 
       <div className="admin-dashboard__main">
         <AdminTopbar activeTab={activeTab} />
-
         <main className="admin-dashboard__content">
           <AdminContentSection activeTab={activeTab} />
         </main>
