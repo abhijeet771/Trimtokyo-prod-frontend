@@ -1,5 +1,5 @@
-import React from "react";
-import NavLink from "../../atoms/NavLink/NavLink";
+
+import { Link } from "react-router-dom";
 import Icon from "../../atoms/Icon/Icon";
 import "./NavItem.scss";
 
@@ -9,17 +9,19 @@ const NavItem = ({
   active = false,
   onClick,
   variant = "default",
+  href = "/",
 }) => {
   return (
-    <div
+    <Link
+      to={href}
       className={`nav-item nav-item--${variant} ${
         active ? "nav-item--active" : ""
       }`}
       onClick={onClick}
     >
       {iconType && <Icon type={iconType} variant={variant} />}
-      <NavLink label={label} />
-    </div>
+      <span className="nav-item__label">{label}</span>
+    </Link>
   );
 };
 

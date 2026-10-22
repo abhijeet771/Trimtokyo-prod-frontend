@@ -8,7 +8,7 @@ import {
   X,
   RefreshCw,
 } from "lucide-react";
-import useNotifications from "../../hooks/useNotifications";
+import useNotifications from "../../../hooks/useNotifications";
 import "./AdminTopbar.scss";
 
 const PAGE_TITLES = {
