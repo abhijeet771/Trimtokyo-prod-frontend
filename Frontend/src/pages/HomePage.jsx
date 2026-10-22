@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import HeaderSection from "../sections/HomePage/HeaderSection/HeaderSection";
-import SplashScreen from "../sections/Homepage/SplashSection/SplashScreen";
+import SplashScreen from "../sections/HomePage/SplashSection/SplashScreen";
 import OptionalSection from "../sections/HomePage/OptionalSection/OptionalSection";
 import ExploreCategory from "../sections/HomePage/ExploreCategory/ExploreCategory";
 import EventSection from "../sections/HomePage/EventSection/EventSection";
@@ -34,8 +34,7 @@ const HomePage = () => {
   return (
     <main className="home-page">
       {loading ? (
-        <SplashScreen onFinish={handleSplashFinish} />
-      ) : (
+        <SplashScreen onFinish={handleSplashFinish} />) : (
         <>
           <HeaderSection />
 
