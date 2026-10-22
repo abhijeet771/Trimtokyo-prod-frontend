@@ -1,0 +1,213 @@
+
+.marketing-stats {
+  width: 100%;
+  min-width: 0;
+  color: #20251f;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    margin: 0;
+    color: #20251f;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+  }
+
+  &__subtitle {
+    margin: 7px 0 0;
+    color: #858b83;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  &__tabs {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  &__tab {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 16px 18px;
+    border: 1px solid #e9ede6;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #686f65;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: #b8e9a8;
+      background: #fbfff9;
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba(38, 139, 22, 0.2);
+      outline-offset: 3px;
+    }
+
+    &--active {
+      border-color: #b6e9a4;
+      background: #f5fff0;
+      box-shadow: 0 2px 8px rgba(38, 139, 22, 0.05);
+
+      .marketing-stats__tab-icon {
+        background: #e2f8d9;
+        color: #268b16;
+      }
+
+      .marketing-stats__tab-label {
+        color: #268b16;
+      }
+    }
+  }
+
+  &__tab-icon {
+    display: flex;
+    flex: 0 0 40px;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f3f5f1;
+    color: #737b6e;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  &__tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  &__tab-label {
+    color: #343a31;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+
+  &__tab-description {
+    color: #8b9187;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  &__divider {
+    width: 100%;
+    height: 1px;
+    margin: 22px 0 24px;
+    background: #edf0eb;
+  }
+
+  &__panel {
+    width: 100%;
+    min-width: 0;
+    animation: marketing-panel-enter 0.2s ease;
+  }
+}
+
+@keyframes marketing-panel-enter {
+  from {
+    opacity: 0.65;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .marketing-stats {
+    &__header {
+      margin-bottom: 18px;
+    }
+
+    &__title {
+      font-size: 21px;
+    }
+
+    &__tabs {
+      gap: 8px;
+    }
+
+    &__tab {
+      gap: 8px;
+      padding: 12px;
+    }
+
+    &__tab-icon {
+      flex-basis: 34px;
+      width: 34px;
+      height: 34px;
+    }
+
+    &__tab-label {
+      font-size: 12px;
+    }
+
+    &__tab-description {
+      font-size: 10px;
+    }
+
+    &__divider {
+      margin: 18px 0;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .marketing-stats {
+    &__tabs {
+      flex-direction: column;
+    }
+
+    &__tab {
+      width: 100%;
+      padding: 12px 14px;
+    }
+
+    &__tab-label {
+      font-size: 13px;
+    }
+
+    &__tab-description {
+      font-size: 11px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marketing-stats__panel {
+    animation: none;
+  }
+
+  .marketing-stats__tab,
+  .marketing-stats__tab-icon {
+    transition: none;
+  }
+}

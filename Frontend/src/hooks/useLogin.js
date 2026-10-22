@@ -1,4 +1,5 @@
-import { loginUser } from "../services/api";
+
+import { loginUser } from "../services/auth.service";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "sonner";
 
@@ -6,9 +7,7 @@ const useLogin = () => {
   const { setUser } = useAuth();
 
   const login = async (formData) => {
-    const loadingToast = toast.loading(
-      "Logging in..."
-    );
+    const loadingToast = toast.loading("Logging in...");
 
     try {
       const payload = {
@@ -27,26 +26,18 @@ const useLogin = () => {
       const role = user?.role;
 
       if (role === "admin") {
-        toast.success(
-          "Admin Login Successful"
-        );
+        toast.success("Admin Login Successful");
       } else if (role === "barber") {
-        toast.success(
-          "Barber Login Successful"
-        );
+        toast.success("Barber Login Successful");
       } else {
-        toast.success(
-          "User Login Successful"
-        );
+        toast.success("User Login Successful");
       }
 
       setUser(user);
 
       return res.data;
     } catch (error) {
-      toast.dismiss(
-        loadingToast
-      );
+      toast.dismiss(loadingToast);
 
       toast.error(
         error?.response?.data?.message ||
@@ -54,10 +45,7 @@ const useLogin = () => {
           "Login Failed"
       );
 
-      throw (
-        error?.response?.data ||
-        error
-      );
+      throw error?.response?.data || error;
     }
   };
 

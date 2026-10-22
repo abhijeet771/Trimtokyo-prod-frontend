@@ -57,7 +57,7 @@ export const REEL_SECTION_TITLE =
   "Trending Reels";
 
 export const REEL_SECTION_SUBTITLE =
-  "Watch the latest hairstyles, beard styling and transformations.";
+  "Watch the latest hairstyles, Our Customer reviews and more";
 
 export const REEL_VIEW_ALL_TEXT =
   "View All";

@@ -1,231 +1,535 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import {  CalendarDays,  Bell,  ShoppingBag,} from "lucide-react";
-import SideBarSection from "../sections/SideBarSection/SideBarSection";
-import useUserOrders from "../hooks/useUserOrders";
-import useNotifications from "../hooks/useNotifications";
-import OrderCard from "../components/molecules/OrderCard/OrderCard";
-import NotificationItem from "../components/molecules/NotificationItem/NotificationItem";
 
-import Button from "../components/atoms/Button/Button";
-import UserMapSection from "../sections/UserMapSection/UserMapSection";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import Shopheader from "../sections/User/Shopheader/Shopheader";
+import UserSideBar from "../components/User/UserSideBar/UserSideBar";
+
+import UserOverviewSection from "../sections/User/UserOverviewSection/UserOverviewSection";
+import UserCartSection from "../sections/User/UserCartSection/UserCartSection";
+import UserOrderSection from "../sections/User/UserOrderSection/UserOrderSection";
+import UserSlotBookingSection from "../sections/User/UserSlotBookingSection/UserSlotBookingSection";
+import UserProfileSection from "../sections/User/UserProfileSection/UserProfileSection";
+import UserHelpSection from "../sections/User/UserHelpSection/UserHelpSection";
+import UserNotificationSection from "../sections/User/UserNotificationSection/UserNotificationSection";
+import UserSettingsSection from "../sections/User/UserSettingsSection/UserSettingsSection";
+
+import AppointmentsSection from "../sections/User/AppointmentsSection/AppointmentsSection";
+import SlotBookingDetailsSection from "../sections/User/SlotBookingDetailsSection/SlotBookingDetailsSection";
+
+import ViewOrderDialog from "../components/User/ViewOrderDialog/ViewOrderDialog";
+
+import { useCart } from "../context/CartContext";
+import { getMyOrders } from "../services/order.service.js";
+import { createBooking } from "../services/slotBooking.service";
+
 import "./UserDashboard.scss";
 
+const ALLOWED_SECTIONS = [
+  "overview",
+  "cart",
+  "orders",
+  "slot-bookings",
+  "appointments",
+  "profile",
+  "help",
+  "notifications",
+  "settings",
+];
+
+const getSlotId = (slot) => {
+  if (!slot || typeof slot !== "object") return "";
+
+  return String(slot._id || slot.slotId || slot.id || "");
+};
+
+const getSlotValue = (slot) => {
+  if (!slot) return "";
+
+  if (typeof slot === "string") return slot;
+
+  if (slot.label || slot.timeSlot || slot.time) {
+    return slot.label || slot.timeSlot || slot.time;
+  }
+
+  const start = slot.startTime || slot.start || slot.from;
+  const end = slot.endTime || slot.end || slot.to;
+
+  return [start, end].filter(Boolean).join(" - ");
+};
+
 const UserDashboard = () => {
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const {
-    orders,
-    loading: ordersLoading,
-    error: ordersError,
-  } = useUserOrders();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const [activeSection, setActiveSection] = useState(
+    location.state?.activeSection || "cart"
+  );
+
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  // Appointment flow state
+  const [bookingDraft, setBookingDraft] = useState(
+    location.state?.bookingDraft || null
+  );
+
+  const [selectedDate, setSelectedDate] = useState(
+    location.state?.bookingDraft?.date || ""
+  );
+
+  // Keep the full slot object, not just its display label.
+  const [selectedSlot, setSelectedSlot] = useState(
+    location.state?.bookingDraft?.slot || null
+  );
+
+  const [selectedService, setSelectedService] = useState(
+    location.state?.bookingDraft?.service || null
+  );
+
+  const [selectedShop, setSelectedShop] = useState(
+    location.state?.bookingDraft?.shop || null
+  );
+
+  const [appointmentStep, setAppointmentStep] = useState(
+    location.state?.appointmentStep || 1
+  );
 
   const {
-    notifications,
-    loading: notificationsLoading,
-    markAsRead,
-  } = useNotifications();
+    cartItems,
+    removeItem,
+    updateQuantity,
+    clearCart,
+  } = useCart();
 
-  const handleNavigateToShop = () => {
-    navigate("/shop");
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [ordersError, setOrdersError] = useState("");
+
+  // Booking data will be fetched through the booking API separately.
+  const [bookings, setBookings] = useState([]);
+
+  /*
+   * Consume navigation state from salon service cards or dashboard
+   * navigation. Preserve real service, shop, and slot identifiers.
+   */
+  useEffect(() => {
+    const navigationState = location.state;
+
+    if (!navigationState) return;
+
+    const requestedSection = navigationState.activeSection;
+    const incomingDraft = navigationState.bookingDraft;
+
+    if (
+      requestedSection &&
+      ALLOWED_SECTIONS.includes(requestedSection)
+    ) {
+      setActiveSection(requestedSection);
+    }
+
+    if (requestedSection === "appointments") {
+      if (incomingDraft) {
+        setBookingDraft(incomingDraft);
+        setSelectedService(incomingDraft.service || null);
+        setSelectedShop(incomingDraft.shop || null);
+        setSelectedDate(incomingDraft.date || "");
+        setSelectedSlot(incomingDraft.slot || null);
+        setAppointmentStep(
+          navigationState.appointmentStep || 1
+        );
+      } else {
+        setBookingDraft(null);
+        setSelectedDate("");
+        setSelectedSlot(null);
+        setSelectedService(null);
+        setSelectedShop(null);
+        setAppointmentStep(1);
+      }
+    }
+
+    navigate(location.pathname, {
+      replace: true,
+      state: null,
+    });
+  }, [location.key, location.pathname, location.state, navigate]);
+
+  // Fetch orders when the Orders section is opened.
+  useEffect(() => {
+    if (activeSection !== "orders") return;
+
+    let isMounted = true;
+
+    const fetchOrders = async () => {
+      setOrdersLoading(true);
+      setOrdersError("");
+
+      try {
+        const response = await getMyOrders();
+        const result = response?.data;
+
+        if (result?.success === false) {
+          throw new Error(
+            result?.message || "Failed to fetch orders."
+          );
+        }
+
+        const orderData =
+          result?.data?.orders ??
+          result?.data ??
+          result?.orders ??
+          [];
+
+        if (isMounted) {
+          setOrders(Array.isArray(orderData) ? orderData : []);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setOrdersError(
+            error?.response?.data?.message ||
+              error?.message ||
+              "Failed to load your orders."
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setOrdersLoading(false);
+        }
+      }
+    };
+
+    fetchOrders();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [activeSection]);
+
+  const handleViewOrderDetails = (order) => {
+    setSelectedOrder(order);
   };
 
-  /* =========================
-     KPI DATA
-  ========================= */
+  const handleCloseOrderDetails = () => {
+    setSelectedOrder(null);
+  };
 
-  const totalOrders = orders?.length || 0;
+  const handleViewBookingDetails = (booking) => {
+    console.log("Selected booking:", booking);
+  };
 
-  const activeOrders =
-    orders?.filter(
-      (order) =>
-        order.status !== "completed"
-    ).length || 0;
+  /*
+   * Called when the customer selects a date and a real available slot.
+   * Store the full slot object and its MongoDB ID for submission.
+   */
+  const handleDateTimeContinue = ({
+    date,
+    slot,
+    slotId,
+    service,
+    shop,
+  }) => {
+    const resolvedSlotId = slotId || getSlotId(slot);
 
-  const unreadNotifications =
-    notifications?.filter(
-      (notification) => !notification.read
-    ).length || 0;
+    if (!date || !slot || !resolvedSlotId) {
+      console.error("Date, slot, or slot ID is missing.", {
+        date,
+        slot,
+        slotId,
+      });
+      return;
+    }
 
-  return (
-    <>
-      <SideBarSection />
+    const resolvedService = service || selectedService;
+    const resolvedShop = shop || selectedShop;
 
-      <div className="user-dashboard">
+    setSelectedDate(date);
+    setSelectedSlot(slot);
 
-        {/* ================= HEADER ================= */}
+    if (resolvedService) {
+      setSelectedService(resolvedService);
+    }
 
-        <div className="dashboard-header">
+    if (resolvedShop) {
+      setSelectedShop(resolvedShop);
+    }
 
-          <div>
-            <p className="dashboard-header__tag">
-              Welcome Back 👋
-            </p>
+    setBookingDraft((previousDraft) => ({
+      ...(previousDraft || {}),
+      ...(resolvedShop ? { shop: resolvedShop } : {}),
+      ...(resolvedService ? { service: resolvedService } : {}),
+      date,
+      slot,
+      slotId: String(resolvedSlotId),
+    }));
 
-            <h2>
-              My Dashboard
-            </h2>
-          </div>
+    setAppointmentStep(3);
+  };
 
-          <Button
-            onClick={handleNavigateToShop}
+  /*
+   * Submit the booking to the backend.
+   * SlotBookingDetailsSection passes customer details to this handler.
+   */
+  const handleBookAppointment = async (bookingDetails) => {
+    const service = bookingDetails?.service || selectedService;
+    const shop = bookingDetails?.shop || selectedShop;
+    const slot = bookingDetails?.slot || selectedSlot;
+
+    const serviceId =
+      bookingDetails?.serviceId ||
+      service?._id ||
+      service?.serviceId ||
+      service?.id;
+
+    const slotId =
+      bookingDetails?.slotId ||
+      bookingDraft?.slotId ||
+      getSlotId(slot);
+
+    const barberProfileId =
+      bookingDetails?.barberProfileId ||
+      shop?.barberProfileId ||
+      shop?.barberId ||
+      shop?._id ||
+      shop?.id ||
+      service?.barberProfileId ||
+      service?.barberId;
+
+    if (!serviceId) {
+      throw new Error(
+        "Service ID is missing. Please select the service again."
+      );
+    }
+
+    if (!slotId) {
+      throw new Error(
+        "Slot ID is missing. Please select an available time slot again."
+      );
+    }
+
+    if (!barberProfileId) {
+      throw new Error(
+        "Barber profile ID is missing. Please return to the salon and select the service again."
+      );
+    }
+
+    if (!bookingDetails?.phone) {
+      throw new Error("Customer phone number is required.");
+    }
+
+    /*
+     * Keep the payload aligned with the booking API.
+     * The backend must support any additional customer fields you send.
+     */
+    const payload = {
+      slotId: String(slotId),
+      serviceId: String(serviceId),
+      barberProfileId: String(barberProfileId),
+      name: bookingDetails.name,
+      phone: bookingDetails.phone,
+      email: bookingDetails.email || "",
+      address: bookingDetails.address || "",
+      notes: bookingDetails.notes || "",
+      date: bookingDetails.date || selectedDate,
+      timeSlot:
+        bookingDetails.timeSlot ||
+        getSlotValue(slot),
+    };
+
+    try {
+      const response = await createBooking(payload);
+      const responseData = response?.data;
+
+      if (responseData?.success === false) {
+        throw new Error(
+          responseData?.message || "Failed to book appointment."
+        );
+      }
+
+      const savedBooking =
+        responseData?.booking ||
+        responseData?.data?.booking ||
+        responseData?.data ||
+        responseData;
+
+      if (!savedBooking) {
+        throw new Error(
+          "The server did not return booking details."
+        );
+      }
+
+      setBookings((previous) => [
+        savedBooking,
+        ...previous,
+      ]);
+
+      return {
+        success: true,
+        booking: savedBooking,
+        data: responseData,
+        message:
+          responseData?.message ||
+          "Appointment booked successfully.",
+      };
+    } catch (error) {
+      throw new Error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Unable to book your appointment. Please try again."
+      );
+    }
+  };
+
+  const handleOpenAppointments = () => {
+    setBookingDraft(null);
+    setSelectedDate("");
+    setSelectedSlot(null);
+    setSelectedService(null);
+    setSelectedShop(null);
+    setAppointmentStep(1);
+    setActiveSection("appointments");
+  };
+
+  const handleBackToDateTime = () => {
+    setAppointmentStep(1);
+  };
+
+  const renderCartSection = () => (
+    <UserCartSection
+      cartItems={cartItems}
+      onRemoveItem={removeItem}
+      onUpdateQuantity={updateQuantity}
+      onClearCart={clearCart}
+    />
+  );
+
+  const renderAppointmentsSection = () => (
+    <div className="user-dashboard-page__appointments">
+      {appointmentStep === 1 && (
+        <AppointmentsSection
+          bookingDraft={bookingDraft}
+          onContinue={handleDateTimeContinue}
+        />
+      )}
+
+      {appointmentStep === 3 && (
+        <>
+          <button
+            type="button"
+            className="user-dashboard-page__back-button"
+            onClick={handleBackToDateTime}
           >
-            Explore Services
-          </Button>
+            ← Back to date and time
+          </button>
 
-        </div>
+          <SlotBookingDetailsSection
+            bookingDraft={{
+              ...(bookingDraft || {}),
+              date: selectedDate,
+              slot: selectedSlot,
+              slotId:
+                bookingDraft?.slotId ||
+                getSlotId(selectedSlot),
+              service: selectedService,
+              shop: selectedShop,
+            }}
+            selectedDate={selectedDate}
+            selectedSlot={selectedSlot}
+            selectedService={selectedService}
+            selectedShop={selectedShop}
+            onBookAppointment={handleBookAppointment}
+          />
+        </>
+      )}
+    </div>
+  );
 
-        {/* ================= KPI SECTION ================= */}
+  const renderSection = () => {
+    switch (activeSection) {
+      case "overview":
+        return <UserOverviewSection />;
 
-        <div className="dashboard-kpis">
+      case "cart":
+        return renderCartSection();
 
-          {/* KPI 1 */}
-          <div className="dashboard-kpi-card">
-
-            <div className="dashboard-kpi-card__icon pink">
-              <ShoppingBag size={24} />
-            </div>
-
-            <div className="dashboard-kpi-card__content">
-              <h3>{totalOrders}</h3>
-
-              <p>Total Orders</p>
-            </div>
-
-          </div>
-
-          {/* KPI 2 */}
-          <div className="dashboard-kpi-card">
-
-            <div className="dashboard-kpi-card__icon purple">
-              <CalendarDays size={24} />
-            </div>
-
-            <div className="dashboard-kpi-card__content">
-              <h3>{activeOrders}</h3>
-
-              <p>Active Bookings</p>
-            </div>
-
-          </div>
-
-          {/* KPI 3 */}
-          <div className="dashboard-kpi-card">
-
-            <div className="dashboard-kpi-card__icon blue">
-              <Bell size={24} />
-            </div>
-
-            <div className="dashboard-kpi-card__content">
-              <h3>{unreadNotifications}</h3>
-
-              <p>Unread Notifications</p>
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* ================= ORDERS ================= */}
-
-        <div className="section">
-
-          <div className="section__header">
-
-            <div>
-              <p className="section__tag">
-                Recent Activity
+      case "orders":
+        return (
+          <>
+            {ordersError && (
+              <p
+                className="user-dashboard-page__error"
+                role="alert"
+              >
+                {ordersError}
               </p>
-
-              <h3>
-                My Orders
-              </h3>
-            </div>
-
-            <Button
-              variant="secondary"
-              onClick={handleNavigateToShop}
-            >
-              Book Service
-            </Button>
-
-          </div>
-
-          {ordersLoading && (
-            <p>Loading orders...</p>
-          )}
-
-          {ordersError && (
-            <p>{ordersError}</p>
-          )}
-
-          <div className="orders-grid">
-
-            {orders.length === 0 &&
-              !ordersLoading && (
-                <p>No orders yet.</p>
-              )}
-
-            {orders.map((order) => (
-              <OrderCard
-                key={order._id}
-                order={order}
-              />
-            ))}
-
-          </div>
-
-        </div>
-
-        {/* ================= MAP ================= */}
-
-        <UserMapSection orders={orders} />
-
-        {/* ================= NOTIFICATIONS ================= */}
-
-        <div className="section">
-
-          <div className="section__header">
-
-            <div>
-              <p className="section__tag">
-                Updates
-              </p>
-
-              <h3>
-                Notifications
-              </h3>
-            </div>
-
-          </div>
-
-          {notificationsLoading && (
-            <p>Loading notifications...</p>
-          )}
-
-          <div className="notifications-list">
-
-            {notifications.length === 0 &&
-              !notificationsLoading && (
-                <p>No notifications.</p>
-              )}
-
-            {notifications.map(
-              (notification) => (
-                <NotificationItem
-                  key={notification._id}
-                  notification={notification}
-                  onRead={markAsRead}
-                />
-              )
             )}
 
-          </div>
+            <UserOrderSection
+              orders={orders}
+              loading={ordersLoading}
+              onViewDetails={handleViewOrderDetails}
+            />
+          </>
+        );
 
-        </div>
+      case "slot-bookings":
+        return (
+          <UserSlotBookingSection
+            bookings={bookings}
+            onViewDetails={handleViewBookingDetails}
+          />
+        );
 
+      case "appointments":
+        return renderAppointmentsSection();
+
+      case "profile":
+        return <UserProfileSection />;
+
+      case "help":
+        return <UserHelpSection />;
+
+      case "notifications":
+        return <UserNotificationSection />;
+
+      case "settings":
+        return <UserSettingsSection />;
+
+      default:
+        return renderCartSection();
+    }
+  };
+
+  return (
+    <div
+      className={`user-dashboard-page ${
+        sidebarCollapsed
+          ? "user-dashboard-page--sidebar-collapsed"
+          : ""
+      }`}
+    >
+      <Shopheader />
+
+      <div className="user-dashboard-page__layout">
+        <UserSideBar
+          collapsed={sidebarCollapsed}
+          onCollapseChange={setSidebarCollapsed}
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+        />
+
+        <main className="user-dashboard-page__content">
+          {renderSection()}
+        </main>
       </div>
-    </>
+
+      {selectedOrder && (
+        <ViewOrderDialog
+          order={selectedOrder}
+          onClose={handleCloseOrderDetails}
+        />
+      )}
+    </div>
   );
 };
 

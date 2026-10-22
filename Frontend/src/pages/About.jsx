@@ -1,10 +1,10 @@
 import React from "react";
-import HeaderSection from "../sections/HeaderSection/HeaderSection";
-import AboutHeroSection from "../sections/AboutHeroSection/AboutHeroSection";
-import AboutRolesSection from "../sections/AboutRolesSection/AboutRolesSection";
-import AboutWhyChooseSection from "../sections/AboutWhyChooseSection/AboutWhyChooseSection";
-import FAQSection from "../sections/FAQSection/FAQSection";
-import MainFooter from "../components/organisms/MainFooter/MainFooter";
+import HeaderSection from "../sections/HomePage/HeaderSection/HeaderSection";
+import AboutHeroSection from "../sections/AboutPage/AboutHeroSection/AboutHeroSection";
+import AboutRolesSection from "../sections/AboutPage/AboutRolesSection/AboutRolesSection";
+import AboutWhyChooseSection from "../sections/AboutPage/AboutWhyChooseSection/AboutWhyChooseSection";
+import FAQSection from "../sections/AboutPage/FAQSection/FAQSection";
+import MainFooter from "../components/website/MainFooter/MainFooter";
 
 
 const About = () => {

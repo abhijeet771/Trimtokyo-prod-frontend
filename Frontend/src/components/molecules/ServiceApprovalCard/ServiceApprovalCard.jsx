@@ -1,7 +1,7 @@
 import React from "react";
-import "./ServiceApprovalCard.scss";
+import {  Scissors,  Clock3,  IndianRupee,  MapPin,  Store,  CheckCircle2,  XCircle,  Users,  Sparkles,} from "lucide-react";
 
-// Admin service approval card
+import "./ServiceApprovalCard.scss";
 
 const ServiceApprovalCard = ({
   service,
@@ -10,98 +10,169 @@ const ServiceApprovalCard = ({
 }) => {
   if (!service) return null;
 
-  const barber =
-    service.barberProfileId;
+  const barber = service.barberProfileId;
+  const status = service.status?.toUpperCase() || "PENDING";
+  const isPending = status === "PENDING";
+
+  const title = service.title || "Untitled Service";
+  const price = Number(service.price);
+  const duration = Number(service.duration);
+
+  const formattedPrice = Number.isFinite(price)
+    ? price.toLocaleString("en-IN", {
+        maximumFractionDigits: 2,
+      })
+    : "Not specified";
+
+  const formattedDuration =
+    Number.isFinite(duration) && duration > 0
+      ? `${duration} mins`
+      : "Not specified";
+
+  const genderLabels = {
+    male: "Male",
+    female: "Female",
+    other: "Other",
+  };
+
+  const gender = genderLabels[service.gender?.toLowerCase()] || "Not specified";
 
   return (
-    <div className="service-approval-card">
-      {/* SERVICE IMAGE */}
+    <article className="service-approval-card">
+      <div className="service-approval-card__image-wrapper">
+        {service.imageUrl ? (
+          <img
+            src={service.imageUrl}
+            alt={title}
+            className="service-approval-card__image"
+            loading="lazy"
+          />
+        ) : (
+          <div className="service-approval-card__placeholder">
+            <Scissors size={38} />
+            <span>Service image unavailable</span>
+          </div>
+        )}
 
-      {service.imageUrl ? (
-        <img
-          src={service.imageUrl}
-          alt={service.title}
-          className="service-image"
-        />
-      ) : (
-        <div className="service-image placeholder">
-          No Image
+        <span
+          className={`service-approval-card__status service-approval-card__status--${status.toLowerCase()}`}
+        >
+          {isPending ? <Clock3 size={14} /> : <CheckCircle2 size={14} />}
+          {status}
+        </span>
+
+        <span className="service-approval-card__category">
+          <Sparkles size={13} />
+          Service
+        </span>
+      </div>
+
+      <div className="service-approval-card__body">
+        <div className="service-approval-card__heading">
+          <div>
+            <span className="service-approval-card__eyebrow">
+              SERVICE REVIEW
+            </span>
+            <h3>{title}</h3>
+          </div>
         </div>
-      )}
 
-      <h4>{service.title}</h4>
+        <div className="service-approval-card__highlights">
+          <div className="service-approval-card__highlight service-approval-card__highlight--orange">
+            <span className="service-approval-card__highlight-icon">
+              <IndianRupee size={17} />
+            </span>
+            <span>
+              <small>Price</small>
+              <strong>
+                {formattedPrice === "Not specified"
+                  ? formattedPrice
+                  : `₹${formattedPrice}`}
+              </strong>
+            </span>
+          </div>
 
-      <p>
-        <strong>Price:</strong> ₹
-        {service.price}
-      </p>
+          <div className="service-approval-card__highlight service-approval-card__highlight--purple">
+            <span className="service-approval-card__highlight-icon">
+              <Clock3 size={17} />
+            </span>
+            <span>
+              <small>Duration</small>
+              <strong>{formattedDuration}</strong>
+            </span>
+          </div>
+        </div>
 
-      <p>
-        <strong>Duration:</strong>{" "}
-        {service.duration} mins
-      </p>
+        {service.description ? (
+          <p className="service-approval-card__description">
+            {service.description}
+          </p>
+        ) : (
+          <p className="service-approval-card__description service-approval-card__description--muted">
+            No service description provided.
+          </p>
+        )}
 
-      {/* GENDER DISPLAY */}
+        <div className="service-approval-card__gender">
+          <Users size={16} />
+          <span>For</span>
+          <strong>{gender}</strong>
+        </div>
 
-      <p>
-        <strong>Gender:</strong>{" "}
-        {service.gender === "male" &&
-          "👨 Male"}
+        <div className="service-approval-card__details">
+          <div className="service-approval-card__detail">
+            <span className="service-approval-card__detail-icon service-approval-card__detail-icon--blue">
+              <Store size={16} />
+            </span>
+            <span className="service-approval-card__detail-label">
+              Barber Shop
+            </span>
+            <strong>
+              {barber?.shopName || "Shop unavailable"}
+            </strong>
+          </div>
 
-        {service.gender ===
-          "female" && "👩 Female"}
+          <div className="service-approval-card__detail">
+            <span className="service-approval-card__detail-icon service-approval-card__detail-icon--green">
+              <MapPin size={16} />
+            </span>
+            <span className="service-approval-card__detail-label">
+              City
+            </span>
+            <strong>{barber?.city || "Not specified"}</strong>
+          </div>
+        </div>
 
-        {service.gender === "other" &&
-          "⚧ Other"}
+        {isPending ? (
+          <div className="service-approval-card__actions">
+            <button
+              type="button"
+              className="service-approval-card__button service-approval-card__button--approve"
+              onClick={() => onApprove?.(service._id)}
+              disabled={!onApprove}
+            >
+              <CheckCircle2 size={17} />
+              Approve
+            </button>
 
-        {!service.gender && "N/A"}
-      </p>
-
-      {/* DESCRIPTION */}
-
-      {service.description && (
-        <p className="description">
-          <strong>Description:</strong>{" "}
-          {service.description}
-        </p>
-      )}
-
-      <p>
-        <strong>Barber Shop:</strong>{" "}
-        {barber?.shopName || "N/A"}
-      </p>
-
-      <p>
-        <strong>City:</strong>{" "}
-        {barber?.city || "N/A"}
-      </p>
-
-      <div
-        className={`status ${service.status?.toLowerCase()}`}
-      >
-        {service.status}
+            <button
+              type="button"
+              className="service-approval-card__button service-approval-card__button--reject"
+              onClick={() => onReject?.(service._id)}
+              disabled={!onReject}
+            >
+              <XCircle size={17} />
+              Reject
+            </button>
+          </div>
+        ) : (
+          <div className="service-approval-card__reviewed">
+            <CheckCircle2 size={16} />
+            This service has been reviewed.
+          </div>
+        )}
       </div>
-
-      <div className="actions">
-        <button
-          className="approve-btn"
-          onClick={() =>
-            onApprove(service._id)
-          }
-        >
-          Approve
-        </button>
-
-        <button
-          className="reject-btn"
-          onClick={() =>
-            onReject(service._id)
-          }
-        >
-          Reject
-        </button>
-      </div>
-    </div>
+    </article>
   );
 };
 

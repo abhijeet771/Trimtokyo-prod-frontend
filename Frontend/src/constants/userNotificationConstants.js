@@ -1,0 +1,90 @@
+export const NOTIFICATION_FILTERS = [
+  { label: "All Notifications", value: "all" },
+  { label: "Unread", value: "unread" },
+  { label: "Read", value: "read" },
+];
+
+export const NOTIFICATION_PAGE_SIZE = 5;
+
+export const INITIAL_NOTIFICATIONS = [
+  {
+    id: "NT-1001",
+    title: "Booking Confirmed",
+    message: "Your appointment has been confirmed successfully.",
+    type: "booking",
+    read: false,
+    createdAt: "2026-10-20T09:30:00",
+  },
+  {
+    id: "NT-1002",
+    title: "Payment Successful",
+    message: "Your payment has been processed successfully.",
+    type: "payment",
+    read: false,
+    createdAt: "2026-10-19T16:45:00",
+  },
+  {
+    id: "NT-1003",
+    title: "Booking Reminder",
+    message: "Your upcoming salon appointment is scheduled soon.",
+    type: "booking",
+    read: true,
+    createdAt: "2026-10-19T11:20:00",
+  },
+  {
+    id: "NT-1004",
+    title: "Offer Available",
+    message: "Check available services and offers at your favorite salon.",
+    type: "offer",
+    read: true,
+    createdAt: "2026-10-18T14:10:00",
+  },
+  {
+    id: "NT-1005",
+    title: "Profile Updated",
+    message: "Your profile information has been updated.",
+    type: "account",
+    read: true,
+    createdAt: "2026-10-18T10:00:00",
+  },
+  {
+    id: "NT-1006",
+    title: "Booking Cancelled",
+    message: "Your booking cancellation has been processed.",
+    type: "booking",
+    read: false,
+    createdAt: "2026-10-17T17:30:00",
+  },
+  {
+    id: "NT-1007",
+    title: "Refund Update",
+    message: "Your refund request has been updated.",
+    type: "payment",
+    read: true,
+    createdAt: "2026-10-17T12:15:00",
+  },
+  {
+    id: "NT-1008",
+    title: "Welcome to TrimTokyo",
+    message: "Explore salons, services, and convenient booking options.",
+    type: "account",
+    read: true,
+    createdAt: "2026-10-16T09:00:00",
+  },
+  {
+    id: "NT-1009",
+    title: "Appointment Reminder",
+    message: "Remember to arrive on time for your upcoming appointment.",
+    type: "booking",
+    read: false,
+    createdAt: "2026-10-15T15:40:00",
+  },
+  {
+    id: "NT-1010",
+    title: "New Service Available",
+    message: "Discover new services offered by participating salons.",
+    type: "offer",
+    read: true,
+    createdAt: "2026-10-14T13:25:00",
+  },
+];

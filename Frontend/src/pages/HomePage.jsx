@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-import SplashScreen from "../sections/SplashSection/SplashScreen";
-import OptionalSection from "../sections/OptionalSection/OptionalSection";
-import HeaderSection from "../sections/HeaderSection/HeaderSection";
-import ReelSection from "../sections/ReelSection/ReelSection";
-import SoloBarbersSection from "../sections/SoloBarbersSection/SoloBarbersSection";
-import Hero from "../components/organisms/Hero/Hero";
-import Services from "../components/organisms/Services/Services";
-import Testimonial from "../components/organisms/Testimonial/Testimonial";
-import MainFooter from "../components/organisms/MainFooter/MainFooter";
+import HeaderSection from "../sections/HomePage/HeaderSection/HeaderSection";
+import SplashScreen from "../sections/Homepage/SplashSection/SplashScreen";
+import OptionalSection from "../sections/HomePage/OptionalSection/OptionalSection";
+import ExploreCategory from "../sections/HomePage/ExploreCategory/ExploreCategory";
+import EventSection from "../sections/HomePage/EventSection/EventSection";
+import SubscriptionSection from "../sections/HomePage/SubscriptionSection/SubscriptionSection";
+import ReelSection from "../sections/HomePage/ReelSection/ReelSection";
+
+import Hero from "../components/website/Hero/Hero";
+import Services from "../components/website/Services/Services";
+import Testimonial from "../components/website/Testimonial/Testimonial";
+import MainFooter from "../components/website/MainFooter/MainFooter";
+
+import "./HomePage.scss";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
@@ -21,23 +26,33 @@ const HomePage = () => {
     }
   }, []);
 
-  return (
-    <>
-      {loading && <SplashScreen onFinish={() => setLoading(false)} />}
+  const handleSplashFinish = () => {
+    localStorage.setItem("splashShown", "true");
+    setLoading(false);
+  };
 
-      {!loading && (
+  return (
+    <main className="home-page">
+      {loading ? (
+        <SplashScreen onFinish={handleSplashFinish} />
+      ) : (
         <>
           <HeaderSection />
-          <Hero/>
-          <OptionalSection/>
-          <ReelSection/>
-          <Services />
-          <SoloBarbersSection />
-          <Testimonial/>
+
+          <div className="home-page__content">
+            <Hero />
+            <ExploreCategory />
+            <OptionalSection />
+            <Services />
+            <EventSection />
+            <ReelSection />
+            <SubscriptionSection />
+            <Testimonial />
+          </div>
           <MainFooter />
         </>
       )}
-    </>
+    </main>
   );
 };
 

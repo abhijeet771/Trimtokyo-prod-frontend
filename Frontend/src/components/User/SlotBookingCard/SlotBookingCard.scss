@@ -1,0 +1,407 @@
+.slot-booking-card {
+  display: grid;
+  grid-template-columns:
+    minmax(230px, 1.25fr)
+    minmax(155px, 0.8fr)
+    minmax(155px, 0.7fr)
+    minmax(130px, auto);
+
+  align-items: center;
+  gap: 22px;
+
+  width: 100%;
+  min-width: 0;
+  padding: 18px 20px;
+
+  border: 1px solid #e5edf8;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgb(24 48 82 / 3%);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    border-color: #cfe0ff;
+    box-shadow: 0 7px 22px rgb(24 48 82 / 6%);
+    transform: translateY(-1px);
+  }
+
+  &__salon {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    min-width: 0;
+  }
+
+  &__salon-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+
+    border: 1px solid #d8e8ff;
+    border-radius: 13px;
+    color: #0878ff;
+    background: #edf5ff;
+  }
+
+  &__salon-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__top-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 6px;
+  }
+
+  &__eyebrow {
+    color: #8190a8;
+    font-size: 10px;
+    font-weight: 650;
+  }
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 750;
+    line-height: 1.2;
+    white-space: nowrap;
+
+    &--completed {
+      color: #087f52;
+      background: #e3f8ee;
+    }
+
+    &--cancelled {
+      color: #d92d3a;
+      background: #ffeaec;
+    }
+
+    &--no-show {
+      color: #b95c00;
+      background: #fff0d9;
+    }
+
+    &--pending {
+      color: #075cff;
+      background: #e7f1ff;
+    }
+  }
+
+  &__salon-name {
+    overflow: hidden;
+    margin: 0 0 8px;
+
+    color: #14264d;
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__location,
+  &__booking-id {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin: 0;
+
+    color: #7184a3;
+    font-size: 11px;
+    line-height: 1.6;
+
+    svg {
+      flex: 0 0 14px;
+      margin-top: 2px;
+      color: #7189ad;
+    }
+
+    span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__location {
+    margin-bottom: 6px;
+  }
+
+  &__booking-id {
+    overflow-wrap: anywhere;
+  }
+
+  &__service {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: 4px 22px;
+
+    border-left: 1px solid #e5edf7;
+  }
+
+  &__section-label {
+    margin: 0 0 12px;
+    color: #526784;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  &__service-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  &__service-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid #e0ecff;
+    border-radius: 11px;
+    color: #0878ff;
+    background: #edf5ff;
+  }
+
+  &__service-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  &__service-name {
+    overflow: hidden;
+    color: #233b60;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+  }
+
+  &__slot-count {
+    color: #8190a8;
+    font-size: 11px;
+  }
+
+  &__schedule {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 4px 22px;
+
+    border-left: 1px solid #e5edf7;
+  }
+
+  &__schedule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+
+    color: #526b91;
+    font-size: 12px;
+    line-height: 1.5;
+
+    svg {
+      flex: 0 0 17px;
+      margin-top: 1px;
+      color: #7189ad;
+    }
+
+    span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  /* Booking price */
+  &__price {
+    grid-column: 1 / -1;
+    justify-self: end;
+
+    margin-top: -8px;
+    color: #14264d;
+    font-size: 14px;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  &__details-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    min-height: 40px;
+    padding: 0 13px;
+
+    border: 1px solid #bcd5ff;
+    border-radius: 10px;
+
+    color: #075cff;
+    background: #fff;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+
+    &:hover {
+      border-color: #0878ff;
+      background: #f0f6ff;
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgb(8 120 255 / 25%);
+      outline-offset: 2px;
+    }
+  }
+
+  &__action-icon {
+    display: none;
+    place-items: center;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+
+    border-radius: 9px;
+    color: #6d86a9;
+    background: #f4f7fc;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .slot-booking-card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: 18px;
+
+    &__service {
+      padding: 15px 0 0;
+      border-top: 1px solid #e5edf7;
+      border-left: 0;
+    }
+
+    &__schedule {
+      padding: 15px 0 0;
+      border-top: 1px solid #e5edf7;
+      border-left: 0;
+    }
+
+    &__price {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+
+    &__actions {
+      justify-content: flex-start;
+      padding-top: 15px;
+      border-top: 1px solid #e5edf7;
+    }
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .slot-booking-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+    padding: 16px;
+    border-radius: 14px;
+
+    &__salon {
+      gap: 11px;
+    }
+
+    &__salon-icon {
+      flex-basis: 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+    }
+
+    &__salon-name {
+      font-size: 14px;
+      white-space: normal;
+    }
+
+    &__service {
+      padding: 15px 0;
+      border-top: 1px solid #e5edf7;
+      border-bottom: 1px solid #e5edf7;
+    }
+
+    &__section-label {
+      margin-bottom: 10px;
+    }
+
+    &__service-name {
+      font-size: 12px;
+    }
+
+    &__schedule {
+      gap: 10px;
+      padding: 0;
+      border-top: 0;
+    }
+
+    &__price {
+      grid-column: auto;
+      justify-self: start;
+      margin-top: 0;
+      font-size: 15px;
+    }
+
+    &__actions {
+      justify-content: space-between;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    &__details-button {
+      flex: 1;
+      min-height: 42px;
+    }
+
+    &__action-icon {
+      display: grid;
+    }
+  }
+}

@@ -10,7 +10,7 @@ getAdminReels,
 createReel as createReelAPI,
 updateReel as updateReelAPI,
 deleteReel as deleteReelAPI,
-} from "../services/api";
+} from "../services/reel.services.js";
 
 const useReel = () => {
 

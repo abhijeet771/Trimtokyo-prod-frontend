@@ -1,4 +1,18 @@
-import {  LayoutDashboard,  User,  ClipboardList,  CalendarDays,  Globe,  Settings,} from "lucide-react";
+import {
+  LayoutDashboard,
+  UserRound,
+  UsersRound,
+  Scissors,
+  ClipboardList,
+  CalendarDays,
+  Globe,
+  ChartNoAxesCombined,
+  Wallet,
+  CreditCard,
+  Receipt,
+  Headset,
+  Settings,
+} from "lucide-react";
 
 export const BARBER_SIDEBAR_ITEMS = [
   {
@@ -10,15 +24,21 @@ export const BARBER_SIDEBAR_ITEMS = [
   {
     id: "profile",
     label: "Profile",
-    icon: User,
+    icon: UserRound,
     path: "/barber/profile",
   },
- {
+  {
     id: "service",
-    label: "Service",
-    icon: LayoutDashboard,
+    label: "Services",
+    icon: Scissors,
     path: "/barber/service",
   },
+   {
+  id: "staff",
+  label: "Staff",
+  icon: UsersRound,
+  path: "/barber/staff",
+},
   {
     id: "orders",
     label: "Orders",
@@ -27,7 +47,7 @@ export const BARBER_SIDEBAR_ITEMS = [
   },
   {
     id: "slots",
-    label: "Slots",
+    label: "Slots & Schedule",
     icon: CalendarDays,
     path: "/barber/slots",
   },
@@ -36,6 +56,49 @@ export const BARBER_SIDEBAR_ITEMS = [
     label: "Brand Website",
     icon: Globe,
     path: "/barber/website",
+  },
+  {
+    id: "analytics",
+    label: "Analytics",
+    icon: ChartNoAxesCombined,
+    path: "/barber/analytics",
+  },
+  {
+    id: "earnings",
+    label: "Earnings",
+    icon: Wallet,
+    children: [
+      {
+        id: "earnings-overview",
+        label: "Overview",
+        icon: ChartNoAxesCombined,
+        path: "/barber/earnings",
+      },
+      {
+        id: "earnings-payments-overview",
+        label: "Payments Overview",
+        icon: LayoutDashboard,
+        path: "/barber/earnings/payments/overview",
+      },
+      {
+        id: "earnings-payments",
+        label: "Payments Table",
+        icon: CreditCard,
+        path: "/barber/earnings/payments",
+      },
+      {
+        id: "earnings-expenditure",
+        label: "Expenditure",
+        icon: Receipt,
+        path: "/barber/earnings/expenditure",
+      },
+    ],
+  },
+  {
+    id: "support",
+    label: "Support",
+    icon: Headset,
+    path: "/barber/support",
   },
   {
     id: "settings",

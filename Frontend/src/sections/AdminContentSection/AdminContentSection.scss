@@ -1,0 +1,93 @@
+/* ================================
+   ADMIN CONTENT SECTION
+   Parrot Green Theme
+================================ */
+
+.admin-content-section {
+  --admin-parrot-green: #7cfc00;
+  --admin-green-dark: #268b16;
+  --admin-green-hover: #f0ffe5;
+  --admin-text-primary: #17251a;
+  --admin-text-secondary: #647067;
+  --admin-border: #e7eee5;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  padding: 24px;
+  color: var(--admin-text-primary);
+  background: #f7faf6;
+  box-sizing: border-box;
+
+  /* Keep nested content within the main area */
+  > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Consistent headings */
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--admin-text-primary);
+    overflow-wrap: anywhere;
+  }
+
+  /* Form controls */
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Consistent green focus states */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    &:focus-visible {
+      outline: 2px solid var(--admin-green-dark);
+      outline-offset: 3px;
+    }
+  }
+
+  /* Tables should scroll instead of breaking the layout */
+  table {
+    max-width: 100%;
+  }
+
+  /* Existing section content */
+  &__content {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 1024px) {
+  .admin-content-section {
+    padding: 20px;
+  }
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 768px) {
+  .admin-content-section {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-content-section {
+    padding: 12px;
+  }
+}

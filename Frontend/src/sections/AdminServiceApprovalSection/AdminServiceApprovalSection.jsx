@@ -1,5 +1,4 @@
-import React from "react";
-import useAdminServiceApprovals from "../../hooks/useAdminServiceApprovals";
+import useAdminServiceApprovals from "../../hooks/admin/useAdminServiceApprovals";
 import ServiceApprovalCard from "../../components/molecules/ServiceApprovalCard/ServiceApprovalCard";
 import "./AdminServiceApprovalSection.scss";
 
@@ -11,17 +10,33 @@ const AdminServiceApprovalSection = () => {
     error,
     approve,
     reject,
+    refresh,
   } = useAdminServiceApprovals();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="admin-service-approval-section">
+        <h3>Pending Service Approvals</h3>
+        <p>Loading pending services...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-service-approval-section">
       <h3>Pending Service Approvals</h3>
 
-      {error && <div className="error">{error}</div>}
+      {error && (
+        <div className="error" role="alert">
+          <p>{error}</p>
 
-      {services.length === 0 ? (
+          <button type="button" onClick={() => refresh().catch(() => {})}>
+            Retry
+          </button>
+        </div>
+      )}
+
+      {!error && services.length === 0 ? (
         <p className="empty">
           No pending service approvals.
         </p>

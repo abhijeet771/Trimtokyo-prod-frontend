@@ -1,18 +1,28 @@
 import React, { useState } from "react";
-import AdminHeaderSection from "../sections/AdminHeaderSection/AdminHeaderSection";
-import AdminTabSection from "../sections/AdminTabSection/AdminTabSection";
+
+import AdminSidebar from "../sections/AdminSidebar/AdminSidebar";
+import AdminTopbar from "../sections/AdminTopbar/AdminTopbar";
+import AdminContentSection from "../sections/AdminContentSection/AdminContentSection";
+
+import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   return (
     <div className="admin-dashboard">
-      <AdminHeaderSection
+      <AdminSidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
 
-      <AdminTabSection activeTab={activeTab} />
+      <div className="admin-dashboard__main">
+        <AdminTopbar activeTab={activeTab} />
+
+        <main className="admin-dashboard__content">
+          <AdminContentSection activeTab={activeTab} />
+        </main>
+      </div>
     </div>
   );
 };

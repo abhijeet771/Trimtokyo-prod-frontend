@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./BlogListSection.scss";
-import useBlog from "../../hooks/useBlog";
+import useBlog from "../../hooks/website/useBlog";
 
 const BlogListSection = () => {
   const { blogs, loading, error, fetchBlogs } = useBlog();

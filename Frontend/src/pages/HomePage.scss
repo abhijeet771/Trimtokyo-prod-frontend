@@ -1,0 +1,44 @@
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: #ffffff;
+  color: #0f172a;
+
+  &__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Prevent oversized children from causing horizontal scrolling */
+  &__content > * {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 768px) {
+  .home-page {
+    &__content {
+      width: 100%;
+    }
+  }
+}
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 480px) {
+  .home-page {
+    &__content {
+      width: 100%;
+    }
+  }
+}

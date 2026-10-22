@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./BlogDetailSection.scss";
-import useBlog from "../../hooks/useBlog";
+import useBlog from "../../hooks/website/useBlog";
 
 const BlogDetailSection = () => {
   const { slug } = useParams();

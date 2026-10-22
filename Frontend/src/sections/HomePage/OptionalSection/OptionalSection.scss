@@ -1,0 +1,336 @@
+
+.optional-section {
+  width: 100%;
+  padding: 28px 20px 34px;
+  background: #ffffff;
+
+  &__container {
+    width: min(1280px, 100%);
+    margin: 0 auto;
+  }
+
+  /* =================================
+     TABS
+  ================================= */
+
+  &__tabs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #64748b;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+      &:hover {
+        border-color: #bfdbfe;
+        background: #f8fbff;
+        color: var(--theme-primary);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--theme-primary);
+        outline-offset: 3px;
+      }
+
+      &.active {
+        border-color: var(--theme-primary);
+        background: var(--theme-primary);
+        color: #ffffff;
+        box-shadow: 0 4px 12px var(--theme-shadow);
+      }
+    }
+  }
+
+  /* =================================
+     SERVICE CARDS GRID
+  ================================= */
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e8edf5;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.035);
+    cursor: pointer;
+    transition:
+      transform 0.22s ease,
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: #cbdfff;
+      box-shadow: 0 9px 22px rgba(37, 99, 235, 0.09);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--theme-primary);
+      outline-offset: 3px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 145px;
+    overflow: hidden;
+    background: #f1f5f9;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &__card:hover &__image img {
+    transform: scale(1.04);
+  }
+
+  &__content {
+    padding: 12px;
+
+    h3 {
+      margin: 0 0 6px;
+      color: #0f172a;
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    p {
+      margin: 0;
+      color: #64748b;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+  }
+
+  /* =================================
+     VIEW ALL BUTTON
+  ================================= */
+
+  &__view-all {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-width: 150px;
+      min-height: 40px;
+      padding: 9px 18px;
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: var(--theme-primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        border-color: var(--theme-primary);
+        background: var(--theme-primary);
+        color: #ffffff;
+        box-shadow: 0 5px 14px var(--theme-shadow);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--theme-primary);
+        outline-offset: 3px;
+      }
+
+      svg {
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+      }
+
+      &:hover svg {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 1000px) {
+  .optional-section {
+    padding: 24px 18px 30px;
+
+    &__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    &__image {
+      height: 135px;
+    }
+
+    &__content {
+      padding: 11px;
+
+      h3 {
+        font-size: 0.84rem;
+      }
+
+      p {
+        font-size: 0.72rem;
+      }
+    }
+  }
+}
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 600px) {
+  .optional-section {
+    padding: 20px 13px 26px;
+
+    &__tabs {
+      gap: 8px;
+      margin-bottom: 16px;
+
+      button {
+        flex: 1;
+        min-width: 0;
+        min-height: 36px;
+        padding: 0 10px;
+        border-radius: 9px;
+        font-size: 0.72rem;
+      }
+    }
+
+    &__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    &__card {
+      border-radius: 11px;
+    }
+
+    &__image {
+      height: 115px;
+    }
+
+    &__content {
+      padding: 9px;
+
+      h3 {
+        margin-bottom: 5px;
+        font-size: 0.76rem;
+        line-height: 1.3;
+      }
+
+      p {
+        font-size: 0.66rem;
+      }
+    }
+
+    &__view-all {
+      margin-top: 16px;
+
+      button {
+        width: 100%;
+        min-width: 0;
+        min-height: 38px;
+        padding: 8px 14px;
+        border-radius: 9px;
+        font-size: 0.74rem;
+      }
+    }
+  }
+}
+
+/* =================================
+   SMALL MOBILE
+================================= */
+
+@media (max-width: 380px) {
+  .optional-section {
+    padding: 18px 10px 22px;
+
+    &__tabs {
+      gap: 6px;
+
+      button {
+        padding: 0 7px;
+        font-size: 0.67rem;
+      }
+    }
+
+    &__list {
+      gap: 8px;
+    }
+
+    &__image {
+      height: 100px;
+    }
+
+    &__content {
+      padding: 8px;
+
+      h3 {
+        font-size: 0.7rem;
+      }
+
+      p {
+        font-size: 0.62rem;
+      }
+    }
+
+    &__view-all {
+      margin-top: 14px;
+
+      button {
+        min-height: 36px;
+        font-size: 0.7rem;
+      }
+    }
+  }
+}

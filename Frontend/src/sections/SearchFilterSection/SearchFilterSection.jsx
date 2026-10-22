@@ -1,5 +1,16 @@
 import "./SearchFilterSection.scss";
 
+import {
+  SlidersHorizontal,
+  Search,
+  MapPin,
+  Scissors,
+  Star,
+  BadgeCheck,
+  House,
+  RotateCcw,
+} from "lucide-react";
+
 const SearchFilterSection = ({
   filters,
   query,
@@ -7,171 +18,146 @@ const SearchFilterSection = ({
   clearFilters,
 }) => {
   return (
-    <div className="search-filter">
-
-      {/* Header */}
-
+    <aside className="search-filter">
+      {/* HEADER */}
       <div className="search-filter__header">
-        <h2>Filters</h2>
+        <div className="search-filter__heading">
+          <SlidersHorizontal size={18} />
+          <h2>Filters</h2>
+        </div>
 
         <button
           type="button"
+          className="search-filter__clear"
           onClick={clearFilters}
         >
+          <RotateCcw size={14} />
           Clear All
         </button>
       </div>
 
-      {/* Search */}
-
+      {/* SEARCH */}
       <div className="search-filter__group">
-        <label>Search</label>
+        <label htmlFor="search-filter-keyword">
+          <Search size={16} />
+          Search
+        </label>
 
         <input
+          id="search-filter-keyword"
           type="text"
-          placeholder="Search salon..."
+          placeholder="Search salon or service..."
           value={query.search}
-          onChange={(e) =>
-            updateQuery(
-              "search",
-              e.target.value
-            )
+          onChange={(event) =>
+            updateQuery("search", event.target.value)
           }
         />
       </div>
 
-      {/* City */}
-
+      {/* CITY */}
       <div className="search-filter__group">
-        <label>City</label>
+        <label htmlFor="search-filter-city">
+          <MapPin size={16} />
+          City
+        </label>
 
         <select
+          id="search-filter-city"
           value={query.city}
-          onChange={(e) =>
-            updateQuery(
-              "city",
-              e.target.value
-            )
+          onChange={(event) =>
+            updateQuery("city", event.target.value)
           }
         >
-          <option value="">
-            All Cities
-          </option>
+          <option value="">All Cities</option>
 
           {filters?.cities?.map((city) => (
-            <option
-              key={city}
-              value={city}
-            >
+            <option key={city} value={city}>
               {city}
             </option>
           ))}
         </select>
       </div>
 
-      {/* Business Type */}
-
+      {/* BUSINESS TYPE */}
       <div className="search-filter__group">
-        <label>Business Type</label>
+        <label htmlFor="search-filter-business-type">
+          <Scissors size={16} />
+          Business Type
+        </label>
 
         <select
+          id="search-filter-business-type"
           value={query.businessType}
-          onChange={(e) =>
-            updateQuery(
-              "businessType",
-              e.target.value
-            )
+          onChange={(event) =>
+            updateQuery("businessType", event.target.value)
           }
         >
-          <option value="">
-            All
-          </option>
+          <option value="">All Types</option>
 
-          {filters?.businessTypes?.map(
-            (type) => (
-              <option
-                key={type}
-                value={type}
-              >
-                {type.charAt(0).toUpperCase() +
-                  type.slice(1)}
-              </option>
-            )
-          )}
+          {filters?.businessTypes?.map((type) => (
+            <option key={type} value={type}>
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </option>
+          ))}
         </select>
       </div>
 
-      {/* Rating */}
-
+      {/* RATING */}
       <div className="search-filter__group">
-        <label>
+        <label htmlFor="search-filter-rating">
+          <Star size={16} />
           Minimum Rating
         </label>
 
         <select
+          id="search-filter-rating"
           value={query.rating}
-          onChange={(e) =>
-            updateQuery(
-              "rating",
-              e.target.value
-            )
+          onChange={(event) =>
+            updateQuery("rating", event.target.value)
           }
         >
-          <option value="">
-            All Ratings
-          </option>
+          <option value="">All Ratings</option>
 
-          {filters?.ratings?.map(
-            (rating) => (
-              <option
-                key={rating}
-                value={rating}
-              >
-                {rating}★ & Above
-              </option>
-            )
-          )}
+          {filters?.ratings?.map((rating) => (
+            <option key={rating} value={rating}>
+              {rating}★ &amp; Above
+            </option>
+          ))}
         </select>
       </div>
 
-      {/* Featured */}
-
+      {/* FEATURED */}
       <div className="search-filter__check">
         <label>
           <input
             type="checkbox"
-            checked={query.featured}
-            onChange={(e) =>
-              updateQuery(
-                "featured",
-                e.target.checked
-              )
+            checked={Boolean(query.featured)}
+            onChange={(event) =>
+              updateQuery("featured", event.target.checked)
             }
           />
 
-          Featured Only
+          <BadgeCheck size={17} className="search-filter__check-icon" />
+          <span>Featured Shops Only</span>
         </label>
       </div>
 
-      {/* Home Service */}
-
+      {/* HOME SERVICE */}
       <div className="search-filter__check">
         <label>
           <input
             type="checkbox"
-            checked={query.delivery}
-            onChange={(e) =>
-              updateQuery(
-                "delivery",
-                e.target.checked
-              )
+            checked={Boolean(query.delivery)}
+            onChange={(event) =>
+              updateQuery("delivery", event.target.checked)
             }
           />
 
-          Home Service Available
+          <House size={17} className="search-filter__check-icon" />
+          <span>Home Service Available</span>
         </label>
       </div>
-    </div>
+    </aside>
   );
 };
 

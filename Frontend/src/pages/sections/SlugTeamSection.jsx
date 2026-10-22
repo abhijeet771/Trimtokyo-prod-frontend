@@ -1,107 +1,161 @@
+
+import { useMemo } from "react";
 import {
-  User,
-  Briefcase,
-  Award,
+  Users,
+  Star,
+  MapPin,
+  Scissors,
+  ArrowRight,
 } from "lucide-react";
 
 import "./SlugTeamSection.scss";
 
-const SlugTeamSection = ({
-  barbers = [],
-}) => {
-  if (!barbers.length) {
+const getBarberName = (barber) =>
+  barber?.name ||
+  barber?.fullName ||
+  barber?.user?.name ||
+  barber?.profile?.name ||
+  "Professional Barber";
+
+const getBarberImage = (barber) =>
+  barber?.profileImage ||
+  barber?.avatar ||
+  barber?.imageUrl ||
+  barber?.image ||
+  barber?.user?.profileImage ||
+  "";
+
+const getBarberRole = (barber) =>
+  barber?.specialization ||
+  barber?.designation ||
+  barber?.roleTitle ||
+  "Professional Barber";
+
+const getBarberRating = (barber) => {
+  const rating = Number(barber?.rating ?? barber?.averageRating);
+  return Number.isFinite(rating) && rating > 0
+    ? rating.toFixed(1)
+    : null;
+};
+
+const SlugTeamSection = ({ barbers = [], onSelectBarber }) => {
+  const teamMembers = useMemo(
+    () => (Array.isArray(barbers) ? barbers : []),
+    [barbers]
+  );
+
+  if (teamMembers.length === 0) {
     return null;
   }
 
+  const handleSelectBarber = (barber) => {
+    if (typeof onSelectBarber === "function") {
+      onSelectBarber(barber);
+      return;
+    }
+
+    document
+      .getElementById("salon-services")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <section className="slug-team-section">
-      <div className="slug-container">
-        <div className="section-header">
-          <span>OUR TEAM</span>
+    <section className="slug-team" id="salon-team">
+      <div className="slug-team__header">
+        <div className="slug-team__heading">
+          <span className="slug-team__heading-icon">
+            <Users size={20} />
+          </span>
 
-          <h2>
-            Meet Our Expert Barbers
-          </h2>
-
-          <p>
-            Skilled professionals
-            dedicated to providing
-            exceptional grooming
-            services.
-          </p>
+          <div>
+            <h2>Meet Our Barbers</h2>
+            <p>
+              Skilled professionals ready to help you look your best.
+            </p>
+          </div>
         </div>
 
-        <div className="team-grid">
-          {barbers.map(
-            (barber, index) => (
-              <div
-                key={
-                  barber._id ??
-                  index
-                }
-                className="team-card"
-              >
-                <div className="team-image">
-                  {barber.image ? (
-                    <img
-                      src={barber.image}
-                      alt={
-                        barber.name
-                      }
-                    />
-                  ) : (
-                    <div className="team-placeholder">
-                      <User
-                        size={48}
-                      />
-                    </div>
-                  )}
-                </div>
+        <span className="slug-team__count">
+          {teamMembers.length}{" "}
+          {teamMembers.length === 1 ? "professional" : "professionals"}
+        </span>
+      </div>
 
-                <div className="team-content">
-                  <h3>
-                    {barber.name}
-                  </h3>
+      <div className="slug-team__grid">
+        {teamMembers.map((barber, index) => {
+          const barberId =
+            barber?._id || barber?.id || `barber-${index}`;
 
-                  {barber.designation && (
-                    <div className="team-meta">
-                      <Briefcase
-                        size={16}
-                      />
+          const name = getBarberName(barber);
+          const image = getBarberImage(barber);
+          const rating = getBarberRating(barber);
+          const role = getBarberRole(barber);
 
-                      <span>
-                        {
-                          barber.designation
-                        }
-                      </span>
-                    </div>
-                  )}
-
-                  {barber.specialization && (
-                    <div className="team-meta">
-                      <Award
-                        size={16}
-                      />
-
-                      <span>
-                        {
-                          barber.specialization
-                        }
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="experience-badge">
-                    {
-                      barber.experience
-                    }{" "}
-                    Years Experience
+          return (
+            <article className="slug-team__card" key={barberId}>
+              <div className="slug-team__image-wrap">
+                {image ? (
+                  <img
+                    className="slug-team__image"
+                    src={image}
+                    alt={name}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="slug-team__image-placeholder">
+                    <Scissors size={34} />
+                    <span>Barber</span>
                   </div>
-                </div>
+                )}
+
+                <span className="slug-team__image-label">
+                  <span className="slug-team__status-dot" />
+                  Professional
+                </span>
               </div>
-            )
-          )}
-        </div>
+
+              <div className="slug-team__body">
+                <div className="slug-team__name-row">
+                  <h3>{name}</h3>
+
+                  {rating && (
+                    <span className="slug-team__rating">
+                      <Star size={14} fill="currentColor" />
+                      {rating}
+                    </span>
+                  )}
+                </div>
+
+                <p className="slug-team__role">
+                  <Scissors size={14} />
+                  {role}
+                </p>
+
+                {barber?.experience && (
+                  <p className="slug-team__experience">
+                    {barber.experience} experience
+                  </p>
+                )}
+
+                {barber?.address && (
+                  <p className="slug-team__location">
+                    <MapPin size={14} />
+                    <span>{barber.address}</span>
+                  </p>
+                )}
+
+                <button
+                  type="button"
+                  className="slug-team__button"
+                  onClick={() => handleSelectBarber(barber)}
+                >
+                  Choose barber
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

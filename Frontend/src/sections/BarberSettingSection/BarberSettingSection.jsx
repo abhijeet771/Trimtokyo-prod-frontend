@@ -1,92 +1,118 @@
+import { useState } from "react";
 import {
+  UserRound,
   Bell,
-  Lock,
+  Palette,
   ShieldCheck,
-  User,
 } from "lucide-react";
+
+import AccountSettings from "./AccountSettings";
+import NotificationSettings from "./NotificationSettings";
+import ThemeSettings from "./ThemeSettings";
 
 import "./BarberSettingSection.scss";
 
+const SETTINGS_TABS = [
+  {
+    id: "account",
+    label: "Account & Security",
+    icon: UserRound,
+  },
+  {
+    id: "notifications",
+    label: "Notification Settings",
+    icon: Bell,
+  },
+  {
+    id: "theme",
+    label: "Theme Settings",
+    icon: Palette,
+  },
+  {
+    id: "access",
+    label: "Role-Based Access",
+    icon: ShieldCheck,
+  },
+];
+
 const BarberSettingSection = () => {
+  const [activeTab, setActiveTab] = useState("account");
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "account":
+        return <AccountSettings />;
+
+      case "notifications":
+        return <NotificationSettings />;
+
+      case "theme":
+        return <ThemeSettings />;
+
+      case "access":
+        return (
+          <div className="settings-placeholder">
+            <ShieldCheck size={36} />
+            <h3>Role-Based Access</h3>
+            <p>
+              Manage role permissions and access controls for your account.
+            </p>
+            <span className="settings-coming-soon">
+              Coming Soon
+            </span>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <section className="barber-setting-section">
       <div className="page-header">
         <h2>Settings</h2>
-
         <p>
-          Manage your account preferences and
-          dashboard settings.
+          Manage your account, notifications, appearance, and access.
         </p>
       </div>
 
-      <div className="settings-grid">
-        {/* Account */}
+      {/* Four settings tabs */}
+      <div
+        className="settings-tabs"
+        role="tablist"
+        aria-label="Settings"
+      >
+        {SETTINGS_TABS.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
 
-        <div className="setting-card">
-          <div className="card-header">
-            <User size={22} />
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              id={`settings-tab-${tab.id}`}
+              aria-selected={isActive}
+              aria-controls={`settings-panel-${tab.id}`}
+              className={`settings-tab ${isActive ? "active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <Icon size={19} />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
 
-            <h3>Account</h3>
-          </div>
-
-          <p>
-            Update your profile information and
-            password.
-          </p>
-
-          <button>Manage Account</button>
-        </div>
-
-        {/* Notifications */}
-
-        <div className="setting-card">
-          <div className="card-header">
-            <Bell size={22} />
-
-            <h3>Notifications</h3>
-          </div>
-
-          <p>
-            Configure email and order
-            notifications.
-          </p>
-
-          <button>Coming Soon</button>
-        </div>
-
-        {/* Security */}
-
-        <div className="setting-card">
-          <div className="card-header">
-            <ShieldCheck size={22} />
-
-            <h3>Security</h3>
-          </div>
-
-          <p>
-            Manage password, sessions and account
-            protection.
-          </p>
-
-          <button>Coming Soon</button>
-        </div>
-
-        {/* Privacy */}
-
-        <div className="setting-card">
-          <div className="card-header">
-            <Lock size={22} />
-
-            <h3>Privacy</h3>
-          </div>
-
-          <p>
-            Control your account privacy and data
-            preferences.
-          </p>
-
-          <button>Coming Soon</button>
-        </div>
+      {/* Active tab content */}
+      <div
+        className="settings-content"
+        role="tabpanel"
+        id={`settings-panel-${activeTab}`}
+        aria-labelledby={`settings-tab-${activeTab}`}
+      >
+        {renderContent()}
       </div>
     </section>
   );

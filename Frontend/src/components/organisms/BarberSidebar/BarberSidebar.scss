@@ -1,84 +1,362 @@
 .barber-sidebar {
-  width: 260px;
-  background: #ffffff;
-  border-right: 1px solid #ececec;
+  width: 238px;
+  min-width: 238px;
   height: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e6eee3;
   position: sticky;
   top: 0;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #dce8d7 transparent;
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px;
+    margin: 0 15px;
+    border-bottom: 1px solid #e8eee5;
+  }
+
+  &__logo {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: #65f500;
+    color: #19350c;
+    box-shadow: 0 3px 10px rgba(101, 245, 0, 0.18);
+
+    span {
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1;
+    }
+  }
+
+  &__brand-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+
+    h2 {
+      margin: 0;
+      color: #17251a;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+    }
+
+    > span {
+      color: #7a8879;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.7px;
+    }
+  }
+
+  &__section-label {
+    padding: 0 26px;
+    margin: 24px 0 12px;
+    color: #899487;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
 
   &__nav {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 24px 16px;
+    gap: 5px;
+    padding: 0 15px;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   &__item {
+    width: 100%;
+    min-height: 43px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: 14px;
-
-    padding: 14px 16px;
-
-    border-radius: 12px;
-
+    gap: 13px;
+    padding: 11px 13px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    background: transparent;
     text-decoration: none;
-
-    color: #5b6475;
-
-    transition: 0.25s ease;
+    text-align: left;
+    color: #526052;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
 
     svg {
       flex-shrink: 0;
+      color: #899688;
+      transition: color 0.2s ease;
     }
 
     span {
-      font-size: 15px;
-      font-weight: 500;
+      flex: 1;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 550;
+      line-height: 1.4;
     }
 
     &:hover {
-      background: #f5f7ff;
-      color: #4f46e5;
+      background: #f5faf2;
+      color: #27851b;
+
+      svg {
+        color: #27851b;
+      }
     }
 
     &.active {
-      background: #eef2ff;
-      color: #4f46e5;
-      font-weight: 600;
+      background: #efffe6;
+      border-color: #d5f5c4;
+      color: #267e17;
+
+      svg {
+        color: #398c20;
+      }
+
+      > span {
+        font-weight: 650;
+      }
     }
+
+    &:focus-visible {
+      outline: 2px solid #65c93a;
+      outline-offset: 2px;
+    }
+  }
+
+  &__toggle {
+    appearance: none;
+    flex-shrink: 0;
+  }
+
+  &__chevron {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+    color: #899688 !important;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 2px 0 5px 19px;
+    padding-left: 12px;
+    border-left: 1px solid #e1ebdc;
+    animation: barber-submenu-in 0.18s ease;
+  }
+
+  &__subitem {
+    min-height: 38px;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 9px;
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding: 0 15px 20px;
+  }
+
+  &__footer &__section-label {
+    margin-top: 28px;
+  }
+
+  &__workspace-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 16px 11px 0;
+    margin-top: 4px;
+    border-top: 1px solid #e8eee5;
+    color: #718071;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  &__status-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #42bd35;
+  }
+}
+
+@keyframes barber-submenu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @media (max-width: 992px) {
   .barber-sidebar {
     width: 220px;
+    min-width: 220px;
+
+    &__brand {
+      padding: 22px 12px;
+      margin: 0 10px;
+    }
+
+    &__nav {
+      padding: 0 10px;
+    }
+
+    &__section-label {
+      padding: 0 20px;
+    }
+
+    &__item {
+      gap: 10px;
+      padding: 11px;
+    }
+
+    &__footer {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
   }
 }
 
 @media (max-width: 768px) {
   .barber-sidebar {
     width: 100%;
+    min-width: 0;
+    min-height: auto;
     height: auto;
     position: static;
     border-right: none;
-    border-bottom: 1px solid #ececec;
+    border-bottom: 1px solid #e6eee3;
+    overflow: visible;
+
+    &__brand {
+      padding: 14px 16px;
+      margin: 0;
+    }
+
+    &__logo {
+      width: 38px;
+      height: 38px;
+    }
+
+    &__section-label {
+      margin: 15px 0 9px;
+      padding: 0 16px;
+    }
 
     &__nav {
       flex-direction: row;
+      align-items: flex-start;
+      gap: 7px;
       overflow-x: auto;
-      padding: 12px;
+      overflow-y: visible;
+      padding: 0 12px 12px;
+      scrollbar-width: none;
 
       &::-webkit-scrollbar {
         display: none;
       }
+    }
 
-      scrollbar-width: none;
+    &__group {
+      position: relative;
+      flex: 0 0 auto;
     }
 
     &__item {
+      width: auto;
+      min-height: 40px;
       flex: 0 0 auto;
+      gap: 8px;
+      padding: 10px 12px;
       white-space: nowrap;
+
+      span {
+        flex: 0 0 auto;
+        font-size: 12px;
+      }
     }
+
+    &__toggle {
+      min-width: 125px;
+    }
+
+    &__submenu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      z-index: 20;
+      width: 175px;
+      margin: 0;
+      padding: 7px;
+      border: 1px solid #e6eee3;
+      border-radius: 11px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(26, 55, 20, 0.1);
+    }
+
+    &__subitem {
+      width: 100%;
+      min-height: 37px;
+    }
+
+    &__footer {
+      display: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barber-sidebar,
+  .barber-sidebar * {
+    animation: none !important;
+    transition: none !important;
   }
 }

@@ -1,30 +1,19 @@
 import React, { useState } from "react";
-import {
-  Bell,
-  Menu,
-  ChevronDown,
-} from "lucide-react";
+import {  Bell,  Menu,  ChevronDown,} from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
-import useBarberProfile from "../../hooks/useBarberProfile";
+import useBarberProfile from "../../hooks/barber/useBarberProfile";
 
-import BarberNotifications from "../../components/molecules/BarberNotification/BarberNotification";
-import BarberProfileMenu from "../../components/molecules/BarberProfileMenu/BarberProfileMenu";
+import BarberNotifications from "../../components/barber/BarberNotification/BarberNotification";
+import BarberProfileMenu from "../../components/barber/BarberProfileMenu/BarberProfileMenu";
 
 import "./BarberHeaderSection.scss";
 
 const BarberHeaderSection = () => {
-  const [notificationOpen, setNotificationOpen] =
-    useState(false);
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-  const [profileOpen, setProfileOpen] =
-    useState(false);
-
-  const {
-    profile,
-    loading,
-  } = useBarberProfile();
-
+  const { profile, loading, error } = useBarberProfile();
   const { logout } = useAuth();
 
   const handleLogout = async () => {
@@ -35,26 +24,57 @@ const BarberHeaderSection = () => {
     }
   };
 
+  // Prefer the barber's personal name over the shop name.
+  const barberName =
+    profile?.name ||
+    profile?.fullName ||
+    profile?.userId?.name ||
+    profile?.user?.name ||
+    profile?.shopName ||
+    "Barber";
+
+  const location = [
+    profile?.city,
+    profile?.state,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  const profileImage =
+    profile?.profileImage ||
+    profile?.userId?.profileImage ||
+    profile?.user?.profileImage;
+
   return (
     <>
       <header className="barber-header">
         {/* Left */}
         <div className="barber-header__left">
-          <div className="barber-header__brand">
-            <div className="barber-header__logo">
-              ✂️
-            </div>
+          <div className="barber-header__welcome">
+            <span className="barber-header__eyebrow">
+              BARBER WORKSPACE
+            </span>
 
-            <div>
-              <h2>TrimTokyo</h2>
+            <h2>
+              Hi {loading ? "there" : barberName}, welcome back!
+            </h2>
 
-              <span>
-                Barber Dashboard
+            <p>
+              Here's what's happening with your shop today.
+            </p>
+
+            {error && (
+              <span role="status" className="barber-header__error">
+                Unable to load your profile.
               </span>
-            </div>
+            )}
           </div>
 
-          <button className="menu-btn">
+          <button
+            type="button"
+            className="menu-btn"
+            aria-label="Toggle menu"
+          >
             <Menu size={22} />
           </button>
         </div>
@@ -62,66 +82,52 @@ const BarberHeaderSection = () => {
         {/* Right */}
         <div className="barber-header__right">
           <button
+            type="button"
             className="notification-btn"
-            onClick={() =>
-              setNotificationOpen(true)
-            }
+            aria-label="Notifications"
+            onClick={() => setNotificationOpen(true)}
           >
             <Bell size={22} />
-
-            <span className="badge">
-              3
-            </span>
+            <span className="badge">3</span>
           </button>
 
           <div className="profile-wrapper">
-            <div
+            <button
+              type="button"
               className="profile"
-              onClick={() =>
-                setProfileOpen(
-                  (prev) => !prev
-                )
-              }
+              onClick={() => setProfileOpen((prev) => !prev)}
+              aria-expanded={profileOpen}
+              aria-label="Open profile menu"
             >
-              <img
-                src={
-                  profile?.profileImage ||
-                  "https://i.pravatar.cc/100"
-                }
-                alt={
-                  profile?.shopName ||
-                  "Profile"
-                }
-              />
+              {profileImage ? (
+                <img
+                  src={profileImage}
+                  alt={`${barberName}'s profile`}
+                />
+              ) : (
+                <div className="profile__avatar" aria-hidden="true">
+                  {barberName.charAt(0).toUpperCase()}
+                </div>
+              )}
 
               <div className="profile__info">
                 <h4>
-                  {loading
-                    ? "Loading..."
-                    : profile?.shopName ||
-                      "TrimTokyo"}
+                  {loading ? "Loading..." : barberName}
                 </h4>
 
                 <span>
                   {loading
                     ? "Loading..."
-                    : `${profile?.city || ""}${
-                        profile?.city &&
-                        profile?.state
-                          ? ", "
-                          : ""
-                      }${profile?.state || ""}`}
+                    : location || profile?.shopName || "Barber"}
                 </span>
               </div>
 
               <ChevronDown size={18} />
-            </div>
+            </button>
 
             <BarberProfileMenu
               open={profileOpen}
-              onClose={() =>
-                setProfileOpen(false)
-              }
+              onClose={() => setProfileOpen(false)}
               onLogout={handleLogout}
             />
           </div>
@@ -130,9 +136,7 @@ const BarberHeaderSection = () => {
 
       <BarberNotifications
         open={notificationOpen}
-        onClose={() =>
-          setNotificationOpen(false)
-        }
+        onClose={() => setNotificationOpen(false)}
       />
     </>
   );

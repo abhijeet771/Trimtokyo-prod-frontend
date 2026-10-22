@@ -1,322 +1,516 @@
-import React, {
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Plus,
+  X,
+  Search,
+  Megaphone,
+  Trash2,
+  Users,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  LoaderCircle,
+  AlertCircle,
+  Send,
+} from "lucide-react";
 
-import useCampaign from "../../hooks/useCampaign";
-
+import useCampaign from "../../hooks/admin/useAdminCampaign";
 import "./AdminCampaignSection.scss";
+
+const INITIAL_FORM_DATA = {
+  title: "",
+  description: "",
+  imageUrl: "",
+  targetAudience: "user",
+  redirectUrl: "",
+};
 
 const AdminCampaignSection = () => {
   const {
-    campaigns,
+    campaigns = [],
     loading,
     fetchCampaigns,
     sendCampaign,
     removeCampaign,
   } = useCampaign();
 
-  const [showModal, setShowModal] =
-    useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [search, setSearch] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
+  const [formError, setFormError] = useState("");
 
-  const [formData, setFormData] =
-    useState({
-      title: "",
-      description: "",
-      imageUrl: "",
-      targetAudience: "user",
-      redirectUrl: "",
-    });
+  const [formData, setFormData] = useState({
+    ...INITIAL_FORM_DATA,
+  });
 
   useEffect(() => {
     fetchCampaigns();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ================= INPUT CHANGE =================
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    const { name, value } = e.target;
 
-      [e.target.name]:
-        e.target.value,
+    setFormData((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+
+    setFormError("");
+  };
+
+  const closeModal = () => {
+    if (submitting) return;
+
+    setShowModal(false);
+    setFormData({ ...INITIAL_FORM_DATA });
+    setFormError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormError("");
+
+    try {
+      setSubmitting(true);
+
+      await sendCampaign(formData);
+
+      setShowModal(false);
+      setFormData({ ...INITIAL_FORM_DATA });
+
+      await fetchCampaigns();
+    } catch (err) {
+      setFormError(
+        err?.response?.data?.message ||
+          err?.message ||
+          "Failed to send campaign. Please try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async (campaign) => {
+    const confirmed = window.confirm(
+      `Delete the campaign "${campaign.title}"?`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setDeletingId(campaign._id);
+      await removeCampaign(campaign._id);
+    } catch (err) {
+      window.alert(
+        err?.response?.data?.message ||
+          err?.message ||
+          "Failed to delete campaign."
+      );
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const filteredCampaigns = campaigns.filter((campaign) => {
+    const query = search.toLowerCase().trim();
+
+    return (
+      !query ||
+      campaign.title?.toLowerCase().includes(query) ||
+      campaign.description?.toLowerCase().includes(query) ||
+      campaign.targetAudience?.toLowerCase().includes(query) ||
+      campaign.status?.toLowerCase().includes(query)
+    );
+  });
+
+  const formatDate = (dateValue) => {
+    if (!dateValue) return "—";
+
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) return "—";
+
+    return date.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
-  // ================= SEND CAMPAIGN =================
-
-  const handleSubmit =
-    async (e) => {
-      e.preventDefault();
-
-      try {
-        await sendCampaign(
-          formData
-        );
-
-        setShowModal(false);
-
-        setFormData({
-          title: "",
-          description: "",
-          imageUrl: "",
-          targetAudience:
-            "user",
-          redirectUrl: "",
-        });
-      } catch (err) {
-        alert(
-          err.response?.data
-            ?.message ||
-            "Failed to send campaign"
-        );
-      }
-    };
+  const normalizedStatus = (status) =>
+    (status || "unknown")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-");
 
   return (
-    <div className="admin-campaign-section">
-      {/* ================= HEADER ================= */}
+    <section className="admin-campaign-section">
+      {/* Header */}
+      <header className="campaign-header">
+        <div className="campaign-header__content">
+          <div className="campaign-header__eyebrow">
+            <Megaphone size={15} />
+            <span>MARKETING MANAGEMENT</span>
+          </div>
 
-      <div className="campaign-header">
-        <div>
           <h2>Campaigns</h2>
 
           <p>
-            Create and send
-            promotional campaigns
-            to users and barbers.
+            Create and send promotional campaigns to users and barbers.
           </p>
         </div>
 
         <button
-          className="add-btn"
-          onClick={() =>
-            setShowModal(true)
-          }
+          type="button"
+          className="campaign-add-btn"
+          onClick={() => {
+            setFormError("");
+            setShowModal(true);
+          }}
         >
-          + Send New Campaign
+          <Plus size={18} />
+          <span>Send New Campaign</span>
         </button>
+      </header>
+
+      {/* Search */}
+      <div className="campaign-toolbar">
+        <div className="campaign-search">
+          <Search size={18} />
+
+          <input
+            type="search"
+            placeholder="Search campaigns..."
+            aria-label="Search campaigns"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          {search && (
+            <button
+              type="button"
+              className="campaign-search__clear"
+              aria-label="Clear search"
+              onClick={() => setSearch("")}
+            >
+              <X size={15} />
+            </button>
+          )}
+        </div>
+
+        <span className="campaign-result-count">
+          {filteredCampaigns.length}{" "}
+          {filteredCampaigns.length === 1 ? "campaign" : "campaigns"}
+        </span>
       </div>
 
-      {/* ================= TABLE ================= */}
+      {/* Campaign table */}
+      <div className="campaign-table-container">
+        <table className="campaign-table">
+          <thead>
+            <tr>
+              <th>Campaign</th>
+              <th>Audience</th>
+              <th>Status</th>
+              <th>Sent At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
 
-      {loading && (
-        <p>Loading campaigns...</p>
-      )}
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={5} className="campaign-table__empty">
+                  <div className="campaign-state">
+                    <LoaderCircle
+                      size={27}
+                      className="campaign-spinner"
+                    />
+                    <span>Loading campaigns...</span>
+                  </div>
+                </td>
+              </tr>
+            ) : filteredCampaigns.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="campaign-table__empty">
+                  <div className="campaign-state">
+                    <div className="campaign-state__icon">
+                      <Megaphone size={25} />
+                    </div>
 
-      {!loading &&
-        campaigns.length ===
-          0 && (
-          <p>
-            No campaigns found
-          </p>
-        )}
+                    <strong>
+                      {search
+                        ? "No matching campaigns"
+                        : "No campaigns found"}
+                    </strong>
 
-      {!loading &&
-        campaigns.length >
-          0 && (
-          <div className="table-container">
-            <table className="campaign-table">
-              <thead>
-                <tr>
-                  <th>Title</th>
+                    <span>
+                      {search
+                        ? "Try a different search term."
+                        : "Create your first promotional campaign to get started."}
+                    </span>
 
-                  <th>
-                    Audience
-                  </th>
-
-                  <th>Status</th>
-
-                  <th>
-                    Sent At
-                  </th>
-
-                  <th>
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {campaigns.map(
-                  (campaign) => (
-                    <tr
-                      key={
-                        campaign._id
-                      }
-                    >
-                      <td>
-                        <div className="campaign-info">
+                    {!search && (
+                      <button
+                        type="button"
+                        className="campaign-state__create-btn"
+                        onClick={() => setShowModal(true)}
+                      >
+                        <Plus size={16} />
+                        Create campaign
+                      </button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              filteredCampaigns.map((campaign) => (
+                <tr key={campaign._id}>
+                  <td>
+                    <div className="campaign-info">
+                      <div className="campaign-info__image">
+                        {campaign.imageUrl ? (
                           <img
-                            src={
-                              campaign.imageUrl
-                            }
-                            alt={
-                              campaign.title
-                            }
+                            src={campaign.imageUrl}
+                            alt=""
+                            loading="lazy"
                           />
+                        ) : (
+                          <ImageIcon size={22} />
+                        )}
+                      </div>
 
-                          <div>
-                            <h4>
-                              {
-                                campaign.title
-                              }
-                            </h4>
+                      <div className="campaign-info__content">
+                        <h4>{campaign.title || "Untitled campaign"}</h4>
+                        <p>
+                          {campaign.description || "No description available."}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
 
-                            <p>
-                              {
-                                campaign.description
-                              }
-                            </p>
-                          </div>
-                        </div>
-                      </td>
+                  <td>
+                    <span
+                      className={`campaign-audience campaign-audience--${normalizedStatus(
+                        campaign.targetAudience
+                      )}`}
+                    >
+                      <Users size={14} />
+                      {campaign.targetAudience || "—"}
+                    </span>
+                  </td>
 
-                      <td>
-                        {
-                          campaign.targetAudience
-                        }
-                      </td>
+                  <td>
+                    <span
+                      className={`campaign-status campaign-status--${normalizedStatus(
+                        campaign.status
+                      )}`}
+                    >
+                      <span className="campaign-status__dot" />
+                      {campaign.status || "Unknown"}
+                    </span>
+                  </td>
 
-                      <td>
-                        <span className="status">
-                          {
-                            campaign.status
-                          }
-                        </span>
-                      </td>
+                  <td>
+                    <span className="campaign-date">
+                      {formatDate(campaign.sentAt)}
+                    </span>
+                  </td>
 
-                      <td>
-                        {new Date(
-                          campaign.sentAt
-                        ).toLocaleString()}
-                      </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="campaign-delete-btn"
+                      onClick={() => handleDelete(campaign)}
+                      disabled={deletingId === campaign._id}
+                      aria-label={`Delete ${campaign.title || "campaign"}`}
+                      title="Delete campaign"
+                    >
+                      {deletingId === campaign._id ? (
+                        <LoaderCircle
+                          size={16}
+                          className="campaign-spinner"
+                        />
+                      ) : (
+                        <Trash2 size={16} />
+                      )}
 
-                      <td>
-                        <button
-                          className="delete-btn"
-                          onClick={() =>
-                            removeCampaign(
-                              campaign._id
-                            )
-                          }
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
+                      <span>
+                        {deletingId === campaign._id
+                          ? "Deleting..."
+                          : "Delete"}
+                      </span>
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
 
-      {/* ================= MODAL ================= */}
-
+      {/* Send campaign modal */}
       {showModal && (
-        <div className="campaign-modal">
-          <div className="campaign-modal__content">
-            <h3>
-              Send Campaign
-            </h3>
+        <div
+          className="campaign-modal"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) closeModal();
+          }}
+        >
+          <section
+            className="campaign-modal__content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="campaign-modal-title"
+          >
+            <div className="campaign-modal__header">
+              <div className="campaign-modal__title-icon">
+                <Megaphone size={21} />
+              </div>
+
+              <div className="campaign-modal__heading">
+                <h3 id="campaign-modal-title">Send Campaign</h3>
+                <p>Configure the content and target audience.</p>
+              </div>
+
+              <button
+                type="button"
+                className="campaign-modal__close"
+                onClick={closeModal}
+                disabled={submitting}
+                aria-label="Close dialog"
+              >
+                <X size={19} />
+              </button>
+            </div>
 
             <form
-              onSubmit={
-                handleSubmit
-              }
+              className="campaign-form"
+              onSubmit={handleSubmit}
             >
-              <input
-                type="text"
-                name="title"
-                placeholder="Campaign Title"
-                value={
-                  formData.title
-                }
-                onChange={
-                  handleChange
-                }
-                required
-              />
+              <div className="campaign-form__field">
+                <label htmlFor="campaign-title">Campaign title *</label>
+                <input
+                  id="campaign-title"
+                  type="text"
+                  name="title"
+                  placeholder="Enter campaign title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  required
+                  maxLength={180}
+                />
+              </div>
 
-              <textarea
-                name="description"
-                placeholder="Description"
-                value={
-                  formData.description
-                }
-                onChange={
-                  handleChange
-                }
-                required
-              />
+              <div className="campaign-form__field">
+                <label htmlFor="campaign-description">
+                  Description *
+                </label>
+                <textarea
+                  id="campaign-description"
+                  name="description"
+                  placeholder="Describe your promotion..."
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={4}
+                  required
+                />
+              </div>
 
-              <input
-                type="text"
-                name="imageUrl"
-                placeholder="Image URL"
-                value={
-                  formData.imageUrl
-                }
-                onChange={
-                  handleChange
-                }
-                required
-              />
+              <div className="campaign-form__field">
+                <label htmlFor="campaign-image">Image URL *</label>
+                <div className="campaign-form__input-icon">
+                  <ImageIcon size={17} />
+                  <input
+                    id="campaign-image"
+                    type="url"
+                    name="imageUrl"
+                    placeholder="https://example.com/campaign.jpg"
+                    value={formData.imageUrl}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
 
-              <select
-                name="targetAudience"
-                value={
-                  formData.targetAudience
-                }
-                onChange={
-                  handleChange
-                }
-              >
-                <option value="user">
-                  Users
-                </option>
+              <div className="campaign-form__field">
+                <label htmlFor="campaign-audience">Target audience *</label>
+                <div className="campaign-form__input-icon">
+                  <Users size={17} />
+                  <select
+                    id="campaign-audience"
+                    name="targetAudience"
+                    value={formData.targetAudience}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="user">Users</option>
+                    <option value="barber">Barbers</option>
+                  </select>
+                </div>
+              </div>
 
-                <option value="barber">
-                  Barbers
-                </option>
-              </select>
+              <div className="campaign-form__field">
+                <label htmlFor="campaign-redirect">Redirect URL *</label>
+                <div className="campaign-form__input-icon">
+                  <LinkIcon size={17} />
+                  <input
+                    id="campaign-redirect"
+                    type="url"
+                    name="redirectUrl"
+                    placeholder="https://example.com/offer"
+                    value={formData.redirectUrl}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
 
-              <input
-                type="text"
-                name="redirectUrl"
-                placeholder="Redirect URL"
-                value={
-                  formData.redirectUrl
-                }
-                onChange={
-                  handleChange
-                }
-                required
-              />
+              {formError && (
+                <div className="campaign-form__error">
+                  <AlertCircle size={17} />
+                  <span>{formError}</span>
+                </div>
+              )}
 
-              <div className="modal-actions">
+              <div className="campaign-modal__actions">
                 <button
                   type="button"
-                  className="cancel-btn"
-                  onClick={() =>
-                    setShowModal(
-                      false
-                    )
-                  }
+                  className="campaign-cancel-btn"
+                  onClick={closeModal}
+                  disabled={submitting}
                 >
                   Cancel
                 </button>
 
-                <button type="submit">
-                  Send Campaign
+                <button
+                  type="submit"
+                  className="campaign-submit-btn"
+                  disabled={submitting}
+                >
+                  {submitting ? (
+                    <>
+                      <LoaderCircle
+                        size={17}
+                        className="campaign-spinner"
+                      />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={17} />
+                      Send Campaign
+                    </>
+                  )}
                 </button>
               </div>
             </form>
-          </div>
+          </section>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

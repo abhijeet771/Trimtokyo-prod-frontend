@@ -1,14 +1,36 @@
 import { useEffect } from "react";
-import {  Routes,  Route,  Navigate,} from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { Toaster } from "sonner";
+
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-/* ================= THEME ================= */
+// Cart context
+import { CartProvider } from "./context/CartContext";
+
+// Theme
 import "./theme/theme.scss";
 import { applyTheme } from "./theme/applyTheme";
 import { getSettings } from "./services/api";
 
-/* ================= GLOBAL LAYOUT ================= */
+// Pages
+import HomePage from "./pages/HomePage";
+import AuthPage from "./pages/AuthPage";
+import About from "./pages/About";
+import Blog from "./pages/Blog";
+import Contact from "./pages/Contact";
+import UserDashboard from "./pages/UserDashboard";
+import BarberDashboard from "./pages/BarberDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import SearchPage from "./pages/SearchPage";
+import BarberSlugPage from "./pages/BarberSlugPage/BarberSlugPage";
+
+import BlogDetailSection from "./sections/BlogDetailSection/BlogDetailSection";
+
+// Global layout
 function AppLayout({ children }) {
   return (
     <div className="app-root">
@@ -19,46 +41,14 @@ function AppLayout({ children }) {
   );
 }
 
-/* ================= PAGES ================= */
-import HomePage from "./pages/HomePage";
-import AuthPage from "./pages/AuthPage";
-import About from "./pages/About";
-import Blog from "./pages/Blog";
-import Contact from "./pages/Contact";
-import UserDashboard from "./pages/UserDashboard";
-import BarberDashboard from "./pages/BarberDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import ShopPage from "./pages/ShopPage";
-import Profile from "./pages/Profile";
-import Bookings from "./pages/Bookings";
-import SearchPage from "./pages/SearchPage";
-import BarberSlugPage from "./pages/BarberSlugPage/BarberSlugPage";
-
-import BlogDetailSection from "./sections/BlogDetailSection/BlogDetailSection";
-import BarberOrderSection from "./sections/BarberOrderSection/BarberOrderSection";
-import BarberProfileSection from "./sections/BarberProfileSection/BarberProfileSection";
-import BarberServiceSection from "./sections/BarberServiceSection/BarberServiceSection";
-import BarberCmsSection from "./sections/BarberCmsSection/BarberCmsSection";
-import BarberSettingSection from "./sections/BarberSettingSection/BarberSettingSection";
-import SlotSection from "./sections/SlotSection/SlotSection";
-
 export default function App() {
   useEffect(() => {
     const fetchTheme = async () => {
       try {
-        const { data } =
-          await getSettings();
-
-        applyTheme(
-          data.homepageTheme ||
-            "pink"
-        );
+        const { data } = await getSettings();
+        applyTheme(data?.homepageTheme || "pink");
       } catch (err) {
-        console.error(
-          "Failed to load theme",
-          err
-        );
-
+        console.error("Failed to load theme", err);
         applyTheme("pink");
       }
     };
@@ -67,175 +57,85 @@ export default function App() {
   }, []);
 
   return (
-    <AppLayout>
-      <Routes>
-        {/* ================= PUBLIC ROUTES ================= */}
+    <CartProvider>
+      <AppLayout>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<Blog />} />
 
-        <Route
-          path="/"
-          element={<HomePage />}
-        />
-
-        <Route
-          path="/auth"
-          element={<AuthPage />}
-        />
-
-        <Route
-          path="/about"
-          element={<About />}
-        />
-
-        <Route
-          path="/blog"
-          element={<Blog />}
-        />
-
-        <Route
-          path="/blog/:slug"
-          element={
-            <BlogDetailSection />
-          }
-        />
-
-        <Route
-          path="/contact"
-          element={<Contact />}
-        />
-        <Route
-           path="/search"
-           element={<SearchPage />}
-        />
-
-        <Route
-           path="/barber/:slug"
-           element={<BarberSlugPage />}
-        />
-
-        {/* ================= EMAIL VERIFICATION ================= */}
-
-        <Route
-          path="/user"
-          element={
-            <Navigate
-              to="/auth"
-              replace
-            />
-          }
-        />
-
-        {/* ================= USER ROUTES ================= */}
-
-        <Route
-          element={
-            <ProtectedRoute
-              roles={["user"]}
-            />
-          }
-        >
           <Route
-            path="/dashboard"
-            element={
-              <UserDashboard />
-            }
+            path="/blog/:slug"
+            element={<BlogDetailSection />}
           />
 
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/search" element={<SearchPage />} />
+
+          {/* Public salon website */}
           <Route
-            path="/shop"
-            element={<ShopPage />}
+            path="/salon/:slug"
+            element={<BarberSlugPage />}
           />
 
+          {/* Email verification / user entry */}
           <Route
-            path="/profile"
-            element={<Profile />}
+            path="/user"
+            element={<Navigate to="/auth" replace />}
           />
 
-          <Route
-            path="/bookings"
-            element={<Bookings />}
-          />
-        </Route>
-
-        {/* ================= BARBER ROUTES ================= */}
-
-        <Route
-          element={
-            <ProtectedRoute
-              roles={["barber"]}
-            />
-          }
-        >
-          <Route
-            path="/barber"
-            element={
-              <BarberDashboard />
-            }
-          >
+          {/* Protected user routes */}
+          <Route element={<ProtectedRoute roles={["user"]} />}>
+            {/* Cart is the user's main dashboard */}
             <Route
-              path="dashboard"
-              element={null}
+              path="/cart"
+              element={<UserDashboard />}
             />
 
+            {/* Keep dashboard URL compatible */}
             <Route
-              path="service"
-              element={<BarberServiceSection />}
+              path="/dashboard"
+              element={<Navigate to="/cart" replace />}
             />
 
-            <Route
-              path="profile"
-              element={<BarberProfileSection />}
-            />
+            {/* ShopPage temporarily disabled */}
 
-            <Route
-              path="slots"
-              element={<SlotSection />}
-            />
-            <Route
-              path="website"
-              element={<BarberCmsSection/>}
-            />
-           <Route
-              path="settings"
-              element={<BarberSettingSection />}
-            />
+          </Route>
 
+          {/* Barber dashboard */}
+          <Route element={<ProtectedRoute roles={["barber"]} />}>
             <Route
-              path="orders"
-              element={
-                <BarberOrderSection />
-              }
+              path="/barber/*"
+              element={<BarberDashboard />}
             />
           </Route>
-        </Route>
 
-        {/* ================= ADMIN ROUTES ================= */}
-
-        <Route
-          element={
-            <ProtectedRoute
-              roles={["admin"]}
+          {/* Admin routes */}
+          <Route element={<ProtectedRoute roles={["admin"]} />}>
+            <Route
+              path="/admin/dashboard"
+              element={<AdminDashboard />}
             />
-          }
-        >
+          </Route>
+
+          {/* Unknown routes */}
           <Route
-            path="/admin/dashboard"
-            element={
-              <AdminDashboard />
-            }
+            path="*"
+            element={<Navigate to="/" replace />}
           />
-        </Route>
-      </Routes>
+        </Routes>
 
-      {/* ================= SONNER TOASTS ================= */}
-
-      <Toaster
-        theme="dark"
-        position="top-right"
-        richColors
-        closeButton
-        duration={3000}
-        expand
-      />
-    </AppLayout>
+        <Toaster
+          theme="dark"
+          position="top-right"
+          richColors
+          closeButton
+          duration={3000}
+          expand
+        />
+      </AppLayout>
+    </CartProvider>
   );
 }

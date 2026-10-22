@@ -1,0 +1,269 @@
+
+.admin-setting {
+  width: 100%;
+  min-width: 0;
+  color: #20251f;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    margin: 0;
+    color: #20251f;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+  }
+
+  &__subtitle {
+    margin: 7px 0 0;
+    color: #858b83;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  &__tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+  }
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 15px 16px;
+    border: 1px solid #e9ede6;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #686f65;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: #b8e9a8;
+      background: #fbfff9;
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba(38, 139, 22, 0.2);
+      outline-offset: 3px;
+    }
+
+    &--active {
+      border-color: #b6e9a4;
+      background: #f5fff0;
+      box-shadow: 0 2px 8px rgba(38, 139, 22, 0.05);
+
+      .admin-setting__tab-icon {
+        background: #e2f8d9;
+        color: #268b16;
+      }
+
+      .admin-setting__tab-label {
+        color: #268b16;
+      }
+    }
+  }
+
+  &__tab-icon {
+    display: flex;
+    flex: 0 0 40px;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f3f5f1;
+    color: #737b6e;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  &__tab-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  &__tab-label {
+    color: #343a31;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+
+  &__tab-description {
+    color: #8b9187;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  &__panel {
+    min-width: 0;
+    margin-top: 24px;
+    padding: 24px;
+    border: 1px solid #e9ede6;
+    border-radius: 14px;
+    background: #ffffff;
+    animation: admin-setting-enter 0.2s ease;
+  }
+
+  &__panel-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #edf0eb;
+
+    h3 {
+      margin: 0;
+      color: #252b23;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 7px 0 0;
+      color: #858b83;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+  }
+
+  &__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    padding: 30px 20px;
+    text-align: center;
+
+    h4 {
+      margin: 16px 0 0;
+      color: #30372d;
+      font-size: 16px;
+      font-weight: 650;
+    }
+
+    p {
+      width: 100%;
+      max-width: 480px;
+      margin: 9px 0 0;
+      color: #858b83;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+  }
+
+  &__placeholder-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 15px;
+    background: #f0fbe9;
+    color: #268b16;
+  }
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 18px;
+    padding: 7px 12px;
+    border: 1px solid #e7eddf;
+    border-radius: 20px;
+    background: #f7f9f4;
+    color: #747c6e;
+    font-size: 11px;
+    font-weight: 600;
+  }
+}
+
+@keyframes admin-setting-enter {
+  from {
+    opacity: 0.6;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-setting {
+    &__tabs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__panel {
+      padding: 20px;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-setting {
+    &__header {
+      margin-bottom: 18px;
+    }
+
+    &__title {
+      font-size: 21px;
+    }
+
+    &__tabs {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    &__tab {
+      padding: 12px 14px;
+    }
+
+    &__tab-icon {
+      flex-basis: 36px;
+      width: 36px;
+      height: 36px;
+    }
+
+    &__panel {
+      margin-top: 18px;
+      padding: 16px;
+    }
+
+    &__panel-header h3 {
+      font-size: 16px;
+    }
+
+    &__placeholder {
+      min-height: 220px;
+      padding: 24px 8px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-setting__panel {
+    animation: none;
+  }
+
+  .admin-setting__tab,
+  .admin-setting__tab-icon {
+    transition: none;
+  }
+}

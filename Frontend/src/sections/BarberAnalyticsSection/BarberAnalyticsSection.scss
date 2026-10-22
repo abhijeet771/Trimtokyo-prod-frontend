@@ -1,0 +1,779 @@
+.barber-analytics {
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+  color: #20243a;
+  background: #f8f9fd;
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__header {
+    margin-bottom: 20px;
+
+    h1 {
+      margin: 5px 0 7px;
+      color: #20243a;
+      font-size: 27px;
+      font-weight: 750;
+      letter-spacing: -0.6px;
+    }
+
+    p {
+      margin: 0;
+      color: #81889a;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+  }
+
+  &__eyebrow {
+    color: #7864e9;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+
+  &__date-range {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 54px;
+    margin-bottom: 24px;
+    padding: 14px 17px;
+    border: 1px solid #e9e9f1;
+    border-radius: 14px;
+    background: #fff;
+    color: #35394d;
+    font-size: 14px;
+    font-weight: 600;
+
+    svg {
+      flex-shrink: 0;
+      color: #7663e7;
+    }
+  }
+
+  &__kpi-section {
+    margin-bottom: 24px;
+  }
+
+  &__section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 15px;
+
+    h2 {
+      margin: 0 0 5px;
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: -0.3px;
+    }
+
+    p {
+      margin: 0;
+      color: #858b9b;
+      font-size: 12px;
+    }
+  }
+
+  &__period-label {
+    flex-shrink: 0;
+    padding: 9px 12px;
+    border: 1px solid #e8e3ff;
+    border-radius: 11px;
+    background: #fff;
+    color: #7864e9;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  &__kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  &__kpi-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    min-width: 0;
+    padding: 19px;
+    border: 1px solid #ececf3;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgb(31 36 58 / 2%);
+  }
+
+  &__icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+
+    &--purple {
+      color: #7460e9;
+      background: #f0edff;
+    }
+
+    &--blue {
+      color: #4d91ed;
+      background: #eaf3ff;
+    }
+
+    &--green {
+      color: #20a77b;
+      background: #e8faf2;
+    }
+
+    &--orange {
+      color: #ed9a32;
+      background: #fff2df;
+    }
+
+    &--pink {
+      color: #db68a0;
+      background: #ffedf5;
+    }
+
+    &--indigo {
+      color: #6264db;
+      background: #ededff;
+    }
+
+    &--red {
+      color: #e65e67;
+      background: #ffeded;
+    }
+  }
+
+  &__kpi-details {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__kpi-label {
+    margin: 2px 0 8px;
+    color: #777e90;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  &__kpi-value {
+    color: #20243a;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    overflow-wrap: anywhere;
+  }
+
+  &__kpi-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: 8px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    background: #e8faf2;
+    color: #16976c;
+    font-size: 10px;
+    font-weight: 750;
+  }
+
+  &__kpi-description {
+    grid-column: 1 / -1;
+    margin: 2px 0 0;
+    color: #9399a8;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  &__panel {
+    min-width: 0;
+    margin-bottom: 20px;
+    padding: 21px;
+    border: 1px solid #eaeaf2;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgb(31 36 58 / 2%);
+  }
+
+  &__panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 23px;
+  }
+
+  &__panel-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+
+    .barber-analytics__icon {
+      width: 43px;
+      height: 43px;
+    }
+
+    h2 {
+      margin: 0;
+      color: #24283e;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    p {
+      margin: 5px 0 0;
+      color: #9298a7;
+      font-size: 11px;
+    }
+  }
+
+  &__period-select {
+    max-width: 145px;
+    min-height: 40px;
+    padding: 9px 12px;
+    border: 1px solid #e8e3ff;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+    color: #7562e4;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:focus {
+      border-color: #8b79f1;
+    }
+  }
+
+  &__chart {
+    width: 100%;
+    height: 265px;
+    min-width: 0;
+  }
+
+  &__tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 11px 13px;
+    border: 1px solid #eae8f5;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 5px 20px rgb(31 36 58 / 8%);
+
+    span {
+      color: #777e90;
+      font-size: 11px;
+    }
+
+    strong {
+      color: #292d42;
+      font-size: 14px;
+    }
+  }
+
+  &__earning-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+    margin-top: 20px;
+  }
+
+  &__highlight-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 15px;
+    border-radius: 16px;
+    background: #f8f7fc;
+
+    .barber-analytics__icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    > div:last-child {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    span {
+      color: #777e90;
+      font-size: 11px;
+    }
+
+    strong {
+      color: #20243a;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    small {
+      color: #9298a7;
+      font-size: 10px;
+    }
+  }
+
+  &__service-layout {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.5fr);
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__donut {
+    position: relative;
+    width: 100%;
+    max-width: 245px;
+    height: 220px;
+    margin: 0 auto;
+  }
+
+  &__donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    pointer-events: none;
+
+    strong {
+      color: #20243a;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    span {
+      margin-top: 5px;
+      color: #858b9b;
+      font-size: 11px;
+    }
+  }
+
+  &__service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    min-width: 0;
+  }
+
+  &__service-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 45px 90px;
+    align-items: center;
+    gap: 10px;
+
+    > strong {
+      color: #272b40;
+      font-size: 13px;
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+
+  &__service-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    color: #53596b;
+    font-size: 12px;
+
+    > span:last-child {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__legend-dot {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    border-radius: 50%;
+  }
+
+  &__service-percentage {
+    color: #858b9b;
+    font-size: 11px;
+    text-align: right;
+  }
+
+  &__customer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  &__customer-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 17px;
+    border-radius: 16px;
+    background: #f8f7fc;
+
+    .barber-analytics__icon {
+      width: 47px;
+      height: 47px;
+    }
+  }
+
+  &__customer-info {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 7px;
+
+    > span {
+      color: #777e90;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+  }
+
+  &__customer-value-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    strong {
+      color: #20243a;
+      font-size: 22px;
+      font-weight: 800;
+    }
+  }
+
+  &__customer-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    padding: 3px 5px;
+    border-radius: 5px;
+    background: #e5faf1;
+    color: #16976c;
+    font-size: 10px;
+    font-weight: 750;
+  }
+}
+
+@media (max-width: 1100px) {
+  .barber-analytics {
+    padding: 20px;
+
+    &__kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__service-layout {
+      grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.4fr);
+      gap: 15px;
+    }
+
+    &__service-row {
+      grid-template-columns: minmax(0, 1fr) 35px 78px;
+      gap: 7px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .barber-analytics {
+    padding: 16px 14px 24px;
+
+    &__header {
+      margin-bottom: 16px;
+
+      h1 {
+        font-size: 23px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    &__date-range {
+      min-height: 49px;
+      margin-bottom: 22px;
+      padding: 12px;
+      border-radius: 13px;
+      font-size: 12px;
+    }
+
+    &__section-heading {
+      align-items: flex-start;
+      gap: 8px;
+
+      h2 {
+        font-size: 17px;
+      }
+
+      p {
+        font-size: 11px;
+        line-height: 1.5;
+      }
+    }
+
+    &__period-label {
+      padding: 8px;
+      font-size: 10px;
+    }
+
+    &__kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    &__kpi-card {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 13px;
+      border-radius: 15px;
+    }
+
+    &__kpi-card > .barber-analytics__icon {
+      width: 37px;
+      height: 37px;
+      border-radius: 11px;
+
+      svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+
+    &__kpi-label {
+      min-height: 32px;
+      margin-bottom: 5px;
+      font-size: 11px;
+    }
+
+    &__kpi-value {
+      font-size: 21px;
+    }
+
+    &__kpi-change {
+      margin-top: 6px;
+      font-size: 10px;
+    }
+
+    &__kpi-description {
+      font-size: 9px;
+    }
+
+    &__panel {
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 18px;
+    }
+
+    &__panel-heading {
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    &__panel-title {
+      gap: 10px;
+
+      .barber-analytics__icon {
+        width: 39px;
+        height: 39px;
+      }
+
+      h2 {
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 10px;
+      }
+    }
+
+    &__period-select {
+      max-width: 118px;
+      min-height: 36px;
+      padding: 7px 8px;
+      font-size: 10px;
+    }
+
+    &__chart {
+      height: 235px;
+    }
+
+    &__earning-highlights {
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    &__highlight-card {
+      align-items: flex-start;
+      gap: 8px;
+      padding: 11px 9px;
+      border-radius: 14px;
+
+      .barber-analytics__icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      span {
+        font-size: 9px;
+        line-height: 1.4;
+      }
+
+      strong {
+        font-size: 16px;
+      }
+
+      small {
+        font-size: 9px;
+      }
+    }
+
+    &__service-layout {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    &__donut {
+      max-width: 215px;
+      height: 200px;
+    }
+
+    &__donut-center {
+      strong {
+        font-size: 18px;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    &__service-list {
+      gap: 16px;
+    }
+
+    &__service-row {
+      grid-template-columns: minmax(0, 1fr) 38px 78px;
+      gap: 7px;
+
+      > strong {
+        font-size: 12px;
+      }
+    }
+
+    &__service-name {
+      gap: 7px;
+      font-size: 11px;
+    }
+
+    &__legend-dot {
+      width: 9px;
+      height: 9px;
+    }
+
+    &__service-percentage {
+      font-size: 10px;
+    }
+
+    &__customer-grid {
+      gap: 10px;
+    }
+
+    &__customer-card {
+      align-items: flex-start;
+      gap: 9px;
+      padding: 12px 10px;
+      border-radius: 14px;
+
+      .barber-analytics__icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    &__customer-info {
+      gap: 6px;
+
+      > span {
+        font-size: 10px;
+      }
+    }
+
+    &__customer-value-row {
+      gap: 5px;
+
+      strong {
+        font-size: 19px;
+      }
+    }
+
+    &__customer-change {
+      padding: 3px;
+      font-size: 9px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .barber-analytics {
+    padding-right: 10px;
+    padding-left: 10px;
+
+    &__kpi-grid {
+      gap: 8px;
+    }
+
+    &__kpi-card {
+      padding: 11px;
+    }
+
+    &__kpi-value {
+      font-size: 19px;
+    }
+
+    &__earning-highlights {
+      grid-template-columns: 1fr;
+    }
+
+    &__customer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

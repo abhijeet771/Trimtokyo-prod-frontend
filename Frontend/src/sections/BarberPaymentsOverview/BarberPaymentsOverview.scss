@@ -1,0 +1,742 @@
+.barber-payments-overview {
+  --payment-text: #20233a;
+  --payment-muted: #788093;
+  --payment-border: #e9eaf0;
+  --payment-purple: #6650e8;
+  --payment-green: #20a36a;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  min-width: 0;
+  color: var(--payment-text);
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Heading */
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    h1 {
+      margin: 5px 0 7px;
+      font-size: 28px;
+      line-height: 1.25;
+      font-weight: 750;
+      letter-spacing: -0.6px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--payment-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  &__eyebrow {
+    color: var(--payment-purple);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+
+  /* Date range */
+
+  &__date-wrapper {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 0 20px;
+    border: 1px solid var(--payment-border);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgb(31 41 55 / 2%);
+  }
+
+  &__date-icon {
+    flex-shrink: 0;
+    color: var(--payment-purple);
+  }
+
+  &__date-label {
+    flex: 1;
+    min-width: 0;
+    color: #373b4d;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  &__date-chevron {
+    flex-shrink: 0;
+    color: var(--payment-muted);
+  }
+
+  /* Panels */
+
+  &__panel {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--payment-border);
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgb(31 41 55 / 2%);
+  }
+
+  &__panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  &__section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+
+    h2 {
+      margin: 0;
+      color: var(--payment-text);
+      font-size: 18px;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+  }
+
+  &__section-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 15px;
+
+    &--purple {
+      color: #7964e9;
+      background: #f1edff;
+    }
+  }
+
+  /* Period dropdown */
+
+  &__period {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__period-button {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 0 13px;
+    border: 1px solid #e4defb;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--payment-purple);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #f8f6ff;
+    }
+  }
+
+  &__period-menu {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 155px;
+    padding: 6px;
+    border: 1px solid var(--payment-border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 10px 28px rgb(31 41 55 / 12%);
+  }
+
+  &__period-option {
+    width: 100%;
+    padding: 11px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #535a6d;
+    text-align: left;
+    font-size: 13px;
+    cursor: pointer;
+
+    &:hover,
+    &.is-active {
+      background: #f1edff;
+      color: var(--payment-purple);
+    }
+  }
+
+  /* Summary cards */
+
+  &__summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  &__summary-card {
+    min-width: 0;
+    min-height: 150px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px;
+    border: 1px solid var(--payment-border);
+    border-radius: 20px;
+    background: #fff;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: #d9d5f8;
+      box-shadow: 0 5px 16px rgb(31 41 55 / 4%);
+    }
+  }
+
+  &__card-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 50%;
+
+    &--green {
+      color: #159a68;
+      background: #e1f8ec;
+    }
+
+    &--orange {
+      color: #e9a13d;
+      background: #fff0d9;
+    }
+
+    &--teal {
+      color: #18a88a;
+      background: #dff8f0;
+    }
+
+    &--purple {
+      color: #7957e8;
+      background: #f0eaff;
+    }
+  }
+
+  &__card-content {
+    min-width: 0;
+    flex: 1;
+
+    h3 {
+      margin: 8px 0;
+      color: var(--payment-text);
+      font-size: 25px;
+      line-height: 1.25;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__card-label {
+    margin: 0;
+    color: var(--payment-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  &__card-description {
+    display: block;
+    color: var(--payment-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Payment method breakdown */
+
+  &__breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  &__breakdown-row {
+    display: grid;
+    grid-template-columns: 48px minmax(120px, 1.1fr) minmax(100px, 1fr) 48px 105px;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  &__breakdown-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 50%;
+
+    &--green {
+      color: #159a68;
+      background: #e1f8ec;
+    }
+
+    &--purple {
+      color: #7957e8;
+      background: #f0eaff;
+    }
+  }
+
+  &__breakdown-info {
+    min-width: 0;
+
+    h3 {
+      margin: 0 0 5px;
+      color: var(--payment-text);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    p {
+      margin: 0;
+      color: var(--payment-muted);
+      font-size: 12px;
+    }
+  }
+
+  &__progress {
+    min-width: 0;
+  }
+
+  &__progress-track {
+    height: 10px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #eceef4;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    transition: width 0.3s ease;
+
+    &--green {
+      background: #20a36a;
+    }
+
+    &--purple {
+      background: #6650e8;
+    }
+  }
+
+  &__percentage {
+    color: var(--payment-muted);
+    text-align: center;
+    font-size: 12px;
+  }
+
+  &__breakdown-amount {
+    color: var(--payment-text);
+    text-align: right;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  /* Payment status */
+
+  &__status-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  &__status-card {
+    min-width: 0;
+    min-height: 150px;
+    padding: 18px;
+    border-radius: 18px;
+
+    &--green {
+      color: #159a68;
+      background: #e1f8ec;
+    }
+
+    &--orange {
+      color: #df9836;
+      background: #fff0dc;
+    }
+
+    &--red {
+      color: #e34f58;
+      background: #fde9eb;
+    }
+
+    &--blue {
+      color: #427de2;
+      background: #e7efff;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      color: var(--payment-text);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    p {
+      margin: 0;
+      color: #596174;
+      font-size: 14px;
+      font-weight: 650;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__status-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 750;
+  }
+}
+
+/* =========================================================
+   TABLETS
+========================================================= */
+
+@media (max-width: 1100px) {
+  .barber-payments-overview {
+    gap: 18px;
+
+    &__panel {
+      padding: 20px;
+    }
+
+    &__summary-card {
+      padding: 17px;
+      gap: 12px;
+    }
+
+    &__card-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    &__card-content h3 {
+      font-size: 22px;
+    }
+
+    &__breakdown-row {
+      grid-template-columns: 44px minmax(100px, 1fr) minmax(80px, 1fr) 40px 95px;
+      gap: 10px;
+    }
+
+    &__breakdown-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    &__status-card {
+      padding: 14px;
+    }
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .barber-payments-overview {
+    gap: 16px;
+
+    &__heading h1 {
+      font-size: 24px;
+    }
+
+    &__heading p {
+      font-size: 13px;
+    }
+
+    &__date-wrapper {
+      min-height: 58px;
+      padding: 0 15px;
+      gap: 10px;
+      border-radius: 14px;
+    }
+
+    &__date-label {
+      font-size: 14px;
+    }
+
+    &__panel {
+      padding: 17px;
+      border-radius: 20px;
+    }
+
+    &__panel-heading {
+      align-items: center;
+      margin-bottom: 17px;
+    }
+
+    &__section-title {
+      gap: 10px;
+
+      h2 {
+        font-size: 16px;
+      }
+    }
+
+    &__section-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+    }
+
+    &__summary-grid {
+      gap: 12px;
+    }
+
+    &__summary-card {
+      min-height: 145px;
+      flex-direction: column;
+      gap: 10px;
+      padding: 15px;
+      border-radius: 19px;
+    }
+
+    &__card-icon {
+      width: 43px;
+      height: 43px;
+    }
+
+    &__card-content h3 {
+      margin: 5px 0;
+      font-size: 21px;
+    }
+
+    &__card-label {
+      font-size: 12px;
+    }
+
+    &__card-description {
+      font-size: 11px;
+    }
+
+    &__breakdown-list {
+      gap: 20px;
+    }
+
+    &__breakdown-row {
+      grid-template-columns: 42px minmax(0, 1fr) 85px;
+      gap: 10px;
+    }
+
+    &__breakdown-icon {
+      width: 42px;
+      height: 42px;
+    }
+
+    &__breakdown-info h3 {
+      font-size: 13px;
+    }
+
+    &__progress {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    &__percentage {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    &__breakdown-amount {
+      grid-column: 3;
+      grid-row: 1;
+      font-size: 13px;
+    }
+
+    &__status-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    &__status-card {
+      min-height: 135px;
+      padding: 15px;
+      border-radius: 17px;
+
+      h3 {
+        margin: 12px 0 7px;
+        font-size: 22px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .barber-payments-overview {
+    gap: 13px;
+
+    &__heading h1 {
+      font-size: 22px;
+    }
+
+    &__heading p {
+      font-size: 12px;
+    }
+
+    &__panel {
+      padding: 13px;
+      border-radius: 17px;
+    }
+
+    &__panel-heading {
+      gap: 8px;
+    }
+
+    &__section-title {
+      gap: 8px;
+
+      h2 {
+        font-size: 14px;
+      }
+    }
+
+    &__section-icon {
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+
+    &__period-button {
+      min-height: 36px;
+      gap: 5px;
+      padding: 0 8px;
+      font-size: 11px;
+    }
+
+    &__summary-grid {
+      gap: 9px;
+    }
+
+    &__summary-card {
+      min-height: 142px;
+      padding: 12px;
+      gap: 9px;
+    }
+
+    &__card-icon {
+      width: 38px;
+      height: 38px;
+
+      svg {
+        width: 21px;
+        height: 21px;
+      }
+    }
+
+    &__card-content h3 {
+      font-size: 19px;
+    }
+
+    &__card-label {
+      font-size: 11px;
+    }
+
+    &__card-description {
+      font-size: 10px;
+    }
+
+    &__breakdown-row {
+      grid-template-columns: 36px minmax(0, 1fr) 72px;
+      gap: 8px;
+    }
+
+    &__breakdown-icon {
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &__breakdown-info h3 {
+      font-size: 12px;
+    }
+
+    &__breakdown-info p {
+      font-size: 11px;
+    }
+
+    &__breakdown-amount {
+      font-size: 12px;
+    }
+
+    &__percentage {
+      font-size: 11px;
+    }
+
+    &__progress-track {
+      height: 8px;
+    }
+
+    &__status-card {
+      min-height: 125px;
+      padding: 12px;
+
+      h3 {
+        font-size: 21px;
+      }
+    }
+
+    &__status-heading {
+      gap: 6px;
+      font-size: 12px;
+
+      svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+  }
+}

@@ -1,95 +1,104 @@
-import React, {  createContext,  useContext,  useEffect,useState,} from "react";
+
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useCallback,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import API from "../services/api";
+
+import {
+  getCurrentUser,
+  logoutUser,
+  saveFCMToken,
+} from "../services/auth.service";
+
 import { getFCMToken } from "../utils/notification";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-export const AuthProvider = ({  children,}) => {
-  const [user, setUser] =
-    useState(null);
-
-  const [loading, setLoading] =
-    useState(true);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const queryClient =
-    useQueryClient();
+  const fetchUser = useCallback(async () => {
+    setLoading(true);
 
-  const fetchUser = async () => {
     try {
-      const res = await API.get( "/api/v1/auth/me",
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await getCurrentUser();
+      const currentUser = res.data?.data;
 
-      setUser(res.data.data);
+      if (!currentUser) {
+        setUser(null);
+        return null;
+      }
 
+      setUser(currentUser);
+
+      // FCM registration is optional; it must not invalidate login.
       try {
-        const token =
-          await getFCMToken();
+        const token = await getFCMToken();
 
         if (token) {
-          await API.post("/api/v1/auth/save-token",
-            {
-              token,
-            },
-            {
-              withCredentials: true,
-            }
-          );
+          await saveFCMToken(token);
         }
       } catch (err) {
-        console.error(
-          "FCM token save failed:",
-          err
-        );
+        console.error("FCM token save failed:", err);
       }
+
+      return currentUser;
     } catch (err) {
       setUser(null);
+      return null;
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   const logout = async () => {
     try {
-      await API.post("/api/v1/auth/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-
-      queryClient.clear();
-
-      setUser(null);
-
-      navigate("/login", {
-        replace: true,
-      });
+      await logoutUser();
     } catch (err) {
-      console.error(
-        "Logout failed:",
-        err
-      );
+      console.error("Logout request failed:", err);
+    } finally {
+      queryClient.clear();
+      setUser(null);
+      navigate("/login", { replace: true });
     }
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, loading, logout,refreshUser: fetchUser,}}>
+      value={{
+        user,
+        setUser,
+        loading,
+        logout,
+        refreshUser: fetchUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () =>
-  useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error(
+      "useAuth must be used inside an AuthProvider."
+    );
+  }
+
+  return context;
+};

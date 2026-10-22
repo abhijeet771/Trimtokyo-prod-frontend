@@ -1,0 +1,295 @@
+.overview {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #17221a;
+
+  &__demo-notice {
+    padding: 10px 14px;
+    border: 1px solid #f0dfb4;
+    border-radius: 9px;
+    background: #fffaf0;
+    color: #8b6721;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  // KPI CARDS
+  &__kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  &__kpi {
+    min-width: 0;
+    padding: 21px;
+    border: 1px solid #e9eee7;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 3px 12px rgba(28, 49, 26, 0.025);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(28, 49, 26, 0.06);
+    }
+
+    &--green {
+      --kpi-color: #18852b;
+      --kpi-bg: #e3f9e8;
+      --kpi-surface: #f3fcf5;
+    }
+
+    &--blue {
+      --kpi-color: #2563eb;
+      --kpi-bg: #e2efff;
+      --kpi-surface: #f3f8ff;
+    }
+
+    &--purple {
+      --kpi-color: #7c3aed;
+      --kpi-bg: #eee5ff;
+      --kpi-surface: #f8f5ff;
+    }
+
+    &--orange {
+      --kpi-color: #c47b00;
+      --kpi-bg: #fff0cc;
+      --kpi-surface: #fffbf1;
+    }
+  }
+
+  &__kpi-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__kpi-icon {
+    display: flex;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    background: var(--kpi-bg);
+    color: var(--kpi-color);
+  }
+
+  &__kpi-title {
+    color: #536054;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  &__kpi-details {
+    margin-top: 17px;
+    padding-left: 2px;
+
+    h3 {
+      margin: 0 0 10px;
+      color: #17221a;
+      font-size: clamp(23px, 2vw, 30px);
+      font-weight: 750;
+      letter-spacing: -0.8px;
+      overflow-wrap: anywhere;
+    }
+
+    p {
+      margin: 7px 0 0;
+      color: #89938a;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+  }
+
+  &__kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #19853a;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  // BOOKING CHART
+  &__chart-card {
+    min-width: 0;
+    padding: 23px;
+    border: 1px solid #e8eee7;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 3px 12px rgba(28, 49, 26, 0.025);
+  }
+
+  &__chart-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    h3 {
+      margin: 0;
+      color: #202a22;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    p {
+      margin: 6px 0 0;
+      color: #818b82;
+      font-size: 13px;
+    }
+
+    select {
+      min-height: 38px;
+      padding: 0 30px 0 12px;
+      border: 1px solid #e2e9e0;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #4f5d50;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      outline-color: #268b16;
+    }
+  }
+
+  &__chart-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 18px;
+    margin-top: 25px;
+
+    > div:first-child {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      span {
+        color: #7c887d;
+        font-size: 12px;
+      }
+
+      strong {
+        color: #202a22;
+        font-size: 27px;
+        font-weight: 750;
+        letter-spacing: -0.7px;
+      }
+    }
+  }
+
+  &__chart-summary-trend {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 4px;
+    color: #18853a;
+    font-size: 12px;
+    font-weight: 700;
+
+    small {
+      margin-left: 3px;
+      color: #89938a;
+      font-size: 11px;
+      font-weight: 400;
+    }
+  }
+
+  &__chart {
+    width: 100%;
+    height: 310px;
+    margin-top: 18px;
+  }
+
+  &__tooltip {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 12px 15px;
+    border: 1px solid #e6ece3;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(20, 40, 20, 0.08);
+
+    span {
+      color: #7c887d;
+      font-size: 12px;
+    }
+
+    strong {
+      color: #268b16;
+      font-size: 14px;
+    }
+  }
+}
+
+// TABLET
+@media (max-width: 1100px) {
+  .overview {
+    &__kpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+// MOBILE
+@media (max-width: 600px) {
+  .overview {
+    gap: 15px;
+
+    &__kpis {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    &__kpi {
+      padding: 17px;
+    }
+
+    &__kpi-details {
+      margin-top: 12px;
+
+      h3 {
+        font-size: 25px;
+      }
+    }
+
+    &__chart-card {
+      padding: 16px;
+    }
+
+    &__chart-header {
+      flex-direction: column;
+      align-items: stretch;
+
+      select {
+        width: 100%;
+      }
+    }
+
+    &__chart-summary {
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    &__chart-summary-trend {
+      flex-wrap: wrap;
+    }
+
+    &__chart {
+      height: 250px;
+      margin-top: 12px;
+    }
+  }
+}

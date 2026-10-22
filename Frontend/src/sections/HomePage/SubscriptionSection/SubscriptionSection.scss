@@ -1,0 +1,485 @@
+.subscription-section {
+  width: 100%;
+  padding: 24px 20px 30px;
+  background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+
+  &__container {
+    width: min(1200px, 100%);
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+
+  &__header {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 13px;
+    margin-bottom: 12px;
+    border-radius: 999px;
+    background: #e8f1ff;
+    color: #1765e8;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+
+    svg {
+      color: #e6a21b;
+    }
+  }
+
+  &__title {
+    margin: 0 0 8px;
+    color: #12213f;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -1px;
+
+    span {
+      color: #1765e8;
+    }
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  /* PLAN GRID */
+
+  &__plans {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 18px;
+  }
+
+  /* CARD BASE */
+
+  &__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid #e8edf5;
+    border-radius: 17px;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(28, 52, 90, 0.05);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(28, 52, 90, 0.1);
+    }
+
+    &--red {
+      --plan-color: #dc3545;
+      --plan-light: #fff0f1;
+      --plan-border: #f4b8bf;
+
+      border-color: #f1dadd;
+    }
+
+    &--blue {
+      --plan-color: #1765e8;
+      --plan-light: #eaf2ff;
+      --plan-border: #8bb7ff;
+
+      border-color: #c9dcff;
+    }
+
+    &--green {
+      --plan-color: #168447;
+      --plan-light: #e8f8ee;
+      --plan-border: #a4dfb9;
+
+      border-color: #ccebd7;
+    }
+
+    &--popular {
+      border: 2px solid var(--plan-color);
+      box-shadow: 0 8px 24px rgba(23, 101, 232, 0.1);
+    }
+  }
+
+  /* POPULAR LABEL */
+
+  &__popular {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 34px;
+    padding: 8px 10px;
+    border-radius: 14px 14px 0 0;
+    background: var(--plan-color);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  &__card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 19px;
+  }
+
+  /* PLAN HEADER */
+
+  &__plan-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 65px;
+  }
+
+  &__plan-info {
+    min-width: 0;
+
+    h3 {
+      margin: 0 0 6px;
+      color: #12213f;
+      font-size: 1.12rem;
+      font-weight: 850;
+      line-height: 1.3;
+    }
+
+    p {
+      margin: 0;
+      color: #64748b;
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+  }
+
+  &__plan-icon {
+    display: flex;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--plan-light);
+    color: var(--plan-color);
+  }
+
+  /* PRICE */
+
+  &__pricing {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px 9px;
+    margin: 15px 0 18px;
+  }
+
+  &__price-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 9px;
+    width: 100%;
+  }
+
+  &__price {
+    color: var(--plan-color);
+    font-size: clamp(1.8rem, 2.4vw, 2.15rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  &__original-price {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    text-decoration: line-through;
+  }
+
+  &__price-label {
+    color: #64748b;
+    font-size: 0.75rem;
+  }
+
+  &__savings {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: var(--plan-light);
+    color: var(--plan-color);
+    font-size: 0.69rem;
+    font-weight: 800;
+  }
+
+  /* FEATURES */
+
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    padding: 0;
+    margin: 0 0 22px;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: #52627c;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+  }
+
+  &__check {
+    display: flex;
+    flex: 0 0 19px;
+    align-items: center;
+    justify-content: center;
+    width: 19px;
+    height: 19px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: var(--plan-color);
+    color: #ffffff;
+  }
+
+  /* BUTTON */
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 14px;
+    margin-top: auto;
+    border: 1px solid var(--plan-border);
+    border-radius: 11px;
+    background: var(--plan-light);
+    color: var(--plan-color);
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background: var(--plan-color);
+      color: #ffffff;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--plan-color);
+      outline-offset: 3px;
+    }
+  }
+
+  &__card--popular &__button {
+    border-color: var(--plan-color);
+    background: var(--plan-color);
+    color: #ffffff;
+
+    &:hover {
+      filter: brightness(0.92);
+    }
+  }
+
+  /* FOOTNOTE */
+
+  &__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin: 18px 0 0;
+    color: #64748b;
+    font-size: 0.75rem;
+
+    svg {
+      color: #1765e8;
+    }
+  }
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .subscription-section {
+    padding: 20px 16px 26px;
+
+    &__header {
+      margin-bottom: 20px;
+    }
+
+    &__plans {
+      gap: 12px;
+    }
+
+    &__card-body {
+      padding: 15px;
+    }
+
+    &__plan-header {
+      min-height: 60px;
+    }
+
+    &__plan-info {
+      h3 {
+        font-size: 0.95rem;
+      }
+
+      p {
+        font-size: 0.7rem;
+      }
+    }
+
+    &__plan-icon {
+      flex-basis: 38px;
+      width: 38px;
+      height: 38px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &__price {
+      font-size: 1.75rem;
+    }
+
+    &__features {
+      gap: 11px;
+
+      li {
+        font-size: 0.72rem;
+      }
+    }
+
+    &__button {
+      padding: 10px;
+      font-size: 0.7rem;
+    }
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .subscription-section {
+    padding: 18px 13px 22px;
+
+    &__header {
+      margin-bottom: 18px;
+    }
+
+    &__badge {
+      padding: 6px 10px;
+      margin-bottom: 9px;
+      font-size: 0.57rem;
+    }
+
+    &__title {
+      font-size: 1.65rem;
+      letter-spacing: -0.6px;
+    }
+
+    &__subtitle {
+      max-width: 330px;
+      margin: 0 auto;
+      font-size: 0.75rem;
+    }
+
+    &__plans {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    &__card-body {
+      padding: 17px;
+    }
+
+    &__plan-header {
+      min-height: auto;
+    }
+
+    &__plan-info {
+      h3 {
+        font-size: 1.05rem;
+      }
+
+      p {
+        font-size: 0.76rem;
+      }
+    }
+
+    &__pricing {
+      margin: 14px 0 16px;
+    }
+
+    &__price {
+      font-size: 2rem;
+    }
+
+    &__features {
+      gap: 11px;
+      margin-bottom: 18px;
+
+      li {
+        font-size: 0.77rem;
+      }
+    }
+
+    &__button {
+      min-height: 43px;
+      padding: 11px 14px;
+      font-size: 0.77rem;
+    }
+
+    &__note {
+      font-size: 0.68rem;
+      text-align: center;
+    }
+  }
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 380px) {
+  .subscription-section {
+    padding-right: 10px;
+    padding-left: 10px;
+
+    &__title {
+      font-size: 1.45rem;
+    }
+
+    &__card-body {
+      padding: 14px;
+    }
+
+    &__price {
+      font-size: 1.8rem;
+    }
+  }
+}
