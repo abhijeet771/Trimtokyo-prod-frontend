@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<escape><?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://trimtokyo.vercel.app/</loc>
+    <loc>https://trimtokyo.shop/</loc>
   </url>
 
   <url>
-    <loc>https://trimtokyo.vercel.app/about</loc>
+    <loc>https://trimtokyo.shop/about</loc>
   </url>
 
   <url>
-    <loc>https://trimtokyo.vercel.app/contact</loc>
+    <loc>https://trimtokyo.shop/contact</loc>
   </url>
 
   <url>
-    <loc>https://trimtokyo.vercel.app/blog</loc>
+    <loc>https://trimtokyo.shop/blog</loc>
   </url>
 
-</urlset>
+</urlset></escape>

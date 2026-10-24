@@ -1,5 +1,5 @@
 
-import api from "./apik";
+import apik from "./apik";
 
 /* ============================================================
    CAMPAIGN APIs

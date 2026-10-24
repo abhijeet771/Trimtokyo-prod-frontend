@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import AdminSidebar from "../sections/AdminSidebar/AdminSidebar";
+import AdminSidebar from "../sections/admin/AdminSidebar/AdminSidebar";
 import AdminTopbar from "../sections/admin/AdminTopbar/AdminTopbar";
-import AdminContentSection from "../sections/AdminContentSection/AdminContentSection";
+import AdminContentSection from "../sections/admin/AdminContentSection/AdminContentSection";
 
 import "./AdminDashboard.scss";
 
