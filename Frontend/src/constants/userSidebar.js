@@ -32,6 +32,12 @@ export const USER_SIDEBAR_MENU = [
     icon: "CalendarDays",
   },
   {
+    id: "referrals",
+    label: "Referrals",
+    path: "/referrals",
+    icon: "Gift",
+  },
+  {
     id: "profile",
     label: "Profile",
     path: "/profile",
@@ -44,6 +50,12 @@ export const USER_SIDEBAR_MENU = [
     icon: "Bell",
   },
   {
+    id: "subscription",
+    label: "TrimTokyo Pro",
+    path: "/subscription",
+    icon: "Scissors",
+  },
+  {
     id: "settings",
     label: "Settings",
     path: "/settings",
@@ -52,10 +64,5 @@ export const USER_SIDEBAR_MENU = [
 ];
 
 export const USER_SIDEBAR_BOTTOM = [
-  {
-    id: "help",
-    label: "Help Center",
-    path: "/support",
-    icon: "CircleHelp",
-  },
+  
 ];

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { Plus, Search, Pencil, Trash2,Film, LoaderCircle,} from "lucide-react";
 
-import ReelModal from "../../../components/organisms/ReelModal/ReelModal";
+import ReelModal from "../../../components/admin/ReelModal/ReelModal";
 import useReel from "../../../hooks/useReel";
 import { REEL_SEARCH_PLACEHOLDER, TABLE_COLUMNS,} from "../../../constants/reel";
 

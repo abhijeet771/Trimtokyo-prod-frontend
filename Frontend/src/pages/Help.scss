@@ -1,0 +1,262 @@
+
+.help-page {
+  width: 100%;
+  overflow: hidden;
+  background: #f7faff;
+  color: #14213d;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.help-hero {
+  position: relative;
+  padding: 75px 24px 85px;
+  overflow: hidden;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(126, 180, 255, 0.2),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 95% 80%,
+      rgba(65, 145, 255, 0.17),
+      transparent 30%
+    ),
+    linear-gradient(135deg, #f4f8ff, #e6f1ff);
+
+  &__badge {
+    display: inline-block;
+    padding: 9px 20px;
+    border-radius: 30px;
+    background: #dceaff;
+    color: #1769e8;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+
+  h1 {
+    margin: 23px 0 16px;
+    color: #14213d;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 850;
+    letter-spacing: -2.5px;
+    line-height: 1.12;
+
+    span {
+      color: #1769e8;
+    }
+  }
+
+  p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: #5e6d87;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+}
+
+.help-contact {
+  padding: 0 24px 85px;
+  background: linear-gradient(
+    180deg,
+    #e6f1ff 0,
+    #f7faff 150px,
+    #f7faff 100%
+  );
+
+  &__card {
+    position: relative;
+    width: min(850px, 100%);
+    margin: -20px auto 0;
+    padding: 42px;
+    border: 1px solid #e5edfa;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 15px 45px rgba(38, 91, 160, 0.08);
+  }
+
+  &__heading {
+    margin-bottom: 32px;
+    text-align: center;
+
+    h2 {
+      margin: 0 0 10px;
+      color: #14213d;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    p {
+      margin: 0;
+      color: #71809a;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+  }
+}
+
+.help-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 23px 24px;
+
+  &__field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 9px;
+
+    label {
+      color: #263a5c;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    &--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__input-wrap {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+    border: 1px solid #dce6f5;
+    border-radius: 11px;
+    background: #fff;
+    color: #3979d8;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus-within {
+      border-color: #4389f5;
+      box-shadow: 0 0 0 3px rgba(49, 123, 239, 0.1);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 15px 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #182944;
+      font-family: inherit;
+      font-size: 14px;
+
+      &::placeholder {
+        color: #9aa8bd;
+      }
+    }
+
+    &--textarea {
+      align-items: flex-start;
+      padding-top: 12px;
+
+      svg {
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+
+      textarea {
+        min-height: 110px;
+        padding-top: 2px;
+        resize: vertical;
+        line-height: 1.7;
+      }
+    }
+  }
+
+  &__submit {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 4px;
+    padding: 16px 22px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(100deg, #2479f5, #1765e8);
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 9px 22px rgba(23, 101, 232, 0.22);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .help-hero {
+    padding: 55px 20px 65px;
+
+    h1 {
+      font-size: clamp(35px, 9vw, 46px);
+      letter-spacing: -1.5px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .help-contact {
+    padding: 0 16px 55px;
+
+    &__card {
+      padding: 27px 20px;
+      border-radius: 17px;
+    }
+
+    &__heading {
+      margin-bottom: 25px;
+
+      h2 {
+        font-size: 27px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .help-form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 19px;
+
+    &__field--full,
+    &__submit {
+      grid-column: auto;
+    }
+
+    &__input-wrap input,
+    &__input-wrap textarea {
+      font-size: 13px;
+    }
+  }
+}

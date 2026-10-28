@@ -1,8 +1,8 @@
 import "./Services.scss";
 
 import { useNavigate } from "react-router-dom";
-import ServiceCard from "../../molecules/ServiceCard/ServiceCard";
-import Button from "../../atoms/Button/Button";
+import ServiceCard from "../ServiceCard/ServiceCard";
+import Button from "../../User/Button/Button";
 import { SERVICES_CONTENT } from "../../../constants/services";
 import useFeaturedBarbers from "../../../hooks/useFeaturedBarbers";
 

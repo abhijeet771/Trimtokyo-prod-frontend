@@ -1,6 +1,6 @@
 import "./FAQSection.scss";
 import { FAQ_DATA } from "../../../constants/faq";
-import FAQItem from "../../../components/molecules/FAQItem/FAQItem";
+import FAQItem from "../../../components/website/FAQItem/FAQItem";
 
 const FAQSection = () => {
   return (

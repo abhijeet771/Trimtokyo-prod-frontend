@@ -7,7 +7,7 @@ import useAdminOrders from "../../../hooks/admin/useAdminOrders";
 import useAdminOrderStats from "../../../hooks/admin/useAdminOrderStats";
 import useDeleteAdminOrder from "../../../hooks/admin/useDeleteAdminOrder";
 
-import OrderSidebar from "../../../components/organisms/OrderSidebar/OrderSidebar";
+import OrderSidebar from "../../../components/admin/OrderSidebar/OrderSidebar";
 
 import "./AdminOrderSection.scss";
 

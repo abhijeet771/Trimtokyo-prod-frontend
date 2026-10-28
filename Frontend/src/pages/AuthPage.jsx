@@ -1,29 +1,39 @@
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-import {  MdPerson,  MdEmail,  MdPhone,  MdLock,} from "react-icons/md";
-import {  AiOutlineEye,  AiOutlineEyeInvisible,} from "react-icons/ai";
+import {
+  MdPerson,
+  MdEmail,
+  MdPhone,
+  MdLock,
+  MdContentCut,
+  MdCalendarMonth,
+  MdVerifiedUser,
+  MdStarOutline,
+  MdArrowForward,
+} from "react-icons/md";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "sonner";
 
-import authBg from "../assets/images/auth-bg.jpg";
 import { useAuth } from "../context/AuthContext";
 import useLogin from "../hooks/useLogin";
 import useRegister from "../hooks/useRegister";
-
 import "./AuthPage.scss";
 
 const AuthPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const { user } = useAuth();
   const { login } = useLogin();
   const { register } = useRegister();
 
-  // Preserve the page the customer wanted to access before authentication.
   const returnTo = location.state?.from;
   const returnPath =
-    typeof returnTo === "string" ? returnTo : returnTo?.pathname ? `${returnTo.pathname}${returnTo.search || ""}${returnTo.hash || ""}` : "/";
+    typeof returnTo === "string"
+      ? returnTo
+      : returnTo?.pathname
+        ? `${returnTo.pathname}${returnTo.search || ""}${returnTo.hash || ""}`
+        : "/";
 
   const [mode, setMode] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
@@ -36,38 +46,28 @@ const AuthPage = () => {
     phone: "",
     password: "",
     confirmPassword: "",
-    role: "user",
+    referralCode: "",
   });
-
-  /* REDIRECT AFTER AUTHENTICATION */
 
   useEffect(() => {
     if (!user) return;
 
     if (user.role === "admin") {
       navigate("/admin/dashboard", { replace: true });
-      return;
-    }
-
-    if (user.role === "barber") {
+    } else if (user.role === "barber") {
       navigate("/barber/dashboard", { replace: true });
-      return;
+    } else {
+      navigate(returnPath, { replace: true });
     }
-
-    // Customers return to the original page instead of Shop/Dashboard.
-    navigate(returnPath, { replace: true });
   }, [user, navigate, returnPath]);
 
-  /* INPUT CHANGE */
-
   const handleChange = (event) => {
-    setFormData((previous) => ({
-      ...previous,
-      [event.target.name]: event.target.value,
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "referralCode" ? value.toUpperCase() : value,
     }));
   };
-
-  /* RESET FORM */
 
   const resetForm = () => {
     setFormData({
@@ -76,20 +76,22 @@ const AuthPage = () => {
       phone: "",
       password: "",
       confirmPassword: "",
-      role: "user",
+      referralCode: "",
     });
-
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
 
-  /* LOGIN */
+  const switchMode = (nextMode) => {
+    resetForm();
+    setMode(nextMode);
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    if (!formData.phone.trim()) {
-      toast.error("Phone number is required.");
+    if (!/^[6-9]\d{9}$/.test(formData.phone)) {
+      toast.error("Enter a valid 10-digit phone number.");
       return;
     }
 
@@ -100,13 +102,10 @@ const AuthPage = () => {
 
     try {
       setLoading(true);
-
       await login({
         phone: formData.phone,
         password: formData.password,
       });
-
-      // The redirect effect handles navigation after AuthContext updates.
     } catch (error) {
       toast.error(
         error?.response?.data?.message ||
@@ -118,8 +117,6 @@ const AuthPage = () => {
     }
   };
 
-  /* REGISTER */
-
   const handleRegister = async (event) => {
     event.preventDefault();
 
@@ -129,7 +126,7 @@ const AuthPage = () => {
     }
 
     if (!/^[6-9]\d{9}$/.test(formData.phone)) {
-      toast.error("Enter a valid phone number.");
+      toast.error("Enter a valid 10-digit phone number.");
       return;
     }
 
@@ -142,7 +139,7 @@ const AuthPage = () => {
     }
 
     if (formData.password.length < 6) {
-      toast.error("Password should be at least 6 characters.");
+      toast.error("Password must be at least 6 characters.");
       return;
     }
 
@@ -155,13 +152,15 @@ const AuthPage = () => {
       setLoading(true);
 
       await register({
-        name: formData.name,
-        email: formData.email,
+        name: formData.name.trim(),
+        email: formData.email.trim(),
         phone: formData.phone,
         password: formData.password,
         role: "user",
+        referralCode: formData.referralCode.trim() || undefined,
       });
 
+      toast.success("Account created successfully.");
       resetForm();
       setMode("login");
     } catch (error) {
@@ -176,54 +175,100 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div
-        className="auth-left"
-        style={{ backgroundImage: `url(${authBg})` }}
-      >
-        <div className="auth-overlay">
-          <div className="brand-content">
-            <h1>TrimTokyo</h1>
-            <p>Book premium barber services instantly.</p>
+    <main className="auth-page">
+      <section className="auth-left">
+        <div className="auth-brand">
+          <span className="auth-brand-icon">
+            <MdContentCut />
+          </span>
+          <span>TrimTokyo</span>
+        </div>
+
+        <div className="auth-promo">
+          <span className="auth-eyebrow">
+            PREMIUM GROOMING. CLOSER TO YOU.
+          </span>
+
+          <h1>
+            Book. Groom.
+            <br />
+            Look Great.
+          </h1>
+
+          <p className="auth-description">
+            Discover trusted barbers, easy booking, and a premium
+            grooming experience — only on TrimTokyo.
+          </p>
+
+          <div className="auth-features">
+            <div className="auth-feature">
+              <span className="auth-feature-icon">
+                <MdCalendarMonth />
+              </span>
+              <div>
+                <strong>Easy Booking</strong>
+                <p>Choose your barber and book in seconds.</p>
+              </div>
+            </div>
+
+            <div className="auth-feature">
+              <span className="auth-feature-icon">
+                <MdVerifiedUser />
+              </span>
+              <div>
+                <strong>Trusted Professionals</strong>
+                <p>Skilled barbers committed to your comfort.</p>
+              </div>
+            </div>
+
+            <div className="auth-feature">
+              <span className="auth-feature-icon">
+                <MdStarOutline />
+              </span>
+              <div>
+                <strong>Premium Experience</strong>
+                <p>Simple, reliable grooming at your convenience.</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="auth-right">
+        <div className="auth-decoration" aria-hidden="true">
+          <span>✦</span>
+          <p>SELF CARE
+            <br />
+            LOOKS GOOD
+            <br />
+            ON YOU
+          </p>
+        </div>
+      </section>
+
+      <section className="auth-right">
         <div className="auth-card">
-          <div className="auth-header">
-            <h2>
-              {mode === "login" ? "Welcome Back" : "Create Account"}
-            </h2>
-
+          <header className="auth-header">
+            <h2>{mode === "login" ? "Welcome back" : "Create account"}</h2>
             <p>
               {mode === "login"
-                ? "Login to continue."
-                : "Create your account to get started."}
+                ? "Sign in to continue to TrimTokyo."
+                : "Join TrimTokyo and elevate your grooming experience."}
             </p>
-          </div>
+          </header>
 
           <div className="auth-toggle">
             <button
               type="button"
               className={mode === "login" ? "active" : ""}
-              onClick={() => {
-                resetForm();
-                setMode("login");
-              }}
+              onClick={() => switchMode("login")}
             >
               Login
             </button>
-
             <button
               type="button"
               className={mode === "register" ? "active" : ""}
-              onClick={() => {
-                resetForm();
-                setMode("register");
-              }}
+              onClick={() => switchMode("register")}
             >
-              Register
+              Create account
             </button>
           </div>
 
@@ -232,63 +277,74 @@ const AuthPage = () => {
             onSubmit={mode === "login" ? handleLogin : handleRegister}
           >
             {mode === "register" && (
-              <div className="input-group">
-                <MdPerson className="input-icon" />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  autoComplete="name"
-                />
-              </div>
+              <>
+                <label htmlFor="auth-name">Full name</label>
+                <div className="auth-input">
+                  <MdPerson />
+                  <input
+                    id="auth-name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    autoComplete="name"
+                    required
+                  />
+                </div>
+
+                <label htmlFor="auth-email">Email address (optional)</label>
+                <div className="auth-input">
+                  <MdEmail />
+                  <input
+                    id="auth-email"
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                  />
+                </div>
+              </>
             )}
 
-            {mode === "register" && (
-              <div className="input-group">
-                <MdEmail className="input-icon" />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email (Optional)"
-                  value={formData.email}
-                  onChange={handleChange}
-                  autoComplete="email"
-                />
-              </div>
-            )}
-
-            <div className="input-group">
-              <MdPhone className="input-icon" />
+            <label htmlFor="auth-phone">Phone number</label>
+            <div className="auth-input auth-phone">
+              <MdPhone />
+              <span className="auth-country">🇮🇳 +91</span>
               <input
+                id="auth-phone"
                 type="tel"
                 name="phone"
-                placeholder="Phone Number"
+                placeholder="10-digit phone number"
                 maxLength={10}
+                inputMode="numeric"
                 value={formData.phone}
                 onChange={handleChange}
-                autoComplete="tel"
+                autoComplete="tel-national"
+                required
               />
             </div>
 
-            <div className="input-group">
-              <MdLock className="input-icon" />
+            <label htmlFor="auth-password">Password</label>
+            <div className="auth-input">
+              <MdLock />
               <input
+                id="auth-password"
                 type={showPassword ? "text" : "password"}
                 name="password"
-                placeholder="Password"
+                placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
                 autoComplete={
                   mode === "login" ? "current-password" : "new-password"
                 }
+                required
               />
-
               <button
                 type="button"
-                className="password-toggle"
-                onClick={() => setShowPassword((previous) => !previous)}
+                className="auth-eye"
+                onClick={() => setShowPassword((prev) => !prev)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
@@ -296,81 +352,101 @@ const AuthPage = () => {
             </div>
 
             {mode === "register" && (
-              <div className="input-group">
-                <MdLock className="input-icon" />
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  autoComplete="new-password"
-                />
+              <>
+                <label htmlFor="auth-confirm-password">
+                  Confirm password
+                </label>
+                <div className="auth-input">
+                  <MdLock />
+                  <input
+                    id="auth-confirm-password"
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm your password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="auth-eye"
+                    onClick={() =>
+                      setShowConfirmPassword((prev) => !prev)
+                    }
+                    aria-label={
+                      showConfirmPassword
+                        ? "Hide confirm password"
+                        : "Show confirm password"
+                    }
+                  >
+                    {showConfirmPassword ? (
+                      <AiOutlineEyeInvisible />
+                    ) : (
+                      <AiOutlineEye />
+                    )}
+                  </button>
+                </div>
 
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() =>
-                    setShowConfirmPassword((previous) => !previous)
-                  }
-                  aria-label={
-                    showConfirmPassword
-                      ? "Hide confirm password"
-                      : "Show confirm password"
-                  }
-                >
-                  {showConfirmPassword ? (
-                    <AiOutlineEyeInvisible />
-                  ) : (
-                    <AiOutlineEye />
-                  )}
-                </button>
-              </div>
+                <label htmlFor="auth-referral">
+                  Have a referral code? <span>(Optional)</span>
+                </label>
+                <div className="auth-input">
+                  <MdStarOutline />
+                  <input
+                    id="auth-referral"
+                    name="referralCode"
+                    placeholder="Enter referral code"
+                    value={formData.referralCode}
+                    onChange={handleChange}
+                    autoComplete="off"
+                    maxLength={40}
+                  />
+                </div>
+              </>
             )}
 
-            <button type="submit" className="submit-btn" disabled={loading}>
+            <button className="auth-submit" type="submit" disabled={loading}>
               {loading
-                ? mode === "login"
-                  ? "Logging In..."
-                  : "Creating Account..."
+                ? "Please wait..."
                 : mode === "login"
-                  ? "Login"
-                  : "Create Account"}
+                  ? "Continue with phone"
+                  : "Create account"}
+              {!loading && <MdArrowForward />}
             </button>
           </form>
+
+          <p className="auth-legal">
+            By continuing, you agree to our{" "}
+            <button type="button" onClick={() => navigate("/terms")}>
+              Terms of Service
+            </button>{" "}
+            and{" "}
+            <button type="button" onClick={() => navigate("/privacy")}>
+              Privacy Policy
+            </button>.
+          </p>
 
           <div className="auth-footer">
             {mode === "login" ? (
               <>
-                <span>Don't have an account?</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    resetForm();
-                    setMode("register");
-                  }}
-                >
-                  Register
+                <span>New to TrimTokyo?</span>
+                <button type="button" onClick={() => switchMode("register")}>
+                  Create account <MdArrowForward />
                 </button>
               </>
             ) : (
               <>
                 <span>Already have an account?</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    resetForm();
-                    setMode("login");
-                  }}
-                >
+                <button type="button" onClick={() => switchMode("login")}>
                   Login
                 </button>
               </>
             )}
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

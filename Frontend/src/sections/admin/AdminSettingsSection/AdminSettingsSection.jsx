@@ -1,18 +1,11 @@
-
 import { useState } from "react";
-import {
-  Users,
-  CalendarDays,
-  CreditCard,
-  Scissors,
-  Monitor,
-  Share2,
-} from "lucide-react";
+import {  Users, CalendarDays, CreditCard, Scissors, Monitor, Share2,} from "lucide-react";
 
 import Staff from "./Staff/Staff.jsx";
 import Event from "./Event/Event.jsx";
 import SocialMedia from "./SocialMedia/SocialMedia.jsx";
 import Subscription from "./Subscription/Subscription.jsx";
+import Display from "./Display/Display.jsx";
 
 import "./AdminSettingsSection.scss";
 
@@ -104,6 +97,7 @@ export default function AdminSettingSection() {
     "staff",
     "event",
     "subscription",
+    "display",
   ].includes(activeTab);
 
   const renderActiveContent = () => {
@@ -120,8 +114,10 @@ export default function AdminSettingSection() {
       case "social-media":
         return <SocialMedia />;
 
-      case "barber":
       case "display":
+        return <Display />;
+
+      case "barber":
       default:
         return (
           <div className="admin-setting__placeholder">

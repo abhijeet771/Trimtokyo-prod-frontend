@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation,} from "react-router-dom";
 
 import BarberHeaderSection from "../sections/BarberHeaderSection/BarberHeaderSection";
 import BarberOverviewSection from "../sections/BarberOverviewSection/BarberOverviewSection";
-import BarberSidebar from "../components/organisms/BarberSidebar/BarberSidebar";
+import BarberSidebar from "../components/barber/BarberSidebar/BarberSidebar";
 
 import BarberProfileSection from "../sections/BarberProfileSection/BarberProfileSection";
 import BarberServiceSection from "../sections/BarberServiceSection/BarberServiceSection";

@@ -1,9 +1,5 @@
 import { useEffect } from "react";
-import {
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -22,6 +18,13 @@ import AuthPage from "./pages/AuthPage";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import Career from "./pages/Career";
+import Help from "./pages/Help";
+import Terms from "./pages/Terms";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import BecomeBarber from "./pages/BecomeBarber";
+import ReferralProgram from "./pages/ReferralProgram";
+import CareerJobDetails from "./pages/CareerJobDetails";
 import UserDashboard from "./pages/UserDashboard";
 import BarberDashboard from "./pages/BarberDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -64,21 +67,25 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog" element={<Blog/>} />
+          <Route path="/career" element={<Career/>} />
+          <Route path="/help" element={<Help/>} />
+          <Route path="/privacy" element={<PrivacyPolicy/>}/>
+          <Route path="/terms" element={<Terms/>} />
+          <Route path="/become-barber" element={<BecomeBarber/>}/>
+          <Route path="/referral-program" element={<ReferralProgram/>}/>
 
-          <Route
-            path="/blog/:slug"
-            element={<BlogDetailSection />}
-          />
+          {/* Career job details and application */}
+          <Route path="/career/:slug" element={<CareerJobDetails />}/>
+
+          {/* Blog details */}
+          <Route path="/blog/:slug" element={<BlogDetailSection />} />
 
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<SearchPage />} />
 
           {/* Public salon website */}
-          <Route
-            path="/salon/:slug"
-            element={<BarberSlugPage />}
-          />
+          <Route path="/salon/:slug" element={<BarberSlugPage />} />
 
           {/* Email verification / user entry */}
           <Route
@@ -101,7 +108,6 @@ export default function App() {
             />
 
             {/* ShopPage temporarily disabled */}
-
           </Route>
 
           {/* Barber dashboard */}
@@ -114,17 +120,11 @@ export default function App() {
 
           {/* Admin routes */}
           <Route element={<ProtectedRoute roles={["admin"]} />}>
-            <Route
-              path="/admin/dashboard"
-              element={<AdminDashboard />}
-            />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Route>
 
           {/* Unknown routes */}
-          <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-          />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 
         <Toaster

@@ -2,7 +2,7 @@ import "./Testimonial.scss";
 
 import { TESTIMONIALS } from "../../../constants/testimonials";
 
-import TestimonialCard from "../../molecules/TestimonialCard/TestimonialCard";
+import TestimonialCard from "../TestimonialCard/TestimonialCard";
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 

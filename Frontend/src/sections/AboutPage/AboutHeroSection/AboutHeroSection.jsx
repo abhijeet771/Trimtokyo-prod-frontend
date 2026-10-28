@@ -1,7 +1,7 @@
 import React from "react";
 import "./AboutHeroSection.scss";
 import { ABOUT } from "../../../constants/about";
-import Button from "../../../components/atoms/Button/Button";
+import Button from "../../../components/User/Button/Button";
 import heroImage from "../../../assets/hero-barber.png";
 
 const AboutHeroSection = () => {

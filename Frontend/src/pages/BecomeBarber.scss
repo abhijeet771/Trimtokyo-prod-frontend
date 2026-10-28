@@ -1,0 +1,41 @@
+
+.become-barber-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow: clip;
+  background: #ffffff;
+  color: #172641;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  // Keep both sections full-width and prevent horizontal overflow.
+  > section {
+    width: 100%;
+    min-width: 0;
+  }
+
+  // Consistent anchor scrolling for the application form.
+  #barber-application {
+    scroll-margin-top: 24px;
+  }
+
+  // Avoid accidental horizontal overflow from decorative elements.
+  img,
+  svg {
+    max-width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    #barber-application {
+      scroll-margin-top: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}

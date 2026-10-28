@@ -1,15 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Scissors, Menu, User, X, Headset, ArrowRight, LayoutDashboard, ShoppingCart, Package, CalendarDays,
-  Bell, Settings, MessageSquareWarning, CircleHelp, PanelLeftClose, PanelLeftOpen, CalendarCheck,} from "lucide-react";
+import {  Scissors,  Menu,User,  X,  Headset,
+  ArrowRight,  LayoutDashboard,ShoppingCart,  Package,
+  CalendarDays,  Bell,Settings,  MessageSquareWarning,
+  CircleHelp,  PanelLeftClose,PanelLeftOpen,  CalendarCheck,
+  Gift,
+} from "lucide-react";
 
 import { USER_SIDEBAR_MENU, USER_SIDEBAR_BOTTOM,} from "../../../constants/userSidebar";
+
 import "./UserSideBar.scss";
+const ICONS = {
+  LayoutDashboard,
+  ShoppingCart,
+  Package,
+  CalendarDays,
+  Bell,
+  User,
+  Settings,
+  Headset,
+  MessageSquareWarning,
+  CircleHelp,
+  CalendarCheck,
+  Gift,
+  Scissors,
+};
 
-const ICONS = { LayoutDashboard, ShoppingCart, Package, CalendarDays, Bell,  User, Settings, Headset, MessageSquareWarning, CircleHelp, CalendarCheck,};
-
-const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "cart", onSectionChange,}) => {
+const UserSideBar = ({
+  collapsed = false,
+  onCollapseChange,
+  activeSection = "cart",
+  onSectionChange,
+}) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -22,13 +45,11 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
   const handleMenuClick = (item) => {
     closeSidebar();
 
-    // Dashboard sections are switched without leaving the dashboard route.
     if (onSectionChange) {
       onSectionChange(item.id);
       return;
     }
 
-    // Fallback for standalone sidebar usage.
     if (item.path) {
       navigate(item.path);
     }
@@ -68,7 +89,6 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
 
   return (
     <>
-      {/* Mobile menu button */}
       <button
         type="button"
         className="user-sidebar__mobile-toggle"
@@ -79,18 +99,14 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
         <Menu size={22} />
       </button>
 
-      {/* Mobile backdrop */}
       <div
-        className={`user-sidebar__overlay ${
-          open ? "user-sidebar__overlay--active" : ""
-        }`}
+        className={`user-sidebar__overlay ${ open ? "user-sidebar__overlay--active" : ""}`}
         onClick={closeSidebar}
         aria-hidden="true"
       />
 
       <aside
-        className={[
-          "user-sidebar",
+        className={[ "user-sidebar",
           collapsed ? "user-sidebar--collapsed" : "",
           open ? "user-sidebar--open" : "",
         ]
@@ -99,15 +115,11 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
         aria-label="Customer navigation"
       >
         <div className="user-sidebar__top">
-          {/* Brand */}
           <div className="user-sidebar__brand-row">
             <button
               type="button"
               className="user-sidebar__brand"
-              onClick={() => {
-                closeSidebar();
-                navigate("/");
-              }}
+              onClick={() => { closeSidebar(); navigate("/");}}
               aria-label="TrimTokyo home"
               title={collapsed ? "TrimTokyo home" : undefined}
             >
@@ -120,7 +132,6 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
               </span>
             </button>
 
-            {/* Mobile close */}
             <button
               type="button"
               className="user-sidebar__close"
@@ -130,22 +141,15 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
               <X size={21} />
             </button>
 
-            {/* Desktop collapse */}
             <button
               type="button"
               className="user-sidebar__collapse"
               onClick={toggleCollapse}
-              aria-label={
-                collapsed ? "Expand sidebar" : "Collapse sidebar"
-              }
-              title={
-                collapsed ? "Expand sidebar" : "Collapse sidebar"
-              }
+              aria-label={ collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              title={ collapsed ? "Expand sidebar" : "Collapse sidebar"}
               aria-expanded={!collapsed}
             >
-              {collapsed ? (
-                <PanelLeftOpen size={19} />
-              ) : (
+              {collapsed ? ( <PanelLeftOpen size={19} />) : (
                 <PanelLeftClose size={19} />
               )}
             </button>
@@ -162,7 +166,6 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
           </nav>
         </div>
 
-        {/* Bottom links and support */}
         <div className="user-sidebar__bottom">
           <nav className="user-sidebar__bottom-menu">
             {USER_SIDEBAR_BOTTOM.map(renderMenuItem)}
@@ -170,14 +173,14 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
 
           <div className="user-sidebar__support-card">
             <span className="user-sidebar__support-icon">
-              <Headset size={22} />
+              <Gift size={22} />
             </span>
 
-            <h4>Refer a Friend?</h4>
+            <h4>Refer a Friend</h4>
 
             <p>
-              Refer a friend and get the required points to get a
-              discount on your next booking
+              Share your referral code and earn 50 points
+              when your referral is approved by our admin team.
             </p>
 
             <button
@@ -185,7 +188,7 @@ const UserSideBar = ({ collapsed = false, onCollapseChange, activeSection = "car
               className="user-sidebar__support-button"
               onClick={() => {
                 closeSidebar();
-                navigate("/refferal");
+                navigate("/referrals");
               }}
             >
               Refer a Friend

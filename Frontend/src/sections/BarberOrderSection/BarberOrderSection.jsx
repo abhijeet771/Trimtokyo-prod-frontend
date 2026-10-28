@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {  Search,  ClipboardList,  Clock3,  CircleCheckBig,  XCircle,  Eye,  X,} from "lucide-react";
 import useBarberOrders from "../../hooks/barber/useBarberOrders";
-import BarberOrderCard from "../../components/molecules/BarberOrderCard/BarberOrderCard";
+import BarberOrderCard from "../../components/barber/BarberOrderCard/BarberOrderCard";
 import {  getMyProfile,  toggleAutoConfirm,} from "../../services/api";
 
 import "./BarberOrderSection.scss";

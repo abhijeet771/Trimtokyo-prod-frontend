@@ -1,46 +1,65 @@
-import { useState } from "react";
+
+import { useState, useCallback } from "react";
 import { getReels } from "../../services/reel.services.js";
+
 const useHomepageReels = () => {
+  const [loading, setLoading] = useState(false);
+  const [reels, setReels] = useState([]);
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [selectedReel, setSelectedReel] = useState(null);
 
-const [loading, setLoading] = useState(false);
-const [reels, setReels] = useState([]);
-const [viewerOpen, setViewerOpen] =useState(false);
-const [selectedReel, setSelectedReel] =useState(null);
+  /* ===========================
+     FETCH PUBLIC REELS
+  =========================== */
 
-/* ===========================
-   FETCH REELS
-=========================== */
+  const fetchReels = useCallback(async () => {
+    setLoading(true);
 
-const fetchReels = async () => {
-setLoading(true);
-try {
+    try {
+      const { data } = await getReels();
 
-const { data } = await getReels();
-setReels(data.data || []);
-} catch (error) {
-console.error(error);
-} finally {
-setLoading(false);
-}};
+      const reelData = Array.isArray(data?.data) ? data.data : [];
 
-/* ===========================
-   OPEN VIEWER
-=========================== */
+      setReels(reelData);
+    } catch (error) {
+      console.error(
+        "Failed to fetch homepage reels:",
+        error.response?.data || error.message || error
+      );
 
-const openViewer = (reel) => {
-setSelectedReel(reel);
-setViewerOpen(true);
+      setReels([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  /* ===========================
+     OPEN VIEWER
+  =========================== */
+
+  const openViewer = useCallback((reel) => {
+    setSelectedReel(reel);
+    setViewerOpen(true);
+  }, []);
+
+  /* ===========================
+     CLOSE VIEWER
+  =========================== */
+
+  const closeViewer = useCallback(() => {
+    setViewerOpen(false);
+    setSelectedReel(null);
+  }, []);
+
+  return {
+    loading,
+    reels,
+    viewerOpen,
+    selectedReel,
+    fetchReels,
+    openViewer,
+    closeViewer,
+  };
 };
-
-/* ===========================
-   CLOSE VIEWER
-=========================== */
-
-const closeViewer = () => {
-setViewerOpen(false);
-setSelectedReel(null);};
-
-return {loading,reels,viewerOpen,selectedReel,fetchReels,openViewer,closeViewer,
-};};
 
 export default useHomepageReels;

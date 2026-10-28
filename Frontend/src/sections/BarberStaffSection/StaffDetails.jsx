@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 
 import useBarberStaff from "../../hooks/barber/useBarberStaff";
-import StaffDialog from "../../components/organisms/StaffDialog/StaffDialog";
-import StaffViewDialog from "../../components/organisms/StaffViewDialog/StaffViewDialog";
+import StaffDialog from "../../components/barber/StaffDialog/StaffDialog";
+import StaffViewDialog from "../../components/barber/StaffViewDialog/StaffViewDialog";
 import "./StaffDetails.scss";
 
 const PAGE_SIZE = 5;

@@ -9,10 +9,13 @@ import AdminSlotSection from "../AdminSlotSection/AdminSlotSection";
 import AdminStatsSection from "../AdminStatsSection/AdminStatsSection";
 import AdminCampaignSection from "../AdminCampaignSection/AdminCampaignSection";
 import AdminReelSection from "../AdminReelSection/AdminReelSection";
-import AdminCMSSection from "../AdminCMSSection/AdminCMSSection";
+import AdminCMSSection from "../AdminCareerSection/AdminCareerSection";
+import AdminCareerSection from "../AdminCMSSection/AdminCMSSection";
 import AdminOrderSection from "../AdminOrderSection/AdminOrderSection";
 import AdminEventSection from "../AdminEventSection/AdminEventSection";
+import AdminReferralSection from "../AdminReferralSection/AdminReferralSection";
 import AdminSettingsSection from "../AdminSettingsSection/AdminSettingsSection";
+import AdminSupportSection from "../AdminSupportSection/AdminSupportSection";
 
 import "./AdminContentSection.scss";
 
@@ -25,7 +28,7 @@ const AdminContentSection = ({ activeTab }) => {
       case "users":
         return <AdminUserSection />;
 
-      case "barbers":
+      case "barber":
         return <AdminBarberSection />;
 
       case "approvals":
@@ -50,13 +53,22 @@ const AdminContentSection = ({ activeTab }) => {
         return <AdminCampaignSection />;
 
       case "cms":
+        return <AdminCareerSection />;
+
+      case "career":
         return <AdminCMSSection />;
       
       case "settings":
         return <AdminSettingsSection />;
 
+      case "referral":
+        return <AdminReferralSection/>;
+
       case "events":
         return <AdminEventSection/>;
+
+      case "support":
+        return <AdminSupportSection/>;
 
       default:
         return <AdminOverviewSection />;

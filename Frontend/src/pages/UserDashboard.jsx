@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -13,6 +12,7 @@ import UserProfileSection from "../sections/User/UserProfileSection/UserProfileS
 import UserHelpSection from "../sections/User/UserHelpSection/UserHelpSection";
 import UserNotificationSection from "../sections/User/UserNotificationSection/UserNotificationSection";
 import UserSettingsSection from "../sections/User/UserSettingsSection/UserSettingsSection";
+import UserRefferalSection from "../sections/User/UserRefferalSection/UserRefferalSection";
 
 import AppointmentsSection from "../sections/User/AppointmentsSection/AppointmentsSection";
 import SlotBookingDetailsSection from "../sections/User/SlotBookingDetailsSection/SlotBookingDetailsSection";
@@ -25,16 +25,7 @@ import { createBooking } from "../services/slotBooking.service";
 
 import "./UserDashboard.scss";
 
-const ALLOWED_SECTIONS = [
-  "overview",
-  "cart",
-  "orders",
-  "slot-bookings",
-  "appointments",
-  "profile",
-  "help",
-  "notifications",
-  "settings",
+const ALLOWED_SECTIONS = [  "overview",  "cart",  "orders",  "slot-bookings",  "appointments",  "profile",  "help",  "notifications", "referrals" , "settings",
 ];
 
 const getSlotId = (slot) => {
@@ -218,10 +209,6 @@ const UserDashboard = () => {
     console.log("Selected booking:", booking);
   };
 
-  /*
-   * Called when the customer selects a date and a real available slot.
-   * Store the full slot object and its MongoDB ID for submission.
-   */
   const handleDateTimeContinue = ({
     date,
     slot,
@@ -317,10 +304,6 @@ const UserDashboard = () => {
       throw new Error("Customer phone number is required.");
     }
 
-    /*
-     * Keep the payload aligned with the booking API.
-     * The backend must support any additional customer fields you send.
-     */
     const payload = {
       slotId: String(slotId),
       serviceId: String(serviceId),
@@ -488,6 +471,9 @@ const UserDashboard = () => {
 
       case "help":
         return <UserHelpSection />;
+
+       case "referrals":
+        return <UserRefferalSection/>;
 
       case "notifications":
         return <UserNotificationSection />;

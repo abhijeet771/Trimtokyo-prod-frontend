@@ -1,0 +1,66 @@
+.career-page-layout {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background: #ffffff;
+  color: #172033;
+
+  > * {
+    width: 100%;
+  }
+
+  // Header
+  > header {
+    flex-shrink: 0;
+    z-index: 100;
+  }
+
+  // Career hero
+  .career-hero {
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  // Open positions
+  .career-open-positions {
+    width: 100%;
+    padding: 72px 5%;
+    background: #ffffff;
+  }
+
+  // Footer
+  > footer {
+    width: 100%;
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .career-page-layout {
+    .career-open-positions {
+      padding: 56px 4%;
+    }
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .career-page-layout {
+    .career-open-positions {
+      padding: 44px 20px;
+    }
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .career-page-layout {
+    .career-open-positions {
+      padding: 36px 16px;
+    }
+  }
+}

@@ -30,7 +30,7 @@ export const MAIN_FOOTER_CONTENT = {
 
         {
           label: "Careers",
-          href: "/careers",
+          href: "/career",
         },
       ],
     },
@@ -51,7 +51,7 @@ export const MAIN_FOOTER_CONTENT = {
 
         {
           label: "Referral Program",
-          href: "/referral",
+          href: "/referral-program",
         },
       ],
     },
@@ -62,12 +62,7 @@ export const MAIN_FOOTER_CONTENT = {
       links: [
         {
           label: "Become a Barber",
-          href: "/become-a-barber",
-        },
-
-        {
-          label: "Reports",
-          href: "/reports",
+          href: "/become-barber",
         },
       ],
     },
@@ -118,10 +113,6 @@ export const MAIN_FOOTER_CONTENT = {
       href: "/terms",
     },
 
-    {
-      label: "Cookies",
-      href: "/cookies",
-    },
   ],
 
   /* =================================

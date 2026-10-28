@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import ReelViewer from "../../../components/organisms/ReelViewer/ReelViewer";
+import ReelViewer from "../../../components/website/ReelViewer/ReelViewer";
 
 import useHomepageReels from "../../../hooks/website/useHomepageReels";
 

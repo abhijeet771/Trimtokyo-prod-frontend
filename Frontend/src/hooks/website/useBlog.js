@@ -1,5 +1,6 @@
+
 import { useState, useCallback } from "react";
-import api from "../../services/blog.service.js";
+import blogService from "../../services/shared/blog.service.js";
 
 const useBlog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -13,9 +14,11 @@ const useBlog = () => {
       setLoading(true);
       setError(null);
 
-      const { data } = await api.get("/api/v1/blogs");
+      const { data } = await blogService.getAllBlogs();
       setBlogs(data);
     } catch (err) {
+      console.error("Fetch blogs error:", err);
+
       setError(
         err.response?.data?.message || "Failed to fetch blogs"
       );
@@ -29,11 +32,13 @@ const useBlog = () => {
     try {
       setLoading(true);
       setError(null);
-      setBlog(null); // reset previous blog
+      setBlog(null);
 
-      const { data } = await api.get(`/api/v1/blogs/${slug}`);
+      const { data } = await blogService.getBlogBySlug(slug);
       setBlog(data);
     } catch (err) {
+      console.error("Fetch blog by slug error:", err);
+
       setError(
         err.response?.data?.message || "Blog not found"
       );
@@ -48,16 +53,13 @@ const useBlog = () => {
       setLoading(true);
       setError(null);
 
-      const { data } = await api.post(
-        "/api/v1/blogs",
-        blogData
-      );
-
+      const { data } = await blogService.createBlog(blogData);
       return data;
     } catch (err) {
+      console.error("Create blog error:", err);
+
       setError(
-        err.response?.data?.message ||
-          "Failed to create blog"
+        err.response?.data?.message || "Failed to create blog"
       );
       throw err;
     } finally {
@@ -71,16 +73,13 @@ const useBlog = () => {
       setLoading(true);
       setError(null);
 
-      const { data } = await api.put(
-        `/api/v1/blogs/${id}`,
-        blogData
-      );
-
+      const { data } = await blogService.updateBlog(id, blogData);
       return data;
     } catch (err) {
+      console.error("Update blog error:", err);
+
       setError(
-        err.response?.data?.message ||
-          "Failed to update blog"
+        err.response?.data?.message || "Failed to update blog"
       );
       throw err;
     } finally {
@@ -94,11 +93,12 @@ const useBlog = () => {
       setLoading(true);
       setError(null);
 
-      await api.delete(`/api/v1/blogs/${id}`);
+      await blogService.deleteBlog(id);
     } catch (err) {
+      console.error("Delete blog error:", err);
+
       setError(
-        err.response?.data?.message ||
-          "Failed to delete blog"
+        err.response?.data?.message || "Failed to delete blog"
       );
       throw err;
     } finally {
