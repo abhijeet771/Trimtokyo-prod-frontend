@@ -79,13 +79,13 @@
     gap: 24px;
   }
 
-  /* Left panel */
+  /* Left information panel */
 
   &__info {
     position: relative;
     display: flex;
-    flex-direction: column;
     min-width: 0;
+    flex-direction: column;
     padding: 37px 32px 27px;
     overflow: hidden;
     border: 1px solid #246ed9;
@@ -286,6 +286,8 @@
     gap: 21px 17px;
   }
 
+  /* Form fields */
+
   &__field {
     display: flex;
     min-width: 0;
@@ -336,6 +338,12 @@
         background: #fff;
         box-shadow: 0 0 0 3px rgba(23, 105, 232, 0.1);
       }
+
+      &:disabled {
+        cursor: not-allowed;
+        background: #f1f5f9;
+        opacity: 0.7;
+      }
     }
 
     input {
@@ -369,6 +377,8 @@
     font-size: 10px;
   }
 
+  /* Error message */
+
   &__error {
     margin: 18px 0 0;
     padding: 12px 14px;
@@ -379,6 +389,21 @@
     font-size: 12px;
     line-height: 1.7;
   }
+
+  /* Success message */
+
+  &__success {
+    margin: 18px 0 0;
+    padding: 12px 14px;
+    border: 1px solid #bbf7d0;
+    border-radius: 9px;
+    background: #f0fdf4;
+    color: #166534;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  /* Submit button */
 
   &__submit {
     display: flex;
@@ -417,8 +442,15 @@
     &:disabled {
       cursor: not-allowed;
       opacity: 0.65;
+      box-shadow: none;
+    }
+
+    svg {
+      flex: 0 0 auto;
     }
   }
+
+  /* Privacy note */
 
   &__privacy {
     display: flex;
@@ -446,7 +478,7 @@
     padding: 65px 0 75px;
 
     &__container {
-      width: min(100% - 40px, 700px);
+      width: min(calc(100% - 40px), 700px);
     }
 
     &__layout {
@@ -605,6 +637,8 @@
   }
 }
 
+/* Reduced motion accessibility */
+
 @media (prefers-reduced-motion: reduce) {
   .barber-application {
     &__submit {
@@ -613,6 +647,11 @@
 
     &__submit:hover:not(:disabled) {
       transform: none;
+    }
+
+    &__field input,
+    &__field textarea {
+      transition: none;
     }
   }
 }

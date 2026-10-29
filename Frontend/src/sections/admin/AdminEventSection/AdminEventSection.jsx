@@ -3,11 +3,13 @@ import {
   LayoutDashboard,
   CalendarDays,
   ClipboardCheck,
+  ClipboardList,
 } from "lucide-react";
 
 import Overview from "./Overview/Overview.jsx";
 import EventBooking from "./EventBooking/EventBooking.jsx";
 import EventStatus from "./EventStatus/EventStatus.jsx";
+import EventRequest from "./EventRequest/EventRequest.jsx";
 
 import "./AdminEventSection.scss";
 
@@ -27,6 +29,11 @@ const EVENT_TABS = [
     label: "Booking Status",
     icon: ClipboardCheck,
   },
+  {
+    id: "event-requests",
+    label: "Events Request",
+    icon: ClipboardList,
+  },
 ];
 
 export default function AdminEventSection() {
@@ -38,13 +45,16 @@ export default function AdminEventSection() {
         return <Overview />;
 
       case "events":
-        return <EventBooking />;
+        return <EventBooking/>;
 
       case "booking-status":
-        return <EventStatus />;
+        return <EventStatus/>;
+
+      case "event-requests":
+     return <EventRequest/>;
 
       default:
-        return <Overview />;
+        return <Overview/>;
     }
   };
 

@@ -14,52 +14,51 @@ const events = [
   {
     id: 1,
     title: "Wedding Grooming",
-    description: "Haircut, beard styling, facial and complete groom packages.",
+    description:
+      "Haircut, beard styling, facial and complete groom packages.",
     image: "/event/e1.png",
     icon: Heart,
     theme: "wedding",
-    query: "Wedding Grooming",
   },
   {
     id: 2,
     title: "Upanayan Ceremony",
-    description: "Traditional grooming packages for the special day.",
+    description:
+      "Traditional grooming packages for the special day.",
     image: "/event/e2.png",
     icon: HandHeart,
     theme: "ceremony",
-    query: "Upanayan Ceremony",
   },
   {
     id: 3,
     title: "Engagement & Parties",
-    description: "Premium grooming to make you stand out.",
+    description:
+      "Premium grooming to make you stand out.",
     image: "/event/e3.png",
     icon: Sparkles,
     theme: "party",
-    query: "Engagement Grooming",
   },
   {
     id: 4,
     title: "Festivals & Family Events",
-    description: "Fresh looks for every celebration.",
+    description:
+      "Fresh looks for every celebration.",
     image: "/event/e4.png",
     icon: Users,
     theme: "family",
-    query: "Family Event Grooming",
   },
 ];
 
 const EventsSection = () => {
   const navigate = useNavigate();
 
-  const handleEventClick = (eventName) => {
-    navigate(`/search?q=${encodeURIComponent(eventName)}`);
+  const handleEventClick = () => {
+    navigate("/events");
   };
 
   return (
     <section className="events-section">
       <div className="events-section__container">
-        {/* HERO */}
         <div className="events-section__hero">
           <div className="events-section__hero-content">
             <span className="events-section__badge">
@@ -80,7 +79,7 @@ const EventsSection = () => {
             <button
               type="button"
               className="events-section__cta"
-              onClick={() => handleEventClick("Event Grooming")}
+              onClick={handleEventClick}
             >
               Book for Your Event
               <ArrowRight size={19} />
@@ -96,7 +95,6 @@ const EventsSection = () => {
           </div>
         </div>
 
-        {/* EVENT CARDS */}
         <div className="events-section__cards">
           {events.map((event) => {
             const EventIcon = event.icon;
@@ -106,8 +104,8 @@ const EventsSection = () => {
                 type="button"
                 className="events-section__card"
                 key={event.id}
-                onClick={() => handleEventClick(event.query)}
-                aria-label={`Explore ${event.title}`}
+                onClick={handleEventClick}
+                aria-label={`Book grooming for ${event.title}`}
               >
                 <div className="events-section__card-image">
                   <img

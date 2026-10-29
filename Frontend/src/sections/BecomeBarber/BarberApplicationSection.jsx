@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Store,
@@ -14,6 +13,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+import useGuestBarberRequest from "../../hooks/website/useGuestBarberRequest.js";
 import "./BarberApplicationSection.scss";
 
 const initialForm = {
@@ -26,10 +26,16 @@ const initialForm = {
   shopDescription: "",
 };
 
-const BarberApplicationSection = ({ onSubmit }) => {
+const BarberApplicationSection = () => {
   const [formData, setFormData] = useState(initialForm);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+
+  const {
+    loading: submitting,
+    error,
+    success,
+    submitBarberRequest,
+    resetStatus,
+  } = useGuestBarberRequest();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -39,37 +45,31 @@ const BarberApplicationSection = ({ onSubmit }) => {
       [name]: value,
     }));
 
-    setError("");
+    resetStatus();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError("");
+    resetStatus();
 
     if (!/^[6-9]\d{9}$/.test(formData.phone.trim())) {
-      setError("Enter a valid 10-digit Indian mobile number.");
-      return;
-    }
-
-    if (!onSubmit) {
-      setError(
-        "Application submission is not connected yet. Please try again later."
-      );
       return;
     }
 
     try {
-      setSubmitting(true);
-      await onSubmit(formData);
+      await submitBarberRequest({
+        ownerName: formData.ownerName.trim(),
+        shopName: formData.shopName.trim(),
+        mobileNumber: formData.phone.trim(),
+        email: formData.email.trim(),
+        city: formData.city.trim(),
+        shopAddress: formData.shopAddress.trim(),
+        description: formData.shopDescription.trim(),
+      });
+
       setFormData(initialForm);
-    } catch (err) {
-      setError(
-        err?.response?.data?.message ||
-          err?.message ||
-          "Unable to submit your application. Please try again."
-      );
-    } finally {
-      setSubmitting(false);
+    } catch {
+      // The hook exposes the API error message.
     }
   };
 
@@ -128,6 +128,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                 <span>
                   <CheckCircle2 size={18} />
                 </span>
+
                 <div>
                   <strong>One place for your business</strong>
                   <p>Shop, staff, expenses, and orders.</p>
@@ -138,6 +139,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                 <span>
                   <CheckCircle2 size={18} />
                 </span>
+
                 <div>
                   <strong>Simple onboarding</strong>
                   <p>Share your details to get started.</p>
@@ -148,6 +150,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                 <span>
                   <CheckCircle2 size={18} />
                 </span>
+
                 <div>
                   <strong>Personalized assistance</strong>
                   <p>Connect with our partner support team.</p>
@@ -181,6 +184,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
               <div>
                 <span>BARBER PARTNER APPLICATION</span>
                 <h3>Tell us about your shop</h3>
+
                 <p>
                   Fill in the details below to submit your interest.
                 </p>
@@ -196,6 +200,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
               onSubmit={handleSubmit}
             >
               <div className="barber-application__fields">
+                {/* Owner name */}
                 <div className="barber-application__field">
                   <label htmlFor="barber-owner-name">
                     Owner's Full Name <span>*</span>
@@ -218,6 +223,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                   </div>
                 </div>
 
+                {/* Shop name */}
                 <div className="barber-application__field">
                   <label htmlFor="barber-shop-name">
                     Shop Name <span>*</span>
@@ -239,6 +245,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                   </div>
                 </div>
 
+                {/* Mobile number */}
                 <div className="barber-application__field">
                   <label htmlFor="barber-phone">
                     Mobile Number <span>*</span>
@@ -264,6 +271,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                   </div>
                 </div>
 
+                {/* Email */}
                 <div className="barber-application__field">
                   <label htmlFor="barber-email">
                     Email Address <span>*</span>
@@ -286,6 +294,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                   </div>
                 </div>
 
+                {/* City */}
                 <div className="barber-application__field">
                   <label htmlFor="barber-city">
                     City <span>*</span>
@@ -308,6 +317,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                   </div>
                 </div>
 
+                {/* Shop address */}
                 <div className="barber-application__field">
                   <label htmlFor="barber-address">
                     Shop Address <span>*</span>
@@ -330,9 +340,11 @@ const BarberApplicationSection = ({ onSubmit }) => {
                   </div>
                 </div>
 
+                {/* Description */}
                 <div className="barber-application__field barber-application__field--full">
                   <label htmlFor="barber-description">
                     Tell Us About Your Shop
+
                     <span className="barber-application__optional">
                       Optional
                     </span>
@@ -354,6 +366,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
                 </div>
               </div>
 
+              {/* Error message */}
               {error && (
                 <p
                   className="barber-application__error"
@@ -363,6 +376,17 @@ const BarberApplicationSection = ({ onSubmit }) => {
                 </p>
               )}
 
+              {/* Success message */}
+              {success && (
+                <p
+                  className="barber-application__success"
+                  role="status"
+                >
+                  {success}
+                </p>
+              )}
+
+              {/* Submit button */}
               <button
                 className="barber-application__submit"
                 type="submit"
@@ -377,6 +401,7 @@ const BarberApplicationSection = ({ onSubmit }) => {
 
               <p className="barber-application__privacy">
                 <ShieldCheck size={16} />
+
                 Your information will be used to process your
                 partner application.
               </p>

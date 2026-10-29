@@ -64,6 +64,10 @@ export const MAIN_FOOTER_CONTENT = {
           label: "Become a Barber",
           href: "/become-barber",
         },
+        {
+          label: "Contact for Events",
+          href: "/events",
+        },
       ],
     },
   ],

@@ -1,0 +1,297 @@
+
+.barber-overview {
+  min-width: 0;
+  color: #172641;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.bo-header {
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 7px 0;
+    font-size: 26px;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: #75839a;
+    font-size: 13px;
+  }
+}
+
+.bo-eyebrow {
+  color: #1769e8;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.bo-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.bo-kpi {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #e1e9f5;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(30, 70, 125, 0.035);
+
+  &__icon {
+    display: grid;
+    width: 43px;
+    height: 43px;
+    margin-bottom: 15px;
+    place-items: center;
+    border-radius: 11px;
+
+    &--blue {
+      background: #edf4ff;
+      color: #1769e8;
+    }
+
+    &--orange {
+      background: #fff4e5;
+      color: #d97706;
+    }
+
+    &--green {
+      background: #e8f8ee;
+      color: #159653;
+    }
+
+    &--red {
+      background: #fff0f1;
+      color: #dc3545;
+    }
+  }
+
+  p {
+    margin: 0 0 8px;
+    color: #75839a;
+    font-size: 12px;
+  }
+
+  h3 {
+    margin: 0 0 10px;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  &__change {
+    font-size: 11px;
+    font-weight: 650;
+
+    &--blue,
+    &--green {
+      color: #168653;
+    }
+
+    &--orange {
+      color: #b7791f;
+    }
+
+    &--red {
+      color: #d14350;
+    }
+  }
+}
+
+.bo-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.bo-chart-card {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e1e9f5;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(30, 70, 125, 0.035);
+}
+
+.bo-chart-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 25px;
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: #8591a5;
+    font-size: 11px;
+  }
+
+  > svg {
+    color: #1769e8;
+  }
+}
+
+/* Pie chart */
+
+.bo-pie-layout {
+  display: flex;
+  min-height: 220px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.bo-pie {
+  display: grid;
+  width: 175px;
+  height: 175px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+
+  &__center {
+    display: flex;
+    width: 112px;
+    height: 112px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff;
+
+    strong {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    span {
+      margin-top: 4px;
+      color: #8591a5;
+      font-size: 11px;
+    }
+  }
+}
+
+.bo-legend {
+  display: grid;
+  min-width: 135px;
+  gap: 18px;
+
+  &__item {
+    display: grid;
+    grid-template-columns: 10px 1fr auto;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+
+    > span:nth-child(2) {
+      color: #68778d;
+    }
+
+    strong {
+      color: #172641;
+      font-weight: 750;
+    }
+  }
+
+  &__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+}
+
+/* Growth chart */
+
+.bo-growth__total {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+
+  strong {
+    color: #172641;
+    font-size: 27px;
+    font-weight: 800;
+  }
+
+  span {
+    color: #8591a5;
+    font-size: 11px;
+  }
+}
+
+.bo-growth__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  .bo-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bo-charts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .bo-header h2 {
+    font-size: 23px;
+  }
+
+  .bo-kpi {
+    padding: 15px;
+
+    h3 {
+      font-size: 24px;
+    }
+
+    p {
+      min-height: 30px;
+      line-height: 1.5;
+    }
+  }
+
+  .bo-chart-card {
+    padding: 16px;
+  }
+
+  .bo-pie-layout {
+    gap: 22px;
+  }
+
+  .bo-pie {
+    width: 150px;
+    height: 150px;
+
+    &__center {
+      width: 98px;
+      height: 98px;
+    }
+  }
+
+  .bo-legend {
+    width: 100%;
+  }
+}

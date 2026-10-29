@@ -24,6 +24,7 @@ import Terms from "./pages/Terms";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import BecomeBarber from "./pages/BecomeBarber";
 import ReferralProgram from "./pages/ReferralProgram";
+import Events from "./pages/Events";
 import CareerJobDetails from "./pages/CareerJobDetails";
 import UserDashboard from "./pages/UserDashboard";
 import BarberDashboard from "./pages/BarberDashboard";
@@ -72,6 +73,7 @@ export default function App() {
           <Route path="/help" element={<Help/>} />
           <Route path="/privacy" element={<PrivacyPolicy/>}/>
           <Route path="/terms" element={<Terms/>} />
+          <Route path="/events" element={<Events/>} />
           <Route path="/become-barber" element={<BecomeBarber/>}/>
           <Route path="/referral-program" element={<ReferralProgram/>}/>
 
