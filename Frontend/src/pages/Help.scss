@@ -260,3 +260,46 @@
     }
   }
 }
+
+.help-form__feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  &--success {
+    color: #166534;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  &--error {
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+}
+
+.help-form__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.help-form__spinner {
+  animation: help-form-spin 1s linear infinite;
+}
+
+@keyframes help-form-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

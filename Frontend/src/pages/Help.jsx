@@ -1,26 +1,30 @@
-
 import React, { useState } from "react";
-import {
-  UserRound,
-  Mail,
-  Phone,
-  MessageSquare,
-  FileText,
-  ArrowRight,
-} from "lucide-react";
+import {  UserRound,Mail,  Phone,MessageSquare,  FileText,
+  ArrowRight,  CheckCircle,AlertCircle,  LoaderCircle,} from "lucide-react";
 
 import "./Help.scss";
 import HeaderSection from "../sections/HomePage/HeaderSection/HeaderSection";
 import MainFooter from "../components/website/MainFooter/MainFooter";
+import useGuestSupport from "../hooks/website/useGuestSupport.js";
+
+const initialFormData = {
+  name: "",
+  email: "",
+  phone: "",
+  title: "",
+  message: "",
+};
 
 const Help = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    title: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+
+  const {
+    loading,
+    error,
+    success,
+    submitTicket,
+    resetMessages,
+  } = useGuestSupport();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,14 +33,27 @@ const Help = () => {
       ...prev,
       [name]: value,
     }));
+
+    if (error || success) {
+      resetMessages();
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    resetMessages();
 
-    console.log("Help form data:", formData);
+    const result = await submitTicket({
+      fullName: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      title: formData.title.trim(),
+      message: formData.message.trim(),
+    });
 
-    // Connect your help/contact API here.
+    if (result.success) {
+      setFormData(initialFormData);
+    }
   };
 
   return (
@@ -66,10 +83,23 @@ const Help = () => {
               </p>
             </div>
 
-            <form
-              className="help-form"
-              onSubmit={handleSubmit}
-            >
+            {success && (
+              <div className="help-form__feedback help-form__feedback--success" role="status">
+                <CheckCircle size={19} />
+                <span>
+                  {success}
+                </span>
+              </div>
+            )}
+
+            {error && (
+              <div className="help-form__feedback help-form__feedback--error" role="alert">
+                <AlertCircle size={19} />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <form className="help-form" onSubmit={handleSubmit}>
               <div className="help-form__field">
                 <label htmlFor="help-name">Full Name</label>
 
@@ -83,6 +113,10 @@ const Help = () => {
                     placeholder="Enter your full name"
                     value={formData.name}
                     onChange={handleChange}
+                    maxLength={100}
+                    autoComplete="name"
+                    required
+                    disabled={loading}
                   />
                 </div>
               </div>
@@ -100,6 +134,10 @@ const Help = () => {
                     placeholder="Enter your email address"
                     value={formData.email}
                     onChange={handleChange}
+                    maxLength={254}
+                    autoComplete="email"
+                    required
+                    disabled={loading}
                   />
                 </div>
               </div>
@@ -117,6 +155,10 @@ const Help = () => {
                     placeholder="Enter your phone number"
                     value={formData.phone}
                     onChange={handleChange}
+                    maxLength={20}
+                    autoComplete="tel"
+                    required
+                    disabled={loading}
                   />
                 </div>
               </div>
@@ -134,6 +176,9 @@ const Help = () => {
                     placeholder="Enter the subject"
                     value={formData.title}
                     onChange={handleChange}
+                    maxLength={150}
+                    required
+                    disabled={loading}
                   />
                 </div>
               </div>
@@ -151,6 +196,9 @@ const Help = () => {
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
+                    maxLength={5000}
+                    required
+                    disabled={loading}
                   />
                 </div>
               </div>
@@ -158,9 +206,19 @@ const Help = () => {
               <button
                 className="help-form__submit"
                 type="submit"
+                disabled={loading}
               >
-                Send Message
-                <ArrowRight size={19} />
+                {loading ? (
+                  <>
+                    <LoaderCircle size={19} className="help-form__spinner" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <ArrowRight size={19} />
+                  </>
+                )}
               </button>
             </form>
           </div>

@@ -6,7 +6,7 @@ import {
   createBarberSupportTicket,
   updateBarberSupportTicket,
   deleteBarberSupportTicket,
-} from "../../services/barberSupport.service";
+} from "../../services/barber/barberSupport.service";
 
 const useBarberSupport = (initialParams = {}) => {
   const [tickets, setTickets] = useState([]);

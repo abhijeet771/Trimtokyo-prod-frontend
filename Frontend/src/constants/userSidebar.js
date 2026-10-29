@@ -63,6 +63,4 @@ export const USER_SIDEBAR_MENU = [
   },
 ];
 
-export const USER_SIDEBAR_BOTTOM = [
-  
-];
+export const USER_SIDEBAR_BOTTOM = [];

@@ -29,9 +29,9 @@ const SETTINGS_TABS = [
     icon: CreditCard,
   },
   {
-    id: "barber",
-    label: "Barber",
-    description: "Barber configuration",
+    id: "discount",
+    label: "Discount",
+    description: "Discount configuration",
     icon: Scissors,
   },
   {
@@ -64,10 +64,10 @@ const SETTINGS_CONTENT = {
     description:
       "Configure subscription plans, pricing, and billing options.",
   },
-  barber: {
-    title: "Barber Settings",
+  discount: {
+    title: "Discount Settings",
     description:
-      "Manage barber-related configuration and operational preferences.",
+      "Manage disount-related configuration and operational preferences.",
   },
   display: {
     title: "Display Settings",
@@ -84,21 +84,13 @@ const SETTINGS_CONTENT = {
 export default function AdminSettingSection() {
   const [activeTab, setActiveTab] = useState("staff");
 
-  const activeContent =
-    SETTINGS_CONTENT[activeTab] ?? SETTINGS_CONTENT.staff;
+  const activeContent = SETTINGS_CONTENT[activeTab] ?? SETTINGS_CONTENT.staff;
 
-  const activeTabConfig = SETTINGS_TABS.find(
-    (tab) => tab.id === activeTab
-  );
+  const activeTabConfig = SETTINGS_TABS.find((tab) => tab.id === activeTab);
 
   const ActiveIcon = activeTabConfig?.icon ?? Users;
 
-  const hidePanelHeader = [
-    "staff",
-    "event",
-    "subscription",
-    "display",
-  ].includes(activeTab);
+  const hidePanelHeader = [ "staff", "event", "subscription", "display", ].includes(activeTab);
 
   const renderActiveContent = () => {
     switch (activeTab) {
@@ -117,7 +109,7 @@ export default function AdminSettingSection() {
       case "display":
         return <Display />;
 
-      case "barber":
+      case "discount":
       default:
         return (
           <div className="admin-setting__placeholder">

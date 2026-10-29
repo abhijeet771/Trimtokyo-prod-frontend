@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -12,6 +13,7 @@ import UserProfileSection from "../sections/User/UserProfileSection/UserProfileS
 import UserHelpSection from "../sections/User/UserHelpSection/UserHelpSection";
 import UserNotificationSection from "../sections/User/UserNotificationSection/UserNotificationSection";
 import UserSettingsSection from "../sections/User/UserSettingsSection/UserSettingsSection";
+import UserSupportSection from "../sections/User/UserSupportSection/UserSupportSection";
 import UserRefferalSection from "../sections/User/UserRefferalSection/UserRefferalSection";
 
 import AppointmentsSection from "../sections/User/AppointmentsSection/AppointmentsSection";
@@ -25,7 +27,18 @@ import { createBooking } from "../services/slotBooking.service";
 
 import "./UserDashboard.scss";
 
-const ALLOWED_SECTIONS = [  "overview",  "cart",  "orders",  "slot-bookings",  "appointments",  "profile",  "help",  "notifications", "referrals" , "settings",
+const ALLOWED_SECTIONS = [
+  "overview",
+  "cart",
+  "orders",
+  "slot-bookings",
+  "appointments",
+  "profile",
+  "help",
+  "notifications",
+  "referrals",
+  "settings",
+  "support",
 ];
 
 const getSlotId = (slot) => {
@@ -101,10 +114,7 @@ const UserDashboard = () => {
   // Booking data will be fetched through the booking API separately.
   const [bookings, setBookings] = useState([]);
 
-  /*
-   * Consume navigation state from salon service cards or dashboard
-   * navigation. Preserve real service, shop, and slot identifiers.
-   */
+  // Handle navigation state from other pages.
   useEffect(() => {
     const navigationState = location.state;
 
@@ -140,11 +150,17 @@ const UserDashboard = () => {
       }
     }
 
+    // Clear navigation state after processing it.
     navigate(location.pathname, {
       replace: true,
       state: null,
     });
-  }, [location.key, location.pathname, location.state, navigate]);
+  }, [
+    location.key,
+    location.pathname,
+    location.state,
+    navigate,
+  ]);
 
   // Fetch orders when the Orders section is opened.
   useEffect(() => {
@@ -173,7 +189,9 @@ const UserDashboard = () => {
           [];
 
         if (isMounted) {
-          setOrders(Array.isArray(orderData) ? orderData : []);
+          setOrders(
+            Array.isArray(orderData) ? orderData : []
+          );
         }
       } catch (error) {
         if (isMounted) {
@@ -219,11 +237,10 @@ const UserDashboard = () => {
     const resolvedSlotId = slotId || getSlotId(slot);
 
     if (!date || !slot || !resolvedSlotId) {
-      console.error("Date, slot, or slot ID is missing.", {
-        date,
-        slot,
-        slotId,
-      });
+      console.error(
+        "Date, slot, or slot ID is missing.",
+        { date, slot, slotId }
+      );
       return;
     }
 
@@ -244,7 +261,9 @@ const UserDashboard = () => {
     setBookingDraft((previousDraft) => ({
       ...(previousDraft || {}),
       ...(resolvedShop ? { shop: resolvedShop } : {}),
-      ...(resolvedService ? { service: resolvedService } : {}),
+      ...(resolvedService
+        ? { service: resolvedService }
+        : {}),
       date,
       slot,
       slotId: String(resolvedSlotId),
@@ -253,10 +272,6 @@ const UserDashboard = () => {
     setAppointmentStep(3);
   };
 
-  /*
-   * Submit the booking to the backend.
-   * SlotBookingDetailsSection passes customer details to this handler.
-   */
   const handleBookAppointment = async (bookingDetails) => {
     const service = bookingDetails?.service || selectedService;
     const shop = bookingDetails?.shop || selectedShop;
@@ -315,8 +330,7 @@ const UserDashboard = () => {
       notes: bookingDetails.notes || "",
       date: bookingDetails.date || selectedDate,
       timeSlot:
-        bookingDetails.timeSlot ||
-        getSlotValue(slot),
+        bookingDetails.timeSlot || getSlotValue(slot),
     };
 
     try {
@@ -325,7 +339,8 @@ const UserDashboard = () => {
 
       if (responseData?.success === false) {
         throw new Error(
-          responseData?.message || "Failed to book appointment."
+          responseData?.message ||
+            "Failed to book appointment."
         );
       }
 
@@ -472,14 +487,17 @@ const UserDashboard = () => {
       case "help":
         return <UserHelpSection />;
 
-       case "referrals":
-        return <UserRefferalSection/>;
+      case "referrals":
+        return <UserRefferalSection />;
 
       case "notifications":
         return <UserNotificationSection />;
 
       case "settings":
         return <UserSettingsSection />;
+
+      case "support":
+        return <UserSupportSection />;
 
       default:
         return renderCartSection();

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import {
   getBarberSupportStats,
-} from "../../services/barberSupport.service";
+} from "../../services/barber/barberSupport.service";
 
 const useBarberSupportStats = () => {
   const [stats, setStats] = useState({

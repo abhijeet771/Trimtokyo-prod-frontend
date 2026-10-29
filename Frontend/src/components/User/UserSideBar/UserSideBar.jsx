@@ -1,16 +1,31 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {  Scissors,  Menu,User,  X,  Headset,
-  ArrowRight,  LayoutDashboard,ShoppingCart,  Package,
-  CalendarDays,  Bell,Settings,  MessageSquareWarning,
-  CircleHelp,  PanelLeftClose,PanelLeftOpen,  CalendarCheck,
+import {
+  Scissors,
+  Menu,
+  User,
+  X,
+  Headset,
+  ArrowRight,
+  LayoutDashboard,
+  ShoppingCart,
+  Package,
+  CalendarDays,
+  Bell,
+  Settings,
+  CircleHelp,
+  PanelLeftClose,
+  PanelLeftOpen,
+  CalendarCheck,
   Gift,
 } from "lucide-react";
 
-import { USER_SIDEBAR_MENU, USER_SIDEBAR_BOTTOM,} from "../../../constants/userSidebar";
+import { USER_SIDEBAR_MENU } from "../../../constants/userSidebar";
 
 import "./UserSideBar.scss";
+
 const ICONS = {
   LayoutDashboard,
   ShoppingCart,
@@ -20,7 +35,6 @@ const ICONS = {
   User,
   Settings,
   Headset,
-  MessageSquareWarning,
   CircleHelp,
   CalendarCheck,
   Gift,
@@ -36,7 +50,9 @@ const UserSideBar = ({
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const closeSidebar = () => setOpen(false);
+  const closeSidebar = () => {
+    setOpen(false);
+  };
 
   const toggleCollapse = () => {
     onCollapseChange?.(!collapsed);
@@ -87,6 +103,21 @@ const UserSideBar = ({
     );
   };
 
+  // Open the support section within the existing dashboard.
+  const handleSupportClick = () => {
+    closeSidebar();
+
+    if (onSectionChange) {
+      onSectionChange("support");
+      return;
+    }
+
+    // Fallback when the sidebar is used outside UserDashboard.
+    navigate("/dashboard", {
+      state: { activeSection: "support" },
+    });
+  };
+
   return (
     <>
       <button
@@ -100,13 +131,16 @@ const UserSideBar = ({
       </button>
 
       <div
-        className={`user-sidebar__overlay ${ open ? "user-sidebar__overlay--active" : ""}`}
+        className={`user-sidebar__overlay ${
+          open ? "user-sidebar__overlay--active" : ""
+        }`}
         onClick={closeSidebar}
         aria-hidden="true"
       />
 
       <aside
-        className={[ "user-sidebar",
+        className={[
+          "user-sidebar",
           collapsed ? "user-sidebar--collapsed" : "",
           open ? "user-sidebar--open" : "",
         ]
@@ -119,7 +153,10 @@ const UserSideBar = ({
             <button
               type="button"
               className="user-sidebar__brand"
-              onClick={() => { closeSidebar(); navigate("/");}}
+              onClick={() => {
+                closeSidebar();
+                navigate("/");
+              }}
               aria-label="TrimTokyo home"
               title={collapsed ? "TrimTokyo home" : undefined}
             >
@@ -145,11 +182,17 @@ const UserSideBar = ({
               type="button"
               className="user-sidebar__collapse"
               onClick={toggleCollapse}
-              aria-label={ collapsed ? "Expand sidebar" : "Collapse sidebar"}
-              title={ collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              aria-label={
+                collapsed ? "Expand sidebar" : "Collapse sidebar"
+              }
+              title={
+                collapsed ? "Expand sidebar" : "Collapse sidebar"
+              }
               aria-expanded={!collapsed}
             >
-              {collapsed ? ( <PanelLeftOpen size={19} />) : (
+              {collapsed ? (
+                <PanelLeftOpen size={19} />
+              ) : (
                 <PanelLeftClose size={19} />
               )}
             </button>
@@ -167,38 +210,38 @@ const UserSideBar = ({
         </div>
 
         <div className="user-sidebar__bottom">
-          <nav className="user-sidebar__bottom-menu">
-            {USER_SIDEBAR_BOTTOM.map(renderMenuItem)}
-          </nav>
-
+          {/* One Help & Support card only */}
           <div className="user-sidebar__support-card">
             <span className="user-sidebar__support-icon">
-              <Gift size={22} />
+              <Headset size={22} />
             </span>
 
-            <h4>Refer a Friend</h4>
+            {!collapsed && (
+              <>
+                <h4>Need Help?</h4>
 
-            <p>
-              Share your referral code and earn 50 points
-              when your referral is approved by our admin team.
-            </p>
+                <p>
+                  Have an issue with your bookings or services?
+                  Our support team is here to help.
+                </p>
 
-            <button
-              type="button"
-              className="user-sidebar__support-button"
-              onClick={() => {
-                closeSidebar();
-                navigate("/referrals");
-              }}
-            >
-              Refer a Friend
-              <ArrowRight size={15} />
-            </button>
+                <button
+                  type="button"
+                  className="user-sidebar__support-button"
+                  onClick={handleSupportClick}
+                >
+                  Help & Support
+                  <ArrowRight size={15} />
+                </button>
+              </>
+            )}
           </div>
 
-          <p className="user-sidebar__footer">
-            TrimTokyo · Customer Account
-          </p>
+          {!collapsed && (
+            <p className="user-sidebar__footer">
+              TrimTokyo · Customer Account
+            </p>
+          )}
         </div>
       </aside>
     </>
