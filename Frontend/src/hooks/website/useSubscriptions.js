@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import {
   getActiveSubscriptions,
-} from "../../services/subscription.service";
+} from "../../services/shared/subscription.service";
 
 export default function useSubscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);

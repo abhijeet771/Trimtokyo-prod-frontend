@@ -15,6 +15,7 @@ import UserNotificationSection from "../sections/User/UserNotificationSection/Us
 import UserSettingsSection from "../sections/User/UserSettingsSection/UserSettingsSection";
 import UserSupportSection from "../sections/User/UserSupportSection/UserSupportSection";
 import UserRefferalSection from "../sections/User/UserRefferalSection/UserRefferalSection";
+import UserSubscriptionSection from "../sections/User/UserSubscriptionSection/UserSubscriptionSection";
 
 import AppointmentsSection from "../sections/User/AppointmentsSection/AppointmentsSection";
 import SlotBookingDetailsSection from "../sections/User/SlotBookingDetailsSection/SlotBookingDetailsSection";
@@ -36,6 +37,7 @@ const ALLOWED_SECTIONS = [
   "profile",
   "help",
   "notifications",
+  "subscription",
   "referrals",
   "settings",
   "support",
@@ -498,6 +500,9 @@ const UserDashboard = () => {
 
       case "support":
         return <UserSupportSection />;
+
+      case "subscription":
+         return <UserSubscriptionSection />
 
       default:
         return renderCartSection();

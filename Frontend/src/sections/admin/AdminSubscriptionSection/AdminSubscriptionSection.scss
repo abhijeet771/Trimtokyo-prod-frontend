@@ -1,0 +1,627 @@
+
+.admin-subscription {
+  width: 100%;
+  min-height: 100%;
+  padding: 26px;
+  color: #17251d;
+  background: #f7faf7;
+  font-family: inherit;
+
+  .admin-subscription-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+
+    h1 {
+      margin: 16px 0 6px;
+      font-size: 27px;
+      font-weight: 700;
+      color: #17251d;
+    }
+
+    p {
+      margin: 0;
+      color: #78847c;
+      font-size: 14px;
+    }
+  }
+
+  .admin-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8a968e;
+    font-size: 13px;
+
+    strong {
+      color: #34443a;
+      font-weight: 600;
+    }
+  }
+
+  .admin-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px;
+    background: #eef5ee;
+    border-radius: 9px;
+    color: #536358;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* ============================================================
+     KPI CARDS
+  ============================================================ */
+
+  .subscription-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  .subscription-kpi-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 116px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e7eee7;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(30, 65, 40, 0.025);
+
+    > div:last-child {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    span {
+      margin-bottom: 5px;
+      color: #78847c;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    strong {
+      color: #17251d;
+      font-size: 27px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    small {
+      margin-top: 5px;
+      color: #8b968e;
+      font-size: 12px;
+    }
+  }
+
+  .kpi-icon {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+
+    &.orange {
+      color: #e99a00;
+      background: #fff3dc;
+    }
+
+    &.green {
+      color: #16a34a;
+      background: #e5fbe9;
+    }
+
+    &.blue {
+      color: #3279e8;
+      background: #eaf2ff;
+    }
+
+    &.purple {
+      color: #8b5cf6;
+      background: #f2eaff;
+    }
+  }
+
+  /* ============================================================
+     REQUEST PANEL
+  ============================================================ */
+
+  .subscription-requests-panel {
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e7eee7;
+    border-radius: 17px;
+    box-shadow: 0 4px 16px rgba(30, 65, 40, 0.025);
+  }
+
+  .subscription-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+
+    h2 {
+      margin: 0 0 5px;
+      color: #17251d;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      color: #859087;
+      font-size: 13px;
+    }
+  }
+
+  .subscription-table-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .subscription-search {
+    width: 290px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1px solid #e2eae3;
+    border-radius: 10px;
+    color: #87938b;
+    background: #ffffff;
+
+    input {
+      width: 100%;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #26352b;
+      font-size: 13px;
+
+      &::placeholder {
+        color: #a1aaa3;
+      }
+    }
+
+    &:focus-within {
+      border-color: #8fdb79;
+      box-shadow: 0 0 0 3px rgba(95, 200, 55, 0.08);
+    }
+  }
+
+  .subscription-refresh-btn,
+  .subscription-filter-btn {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 13px;
+    border: 1px solid #e2eae3;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #4b5b50;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: #f2f9f0;
+      border-color: #c9e9bf;
+      color: #269b1d;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .spinning {
+    animation: subscription-spin 1s linear infinite;
+  }
+
+  @keyframes subscription-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ============================================================
+     ALERTS
+  ============================================================ */
+
+  .subscription-alert {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 9px;
+    font-size: 13px;
+
+    &.error {
+      color: #b42318;
+      background: #fff1f0;
+      border: 1px solid #ffd6d2;
+    }
+
+    &.success {
+      color: #18833b;
+      background: #effbef;
+      border: 1px solid #d1f0d0;
+    }
+  }
+
+  /* ============================================================
+     TABLE
+  ============================================================ */
+
+  .subscription-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .subscription-approval-table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+    text-align: left;
+
+    thead {
+      background: #f4f8f4;
+
+      th {
+        padding: 13px 12px;
+        color: #48574c;
+        font-size: 12px;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+
+      th:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+
+      th:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #edf1ed;
+        transition: background 0.2s ease;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background: #fbfdfb;
+        }
+      }
+
+      td {
+        padding: 14px 12px;
+        color: #48574f;
+        font-size: 13px;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+    }
+
+    .table-message {
+      padding: 45px 15px;
+      color: #8b968e;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+
+  /* ============================================================
+     USER CELL
+  ============================================================ */
+
+  .subscription-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    > div:last-child {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    strong {
+      color: #26352b;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    small {
+      color: #87938b;
+      font-size: 12px;
+    }
+  }
+
+  .subscription-user-avatar {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e8f5e5;
+    color: #299b20;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* ============================================================
+     PLAN CELL
+  ============================================================ */
+
+  .subscription-plan-cell {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    > svg {
+      color: #d69c22;
+      flex-shrink: 0;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    strong {
+      color: #34443a;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    small {
+      color: #8b968e;
+      font-size: 12px;
+    }
+  }
+
+  .subscription-amount {
+    color: #24342a !important;
+    font-weight: 700;
+  }
+
+  .payment-method-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 11px;
+    border-radius: 7px;
+    background: #eef5ff;
+    color: #3976c8;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* ============================================================
+     STATUS
+  ============================================================ */
+
+  .subscription-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 650;
+
+    > span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    &.pending {
+      color: #c18400;
+      background: #fff5d5;
+    }
+  }
+
+  /* ============================================================
+     ACTION BUTTONS
+  ============================================================ */
+
+  .subscription-action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .approve-payment-btn,
+  .reject-payment-btn {
+    min-width: 100px;
+    height: 39px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 12px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .approve-payment-btn {
+    color: #19963a;
+    background: #efffeb;
+    border: 1px solid #d2f5c9;
+
+    &:hover:not(:disabled) {
+      color: #ffffff;
+      background: #20a83d;
+      border-color: #20a83d;
+    }
+  }
+
+  .reject-payment-btn {
+    color: #e43e3e;
+    background: #fff5f4;
+    border: 1px solid #ffd8d4;
+
+    &:hover:not(:disabled) {
+      color: #ffffff;
+      background: #e84949;
+      border-color: #e84949;
+    }
+  }
+
+  /* ============================================================
+     TABLE FOOTER
+  ============================================================ */
+
+  .subscription-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding-top: 19px;
+    margin-top: 7px;
+    border-top: 1px solid #edf1ed;
+
+    > span {
+      color: #849087;
+      font-size: 13px;
+    }
+  }
+
+  .subscription-pagination {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    button,
+    span {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+    }
+
+    button {
+      color: #66756a;
+      background: #ffffff;
+      border: 1px solid #e3eae3;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        color: #269b1d;
+        background: #f1faef;
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
+
+    span {
+      color: #ffffff;
+      background: #20a83d;
+      font-size: 13px;
+      font-weight: 700;
+    }
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 1200px) {
+  .admin-subscription {
+    .subscription-kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .subscription-panel-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .subscription-table-controls {
+      width: 100%;
+    }
+
+    .subscription-search {
+      flex: 1;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-subscription {
+    padding: 16px;
+
+    .admin-subscription-header {
+      flex-direction: column;
+
+      h1 {
+        font-size: 23px;
+      }
+    }
+
+    .subscription-kpi-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .subscription-requests-panel {
+      padding: 15px;
+    }
+
+    .subscription-table-controls {
+      flex-wrap: wrap;
+    }
+
+    .subscription-search {
+      width: 100%;
+      flex-basis: 100%;
+    }
+
+    .subscription-table-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+}

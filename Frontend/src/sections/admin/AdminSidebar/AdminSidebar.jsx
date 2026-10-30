@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { id: "dashboard", label: "Overview", icon: MdDashboard },
   { id: "users", label: "Users", icon: MdPeople },
   { id: "approvals", label: "Approvals", icon: MdVerifiedUser },
+  { id: "subscription", label: "Subscription", icon: MdVerifiedUser },
   { id: "slots", label: "Bookings", icon: MdCalendarMonth },
   { id: "orders", label: "Orders", icon: MdShoppingCart },
   { id: "events", label: "Events", icon: MdEvent },

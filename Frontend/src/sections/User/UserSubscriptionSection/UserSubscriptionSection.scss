@@ -1,0 +1,450 @@
+
+.user-subscription {
+  padding: 26px;
+  background: #f7f9fc;
+  min-height: 100%;
+  color: #172033;
+
+  * { box-sizing: border-box; }
+  button { cursor: pointer; font: inherit; }
+}
+
+/* HEADER */
+
+.subscription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+
+  h1 { font-size: 26px; margin: 9px 0 6px; }
+  p { color: #8993a4; font-size: 13px; margin: 0; }
+}
+
+.subscription-eyebrow {
+  color: #3278dc;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 1px;
+}
+
+.subscription-back, .back-payment-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  color: #536176;
+  font-size: 13px;
+}
+
+/* PROGRESS */
+
+.subscription-steps {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 30px 0;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #98a2b2;
+    font-weight: 600;
+
+    &.active { color: #3278dc; }
+    &.completed { color: #159b68; }
+  }
+
+  div { height: 2px; width: 65px; background: #dfe5ed; }
+}
+
+/* PLAN SECTION */
+
+.subscription-section-title {
+  margin-bottom: 22px;
+
+  h2 { margin: 0 0 5px; font-size: 19px; }
+  p { margin: 0; color: #8b95a5; font-size: 13px; }
+}
+
+.subscription-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.subscription-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 21px 20px;
+  background: white;
+  border: 1px solid #e5eaf1;
+  border-radius: 15px;
+
+  &.red { --color: #e34d57; --light: #fff0f1; }
+  &.blue { --color: #3278dc; --light: #edf5ff; }
+  &.green { --color: #159b70; --light: #eafaf3; }
+
+  &.popular { border: 2px solid #3278dc; }
+
+  h3 { margin: 16px 0 6px; font-size: 22px; }
+}
+
+.popular-label {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3278dc;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.plan-icon, .summary-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--color, #3278dc);
+  background: var(--light, #edf5ff);
+}
+
+.plan-description {
+  color: #8993a4;
+  font-size: 12px;
+  min-height: 35px;
+  line-height: 1.5;
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 18px;
+
+  strong { font-size: 29px; }
+  del { font-size: 13px; color: #a2aab7; }
+}
+
+.plan-duration {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #7e8a9d;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.plan-benefits {
+  flex: 1;
+  border-top: 1px solid #edf0f4;
+  margin-top: 23px;
+  padding-top: 17px;
+
+  h4 { margin: 0 0 14px; font-size: 13px; }
+
+  div {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: #586579;
+
+    svg { color: #159b70; flex-shrink: 0; }
+  }
+}
+
+.buy-plan-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  border: none;
+  border-radius: 9px;
+  padding: 13px;
+  background: #3278dc;
+  color: white;
+  font-size: 13px;
+  font-weight: 650;
+  margin-top: 18px;
+
+  &:hover { background: #2565c0; }
+}
+
+.subscription-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  margin-top: 24px;
+  color: #738197;
+  background: white;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* PAYMENT */
+
+.subscription-payment-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.8fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.payment-panel, .payment-summary, .subscription-success {
+  background: white;
+  border: 1px solid #e6ebf2;
+  border-radius: 14px;
+  padding: 25px;
+}
+
+.payment-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 24px;
+
+  > svg { color: #3278dc; }
+  h2 { margin: 0 0 5px; font-size: 19px; }
+  p { margin: 0; color: #8b95a5; font-size: 12px; }
+}
+
+/* ACTUAL QR IMAGE */
+
+.qr-container {
+  max-width: 260px;
+  margin: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: #f8fbff;
+  border: 1px solid #e3eaf4;
+  border-radius: 13px;
+
+  .business-qr {
+    display: block;
+    width: 210px;
+    height: 210px;
+    object-fit: contain;
+    background: white;
+    border-radius: 8px;
+  }
+
+  strong { font-size: 14px; color: #34445a; }
+  small { font-size: 11px; color: #8993a4; text-align: center; }
+}
+
+.payment-amount {
+  text-align: center;
+  margin: 17px 0;
+  color: #7e8a9d;
+  font-size: 13px;
+
+  strong { display: block; color: #172033; font-size: 24px; margin-top: 5px; }
+}
+
+.upi-box, .summary-plan {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #e7ecf3;
+  border-radius: 10px;
+
+  div { display: grid; gap: 5px; }
+  small { color: #8b95a5; font-size: 11px; }
+  strong { font-size: 13px; }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #edf5ff;
+    color: #3278dc;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 7px;
+    font-size: 12px;
+  }
+}
+
+.payment-note, .approval-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 18px 0;
+  color: #61738a;
+  font-size: 12px;
+  line-height: 1.6;
+
+  svg { color: #159b70; flex-shrink: 0; }
+}
+
+/* ORDER SUMMARY */
+
+.payment-summary h3 {
+  margin: 0 0 20px;
+  font-size: 17px;
+}
+
+.summary-plan {
+  justify-content: flex-start;
+  margin-bottom: 20px;
+
+  div:last-child { display: grid; gap: 5px; }
+  small { color: #8b95a5; }
+}
+
+.summary-row, .summary-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 15px 0;
+  font-size: 12px;
+
+  span { color: #8993a4; }
+}
+
+.summary-total {
+  padding-top: 17px;
+  border-top: 1px solid #e8edf3;
+
+  strong { font-size: 20px; }
+}
+
+.summary-benefits {
+  display: grid;
+  gap: 12px;
+  margin-top: 25px;
+  font-size: 12px;
+
+  span {
+    display: flex;
+    gap: 8px;
+    color: #64748b;
+
+    svg { color: #159b70; }
+  }
+}
+
+/* APPROVAL SCREEN */
+
+.subscription-success {
+  max-width: 560px;
+  margin: 25px auto;
+  text-align: center;
+
+  h2 { font-size: 22px; margin: 15px 0 8px; }
+  > p { color: #8490a2; font-size: 13px; line-height: 1.6; }
+}
+
+.success-icon {
+  width: 75px;
+  height: 75px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: #fff7e8;
+  color: #d99a25;
+}
+
+.pending-badge {
+  background: #fff5dd;
+  color: #b77b12;
+  border-radius: 20px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.submitted-details {
+  margin: 25px 0;
+  padding: 17px;
+  border-radius: 10px;
+  background: #f7f9fc;
+  text-align: left;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    font-size: 12px;
+  }
+
+  span { color: #8490a2; }
+}
+
+.pending-text { color: #c18a24; }
+
+.approval-note {
+  padding: 14px;
+  background: #eff6ff;
+  border-radius: 9px;
+  text-align: left;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+  .subscription-grid { grid-template-columns: repeat(2, 1fr); }
+  .subscription-payment-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 650px) {
+  .user-subscription { padding: 17px; }
+
+  .subscription-header {
+    align-items: flex-start;
+    flex-direction: column;
+
+    h1 { font-size: 22px; }
+  }
+
+  .subscription-grid { grid-template-columns: 1fr; }
+
+  .payment-panel, .payment-summary { padding: 17px; }
+
+  .subscription-trust {
+    text-align: center;
+    line-height: 1.6;
+  }
+}
+
+.subscription-error {
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.subscription-loading,
+.subscription-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #64748b;
+}

@@ -16,6 +16,7 @@ import AdminEventSection from "../AdminEventSection/AdminEventSection";
 import AdminReferralSection from "../AdminReferralSection/AdminReferralSection";
 import AdminSettingsSection from "../AdminSettingsSection/AdminSettingsSection";
 import AdminSupportSection from "../AdminSupportSection/AdminSupportSection";
+import AdminSubscriptionSection from "../AdminSubscriptionSection/AdminSubscriptionSection"
 
 import "./AdminContentSection.scss";
 
@@ -33,6 +34,9 @@ const AdminContentSection = ({ activeTab }) => {
 
       case "approvals":
         return <AdminApprovalSection />;
+
+      case "subscription":
+        return <AdminSubscriptionSection/>
 
       case "slots":
         return <AdminSlotSection />;
