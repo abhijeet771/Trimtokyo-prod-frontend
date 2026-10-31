@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -63,6 +62,7 @@ const AuthPage = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: name === "referralCode" ? value.toUpperCase() : value,
@@ -78,6 +78,7 @@ const AuthPage = () => {
       confirmPassword: "",
       referralCode: "",
     });
+
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
@@ -102,6 +103,7 @@ const AuthPage = () => {
 
     try {
       setLoading(true);
+
       await login({
         phone: formData.phone,
         password: formData.password,
@@ -177,12 +179,20 @@ const AuthPage = () => {
   return (
     <main className="auth-page">
       <section className="auth-left">
-        <div className="auth-brand">
+
+        {/* BRAND - CLICK TO GO HOME */}
+        <button
+          type="button"
+          className="auth-brand"
+          onClick={() => navigate("/")}
+          aria-label="Go to TrimTokyo homepage"
+        >
           <span className="auth-brand-icon">
             <MdContentCut />
           </span>
+
           <span>TrimTokyo</span>
-        </div>
+        </button>
 
         <div className="auth-promo">
           <span className="auth-eyebrow">
@@ -205,6 +215,7 @@ const AuthPage = () => {
               <span className="auth-feature-icon">
                 <MdCalendarMonth />
               </span>
+
               <div>
                 <strong>Easy Booking</strong>
                 <p>Choose your barber and book in seconds.</p>
@@ -215,6 +226,7 @@ const AuthPage = () => {
               <span className="auth-feature-icon">
                 <MdVerifiedUser />
               </span>
+
               <div>
                 <strong>Trusted Professionals</strong>
                 <p>Skilled barbers committed to your comfort.</p>
@@ -225,6 +237,7 @@ const AuthPage = () => {
               <span className="auth-feature-icon">
                 <MdStarOutline />
               </span>
+
               <div>
                 <strong>Premium Experience</strong>
                 <p>Simple, reliable grooming at your convenience.</p>
@@ -235,7 +248,8 @@ const AuthPage = () => {
 
         <div className="auth-decoration" aria-hidden="true">
           <span>✦</span>
-          <p>SELF CARE
+          <p>
+            SELF CARE
             <br />
             LOOKS GOOD
             <br />
@@ -247,7 +261,10 @@ const AuthPage = () => {
       <section className="auth-right">
         <div className="auth-card">
           <header className="auth-header">
-            <h2>{mode === "login" ? "Welcome back" : "Create account"}</h2>
+            <h2>
+              {mode === "login" ? "Welcome back" : "Create account"}
+            </h2>
+
             <p>
               {mode === "login"
                 ? "Sign in to continue to TrimTokyo."
@@ -263,6 +280,7 @@ const AuthPage = () => {
             >
               Login
             </button>
+
             <button
               type="button"
               className={mode === "register" ? "active" : ""}
@@ -279,6 +297,7 @@ const AuthPage = () => {
             {mode === "register" && (
               <>
                 <label htmlFor="auth-name">Full name</label>
+
                 <div className="auth-input">
                   <MdPerson />
                   <input
@@ -292,7 +311,10 @@ const AuthPage = () => {
                   />
                 </div>
 
-                <label htmlFor="auth-email">Email address (optional)</label>
+                <label htmlFor="auth-email">
+                  Email address (optional)
+                </label>
+
                 <div className="auth-input">
                   <MdEmail />
                   <input
@@ -309,9 +331,11 @@ const AuthPage = () => {
             )}
 
             <label htmlFor="auth-phone">Phone number</label>
+
             <div className="auth-input auth-phone">
               <MdPhone />
               <span className="auth-country">🇮🇳 +91</span>
+
               <input
                 id="auth-phone"
                 type="tel"
@@ -327,8 +351,10 @@ const AuthPage = () => {
             </div>
 
             <label htmlFor="auth-password">Password</label>
+
             <div className="auth-input">
               <MdLock />
+
               <input
                 id="auth-password"
                 type={showPassword ? "text" : "password"}
@@ -341,13 +367,18 @@ const AuthPage = () => {
                 }
                 required
               />
+
               <button
                 type="button"
                 className="auth-eye"
                 onClick={() => setShowPassword((prev) => !prev)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                {showPassword ? (
+                  <AiOutlineEyeInvisible />
+                ) : (
+                  <AiOutlineEye />
+                )}
               </button>
             </div>
 
@@ -356,8 +387,10 @@ const AuthPage = () => {
                 <label htmlFor="auth-confirm-password">
                   Confirm password
                 </label>
+
                 <div className="auth-input">
                   <MdLock />
+
                   <input
                     id="auth-confirm-password"
                     type={showConfirmPassword ? "text" : "password"}
@@ -368,6 +401,7 @@ const AuthPage = () => {
                     autoComplete="new-password"
                     required
                   />
+
                   <button
                     type="button"
                     className="auth-eye"
@@ -391,8 +425,10 @@ const AuthPage = () => {
                 <label htmlFor="auth-referral">
                   Have a referral code? <span>(Optional)</span>
                 </label>
+
                 <div className="auth-input">
                   <MdStarOutline />
+
                   <input
                     id="auth-referral"
                     name="referralCode"
@@ -406,23 +442,34 @@ const AuthPage = () => {
               </>
             )}
 
-            <button className="auth-submit" type="submit" disabled={loading}>
+            <button
+              className="auth-submit"
+              type="submit"
+              disabled={loading}
+            >
               {loading
                 ? "Please wait..."
                 : mode === "login"
                   ? "Continue with phone"
                   : "Create account"}
+
               {!loading && <MdArrowForward />}
             </button>
           </form>
 
           <p className="auth-legal">
             By continuing, you agree to our{" "}
-            <button type="button" onClick={() => navigate("/terms")}>
+            <button
+              type="button"
+              onClick={() => navigate("/terms")}
+            >
               Terms of Service
             </button>{" "}
             and{" "}
-            <button type="button" onClick={() => navigate("/privacy")}>
+            <button
+              type="button"
+              onClick={() => navigate("/privacy")}
+            >
               Privacy Policy
             </button>.
           </p>
@@ -431,14 +478,22 @@ const AuthPage = () => {
             {mode === "login" ? (
               <>
                 <span>New to TrimTokyo?</span>
-                <button type="button" onClick={() => switchMode("register")}>
+
+                <button
+                  type="button"
+                  onClick={() => switchMode("register")}
+                >
                   Create account <MdArrowForward />
                 </button>
               </>
             ) : (
               <>
                 <span>Already have an account?</span>
-                <button type="button" onClick={() => switchMode("login")}>
+
+                <button
+                  type="button"
+                  onClick={() => switchMode("login")}
+                >
                   Login
                 </button>
               </>

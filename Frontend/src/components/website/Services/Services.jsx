@@ -26,19 +26,16 @@ const Services = () => {
     limit: 6,
   });
 
-  const handleNavigateToShop =
-    () => {
-      navigate("/shop");
-    };
+  const handleNavigateToAuth = () => {
+    navigate("/auth");
+  };
 
   return (
     <section className="services">
-
       <div className="services__container">
 
         {/* HEADER */}
         <div className="services__header">
-
           <span className="services__badge">
             {badge}
           </span>
@@ -50,7 +47,6 @@ const Services = () => {
           <p className="services__subtitle">
             {subtitle}
           </p>
-
         </div>
 
         {/* LOADING */}
@@ -81,62 +77,31 @@ const Services = () => {
           !error &&
           featuredBarbers.length > 0 && (
             <div className="services__grid">
-
-              {featuredBarbers.map(
-                (barber) => (
-                  <ServiceCard
-                    key={barber._id}
-
-                    _id={barber._id}
-
-                    shopName={
-                      barber.shopName
-                    }
-
-                    profileImage={
-                      barber.profileImage
-                    }
-
-                    city={barber.city}
-
-                    avgRating={
-                      barber.avgRating
-                    }
-
-                    totalReviews={
-                      barber.totalReviews
-                    }
-
-                    startingPrice={
-                      barber.startingPrice
-                    }
-
-                    businessType={
-                      barber.businessType
-                    }
-
-                    isDeliveryAvailable={
-                      barber.isDeliveryAvailable
-                    }
-                  />
-                )
-              )}
-
+              {featuredBarbers.map((barber) => (
+                <ServiceCard
+                  key={barber._id}
+                  _id={barber._id}
+                  shopName={barber.shopName}
+                  profileImage={barber.profileImage}
+                  city={barber.city}
+                  avgRating={barber.avgRating}
+                  totalReviews={barber.totalReviews}
+                  startingPrice={barber.startingPrice}
+                  businessType={barber.businessType}
+                  isDeliveryAvailable={barber.isDeliveryAvailable}
+                />
+              ))}
             </div>
           )}
 
         {/* VIEW ALL */}
         <div className="services__view-all">
-
           <Button
             variant="secondary"
-            onClick={
-              handleNavigateToShop
-            }
+            onClick={handleNavigateToAuth}
           >
             {buttonText}
           </Button>
-
         </div>
 
       </div>

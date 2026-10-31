@@ -66,11 +66,18 @@ const HeaderSection = () => {
 
   const handleSearch = () => {
     const query = searchTerm.trim();
-    navigate(query ? `/search?q=${encodeURIComponent(query)}` : "/search");
+
+    navigate(
+      query
+        ? `/search?q=${encodeURIComponent(query)}`
+        : "/search"
+    );
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") handleSearch();
+    if (event.key === "Enter") {
+      handleSearch();
+    }
   };
 
   const displayName =
@@ -88,6 +95,7 @@ const HeaderSection = () => {
       setShowLoginDialog(true);
       return;
     }
+
     navigate("/cart");
   };
 
@@ -102,6 +110,8 @@ const HeaderSection = () => {
     <>
       <header className="header">
         <div className="header__container">
+
+          {/* LEFT SECTION */}
           <div className="header__left">
             <button
               type="button"
@@ -109,9 +119,15 @@ const HeaderSection = () => {
               onClick={() => navigate("/")}
               aria-label="TrimTokyo home"
             >
-              <img src={HEADER_DATA.logo} alt="" className="header__logo" />
+              <img
+                src={HEADER_DATA.logo}
+                alt=""
+                className="header__logo"
+              />
+
               <span className="header__brand">
-                TrimTokyo<span className="header__brand-dot">.</span>
+                TrimTokyo
+                <span className="header__brand-dot">.</span>
               </span>
             </button>
 
@@ -122,14 +138,22 @@ const HeaderSection = () => {
               title={location}
             >
               <FiMapPin className="header__location-icon" />
+
               <span className="header__location-content">
-                <span className="header__eyebrow">Delivering to</span>
+                <span className="header__eyebrow">
+                  Delivering to
+                </span>
+
                 <strong>{location}</strong>
-                <span className="header__location-update">Update location</span>
+
+                <span className="header__location-update">
+                  Update location
+                </span>
               </span>
             </button>
           </div>
 
+          {/* SEARCH SECTION */}
           <form
             className="header__search"
             onSubmit={(event) => {
@@ -137,30 +161,38 @@ const HeaderSection = () => {
               handleSearch();
             }}
           >
-            <span className="header__search-label">Explore</span>
+            <span className="header__search-label">
+              Explore
+            </span>
+
             <input
               type="search"
               placeholder="Search shops, services or barbers..."
               className="header__search-input"
               value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
+              onChange={(event) =>
+                setSearchTerm(event.target.value)
+              }
               onKeyDown={handleKeyDown}
               aria-label="Search shops, services or barbers"
             />
-            <button type="submit" className="header__search-btn" aria-label="Search">
+
+            <button
+              type="submit"
+              className="header__search-btn"
+              aria-label="Search"
+            >
               <FiSearch size={22} />
             </button>
           </form>
 
-          <nav className="header__right" aria-label="Main navigation">
-            <button
-              type="button"
-              className="header__shop-btn"
-              onClick={handleAuthClick}
-            >
-              Shop
-            </button>
+          {/* RIGHT SECTION */}
+          <nav
+            className="header__right"
+            aria-label="Main navigation"
+          >
 
+            {/* CART */}
             <button
               type="button"
               className="header__cart-btn"
@@ -170,15 +202,20 @@ const HeaderSection = () => {
             >
               <span className="header__cart-icon-wrap">
                 <FiShoppingCart size={24} />
+
                 {cartCount > 0 && (
                   <span className="header__cart-count">
                     {cartCount > 99 ? "99+" : cartCount}
                   </span>
                 )}
               </span>
-              <span className="header__cart-label">Cart</span>
+
+              <span className="header__cart-label">
+                Cart
+              </span>
             </button>
 
+            {/* AUTH / PROFILE */}
             {user ? (
               <UserProfileMenu
                 user={user}
@@ -194,6 +231,7 @@ const HeaderSection = () => {
                 >
                   Login
                 </button>
+
                 <button
                   type="button"
                   className="header__register-btn"
@@ -203,15 +241,19 @@ const HeaderSection = () => {
                 </button>
               </div>
             )}
+
           </nav>
         </div>
       </header>
 
+      {/* CART LOGIN DIALOG */}
       {showLoginDialog && (
         <div
           className="cart-login-modal__overlay"
           onMouseDown={(event) => {
-            if (event.target === event.currentTarget) closeLoginDialog();
+            if (event.target === event.currentTarget) {
+              closeLoginDialog();
+            }
           }}
         >
           <section
@@ -232,11 +274,16 @@ const HeaderSection = () => {
             <div className="cart-login-modal__icon">
               <FiShoppingCart size={27} />
             </div>
-            <h2 id="cart-login-title">Your cart is waiting!</h2>
+
+            <h2 id="cart-login-title">
+              Your cart is waiting!
+            </h2>
+
             <p>
-              Please log in to continue to your cart. Your selected services
-              will remain saved while you sign in.
+              Please log in to continue to your cart. Your selected
+              services will remain saved while you sign in.
             </p>
+
             <button
               type="button"
               className="cart-login-modal__login"
@@ -244,6 +291,7 @@ const HeaderSection = () => {
             >
               Log in to continue
             </button>
+
             <button
               type="button"
               className="cart-login-modal__cancel"

@@ -11,16 +11,23 @@ const OptionalSection = () => {
 
   const activeSection = OPTIONAL_SECTION_CONTENT.tabs[activeTab];
 
+  // Home service cards → Home Service page
+  // Slot booking cards → Auth page
   const handleItemClick = () => {
-    navigate("/auth");
+    if (activeTab === "homeService") {
+      navigate("/salon/trimtokyo-home-service");
+    } else {
+      navigate("/auth");
+    }
   };
 
+  // View All follows the same routing logic
   const handleViewAll = () => {
-    navigate(
-      activeTab === "homeService"
-        ? "/search?q=home%20service"
-        : "/search?q=slot%20booking"
-    );
+    if (activeTab === "homeService") {
+      navigate("/salon/trimtokyo-home-service");
+    } else {
+      navigate("/auth");
+    }
   };
 
   return (
