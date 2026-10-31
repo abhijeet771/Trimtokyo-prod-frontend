@@ -1,26 +1,26 @@
 import React from "react";
 import { Navigate, Route, Routes, useLocation,} from "react-router-dom";
 
-import BarberHeaderSection from "../sections/BarberHeaderSection/BarberHeaderSection";
-import BarberOverviewSection from "../sections/BarberOverviewSection/BarberOverviewSection";
+import BarberHeaderSection from "../sections/barber/BarberHeaderSection/BarberHeaderSection";
+import BarberOverviewSection from "../sections/barber/BarberOverviewSection/BarberOverviewSection";
 import BarberSidebar from "../components/barber/BarberSidebar/BarberSidebar";
 
-import BarberProfileSection from "../sections/BarberProfileSection/BarberProfileSection";
-import BarberServiceSection from "../sections/BarberServiceSection/BarberServiceSection";
-import BarberOrderSection from "../sections/BarberOrderSection/BarberOrderSection";
-import BarberCmsSection from "../sections/BarberCmsSection/BarberCmsSection";
-import BarberSettingSection from "../sections/BarberSettingSection/BarberSettingSection";
-import BarberSlotSection from "../sections/BarberSlotSection/BarberSlotSection";
+import BarberProfileSection from "../sections/barber/BarberProfileSection/BarberProfileSection";
+import BarberServiceSection from "../sections/barber/BarberServiceSection/BarberServiceSection";
+import BarberOrderSection from "../sections/barber/BarberOrderSection/BarberOrderSection";
+import BarberSettingSection from "../sections/barber/BarberSettingSection/BarberSettingSection";
+import BarberSlotSection from "../sections/barber/BarberSlotSection/BarberSlotSection";
 
 // Earnings
-import BarberEarningsOverview from "../sections/BarberEarningsOverview/BarberEarningsOverview";
-import BarberPaymentsOverview from "../sections/BarberPaymentsOverview/BarberPaymentsOverview";
-import BarberPaymentsTable from "../sections/BarberPaymentsTable/BarberPaymentsTable";
+import BarberEarningsOverview from "../sections/barber/BarberEarningsOverview/BarberEarningsOverview";
+import BarberPaymentsOverview from "../sections/barber/BarberPaymentsOverview/BarberPaymentsOverview";
+import BarberPaymentsTable from "../sections/barber/BarberPaymentsTable/BarberPaymentsTable";
+import BarberExpenceSection from "../sections/barber/BarberExpenceSection/BarberExpenceSection";
 
 // Support
-import BarberSupportSection from "../sections/BarberSupportSection/BarberSupportSection";
-import BarberAnalyticsSection from "../sections/BarberAnalyticsSection/BarberAnalyticsSection";
-import BarberStaffSection from "../sections/BarberStaffSection/BarberStaffSection";
+import BarberSupportSection from "../sections/barber/BarberSupportSection/BarberSupportSection";
+import BarberAnalyticsSection from "../sections/barber/BarberAnalyticsSection/BarberAnalyticsSection";
+import BarberStaffSection from "../sections/barber/BarberStaffSection/BarberStaffSection";
 
 import "./BarberDashboard.scss";
 
@@ -91,12 +91,6 @@ const BarberDashboard = () => {
               element={<BarberSlotSection />}
             />
 
-            {/* Website / CMS */}
-            <Route
-              path="website"
-              element={<BarberCmsSection />}
-            />
-
             {/* Settings */}
             <Route
               path="settings"
@@ -128,7 +122,7 @@ const BarberDashboard = () => {
             {/* Expenditure */}
             <Route
               path="earnings/expenditure"
-              element={<ComingSoon title="Expenditure" />}
+              element={<BarberExpenceSection />}
             />
 
             {/* Help & Support */}

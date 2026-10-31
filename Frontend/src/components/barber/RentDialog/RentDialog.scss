@@ -1,0 +1,362 @@
+.rent-dialog {
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 20px 60px rgba(20, 40, 25, 0.18);
+  animation: rentDialogIn 0.2s ease;
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 25, 18, 0.45);
+    backdrop-filter: blur(3px);
+  }
+
+  /* HEADER */
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 21px 23px;
+    border-bottom: 1px solid #edf1ed;
+    flex-shrink: 0;
+  }
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+
+    h2 {
+      margin: 0;
+      color: #17251b;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 5px 0 0;
+      color: #849087;
+      font-size: 13px;
+    }
+  }
+
+  &__icon {
+    width: 47px;
+    height: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #e8f6eb;
+    color: #16803d;
+  }
+
+  &__close {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid #edf1ed;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #68776c;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: #f3f6f3;
+      color: #17251b;
+    }
+  }
+
+  /* FORM */
+  &__form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    padding: 23px;
+    overflow-y: auto;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+
+    > label {
+      color: #34443a;
+      font-size: 13px;
+      font-weight: 600;
+
+      > span:not(.optional) {
+        color: #e04444;
+      }
+
+      .optional {
+        margin-left: 5px;
+        color: #929c94;
+        font-size: 11px;
+        font-weight: 400;
+      }
+    }
+
+    input:not([type="file"]),
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #dfe7df;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #26352b;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &::placeholder {
+        color: #a1aaa3;
+      }
+
+      &:focus {
+        border-color: #24964b;
+        box-shadow: 0 0 0 3px rgba(36, 150, 75, 0.09);
+      }
+    }
+
+    input:not([type="file"]),
+    select {
+      height: 45px;
+      padding: 0 12px;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    textarea {
+      min-height: 85px;
+      padding: 12px;
+      resize: vertical;
+    }
+  }
+
+  /* DATE INPUT */
+  &__input-icon {
+    position: relative;
+
+    input {
+      padding-right: 38px !important;
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      color: #788a7e;
+      pointer-events: none;
+    }
+  }
+
+  /* RECEIPT UPLOAD */
+  &__upload {
+    min-height: 91px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px dashed #cfdad1;
+    border-radius: 10px;
+    background: #fafcfa;
+    color: #728479;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      border-color: #16803d;
+      background: #f4faf5;
+    }
+
+    > svg {
+      flex-shrink: 0;
+      color: #84958a;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    strong {
+      color: #16803d;
+      font-size: 13px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+
+      span {
+        color: #849087;
+        font-weight: 400;
+      }
+    }
+
+    small {
+      color: #89968d;
+      font-size: 11px;
+    }
+
+    input {
+      display: none;
+    }
+
+    &.has-file {
+      border-color: #b9dfc1;
+      background: #f2faf3;
+      color: #16803d;
+    }
+  }
+
+  /* FOOTER */
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 11px;
+    padding: 17px 23px;
+    border-top: 1px solid #edf1ed;
+    background: #fcfdfc;
+    flex-shrink: 0;
+  }
+
+  &__cancel,
+  &__submit {
+    min-height: 43px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 19px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  &__cancel {
+    border: 1px solid #dfe7df;
+    background: #ffffff;
+    color: #536157;
+
+    &:hover {
+      background: #f4f7f4;
+    }
+  }
+
+  &__submit {
+    border: 1px solid #16803d;
+    background: #16803d;
+    color: #ffffff;
+
+    &:hover {
+      background: #116b32;
+    }
+  }
+}
+
+/* ANIMATION */
+@keyframes rentDialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* TABLET */
+@media (max-width: 600px) {
+  .rent-dialog {
+    max-height: 94vh;
+    border-radius: 14px;
+
+    &__overlay {
+      padding: 12px;
+    }
+
+    &__header {
+      padding: 17px;
+    }
+
+    &__body {
+      padding: 17px;
+      gap: 16px;
+    }
+
+    &__footer {
+      padding: 14px 17px;
+    }
+  }
+}
+
+/* MOBILE */
+@media (max-width: 430px) {
+  .rent-dialog {
+    &__row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    &__heading {
+      h2 {
+        font-size: 15px;
+      }
+
+      p {
+        font-size: 11px;
+      }
+    }
+
+    &__footer {
+      button {
+        flex: 1;
+        padding: 0 10px;
+      }
+    }
+  }
+}

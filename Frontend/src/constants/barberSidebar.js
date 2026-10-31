@@ -52,12 +52,6 @@ export const BARBER_SIDEBAR_ITEMS = [
     path: "/barber/slots",
   },
   {
-    id: "website",
-    label: "Brand Website",
-    icon: Globe,
-    path: "/barber/website",
-  },
-  {
     id: "analytics",
     label: "Analytics",
     icon: ChartNoAxesCombined,

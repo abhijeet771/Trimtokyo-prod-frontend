@@ -1,0 +1,418 @@
+.inventory-section {
+  width: 100%;
+
+  /* HEADER */
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0 0 6px;
+      color: #17251b;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      color: #839087;
+      font-size: 14px;
+    }
+  }
+
+  &__add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 19px;
+    border: 1px solid #16803d;
+    border-radius: 9px;
+    background: #16803d;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+
+    &:hover {
+      background: #116b32;
+    }
+  }
+
+  /* KPI CARDS */
+  &__kpis {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  &__table-card {
+    overflow: hidden;
+    border: 1px solid #e5ece5;
+    border-radius: 14px;
+    background: #ffffff;
+  }
+
+  &__table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px 22px;
+    border-bottom: 1px solid #edf1ed;
+
+    h3 {
+      margin: 0 0 5px;
+      color: #26372b;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      color: #8b968e;
+      font-size: 12px;
+    }
+  }
+
+  &__record-count {
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #eef7ef;
+    color: #16803d;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* TABLE */
+  &__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    text-align: left;
+
+    th {
+      padding: 14px 17px;
+      background: #f8faf8;
+      color: #6f7e73;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 15px 17px;
+      border-top: 1px solid #eff2ef;
+      color: #536157;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      transition: background 0.2s;
+
+      &:hover {
+        background: #fbfdfb;
+      }
+    }
+  }
+
+  &__item-name {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #26372b;
+    font-weight: 600;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__item-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: #edf7ef;
+    color: #218346;
+  }
+
+  /* CATEGORY BADGES */
+  &__category {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+
+    &--hair-care {
+      background: #e9f5ec;
+      color: #208044;
+    }
+
+    &--styling {
+      background: #eaf2ff;
+      color: #376dc5;
+    }
+
+    &--hair-color {
+      background: #f5edff;
+      color: #8050ba;
+    }
+
+    &--tools {
+      background: #fff3e7;
+      color: #c57a29;
+    }
+
+    &--consumables {
+      background: #e8f5f6;
+      color: #31838b;
+    }
+
+    &--other {
+      background: #f0f1f2;
+      color: #68727b;
+    }
+  }
+
+  &__quantity {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 27px;
+    padding: 0 8px;
+    border-radius: 7px;
+    background: #f3f6f3;
+    color: #34463a;
+    font-weight: 600;
+  }
+
+  &__shop {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #718076;
+
+    svg {
+      color: #98a69a;
+      flex-shrink: 0;
+    }
+  }
+
+  &__empty {
+    color: #a0aaa2;
+  }
+
+  &__total {
+    color: #16803d;
+    font-weight: 700;
+  }
+
+  &__empty-state {
+    padding: 40px !important;
+    text-align: center;
+    color: #909b92 !important;
+  }
+
+  /* PAGINATION */
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 16px 20px;
+    border-top: 1px solid #edf1ed;
+
+    > span {
+      color: #89958c;
+      font-size: 12px;
+    }
+  }
+
+  &__pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    button {
+      width: 33px;
+      height: 33px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e3eae3;
+      border-radius: 7px;
+      background: #ffffff;
+      color: #647268;
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover:not(:disabled) {
+        border-color: #16803d;
+        color: #16803d;
+      }
+
+      &.active {
+        border-color: #16803d;
+        background: #16803d;
+        color: #ffffff;
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+/* KPI CARD COMPONENT */
+.inventory-kpi {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid transparent;
+  border-radius: 13px;
+
+  &__icon {
+    width: 49px;
+    height: 49px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+  }
+
+  &__content {
+    min-width: 0;
+
+    span {
+      display: block;
+      margin-bottom: 7px;
+      color: #647268;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    h3 {
+      margin: 0;
+      color: #1d3022;
+      font-size: 23px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 5px 0 0;
+      color: #929d94;
+      font-size: 11px;
+    }
+  }
+
+  &--green {
+    border-color: #e1eee3;
+    background: #f0f8f1;
+
+    .inventory-kpi__icon {
+      background: #dff1e2;
+      color: #218346;
+    }
+  }
+
+  &--blue {
+    border-color: #e0eaf7;
+    background: #f1f6fc;
+
+    .inventory-kpi__icon {
+      background: #dfebfb;
+      color: #3978ca;
+    }
+  }
+
+  &--orange {
+    border-color: #f4e9dc;
+    background: #fff7ef;
+
+    .inventory-kpi__icon {
+      background: #ffead5;
+      color: #d28a40;
+    }
+  }
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+  .inventory-section {
+    &__kpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .inventory-section {
+    &__header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    &__add-btn {
+      width: 100%;
+    }
+
+    &__kpis {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    &__table-header {
+      padding: 16px;
+    }
+
+    &__pagination {
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 15px;
+    }
+
+    &__pagination-controls {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  .inventory-kpi {
+    padding: 17px;
+
+    &__content {
+      h3 {
+        font-size: 21px;
+      }
+    }
+  }
+}
