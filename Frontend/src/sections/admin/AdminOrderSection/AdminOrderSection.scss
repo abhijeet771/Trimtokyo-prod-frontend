@@ -1060,3 +1060,79 @@
     }
   }
 }
+
+/* Header actions */
+.admin-order-panel__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Add Order button */
+.admin-order-add-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+  border: 1px solid #16a34a;
+  border-radius: 9px;
+
+  background: #16a34a;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: #15803d;
+    border-color: #15803d;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(22, 163, 74, 0.25);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .admin-order-panel__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admin-order-add-button {
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+}

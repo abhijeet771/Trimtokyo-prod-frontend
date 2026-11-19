@@ -1,4 +1,5 @@
-import apik from "./apik";
+
+import apik from "../apik";
 
 /* ============================================================
    ADMIN ORDER MANAGEMENT APIs
@@ -13,6 +14,10 @@ export const getAdminOrders = (page = 1, limit = 5) =>
 // Get admin order statistics
 export const getAdminOrderStats = () =>
   apik.get("/api/admin/orders/stats");
+
+// Create manual order
+export const createManualOrder = (orderData) =>
+  apik.post("/api/admin/orders/manual", orderData);
 
 // Delete an order
 export const deleteAdminOrder = (id) =>

@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 
 import useBarberShop from "../../hooks/barber/useBarberShop";
@@ -12,6 +13,10 @@ import SlugReviewsSection from "../sections/SlugReviewsSection";
 
 import "./BarberSlugPage.scss";
 
+/* -------------------------------------------------------------------------- */
+/*                                  HELPERS                                   */
+/* -------------------------------------------------------------------------- */
+
 const getId = (value) => {
   if (!value) return "";
 
@@ -24,6 +29,10 @@ const getId = (value) => {
 
   return "";
 };
+
+/* -------------------------------------------------------------------------- */
+/*                              BARBER SLUG PAGE                              */
+/* -------------------------------------------------------------------------- */
 
 const BarberSlugPage = () => {
   const { slug } = useParams();
@@ -38,6 +47,10 @@ const BarberSlugPage = () => {
     error,
   } = useBarberShop(slug);
 
+  /* ------------------------------------------------------------------------ */
+  /*                              LOADING / ERROR                             */
+  /* ------------------------------------------------------------------------ */
+
   if (loading) {
     return (
       <main className="barber-slug-page">
@@ -47,6 +60,12 @@ const BarberSlugPage = () => {
   }
 
   if (error || !profile) {
+    console.error("[BarberSlugPage] Salon profile error:", {
+      slug,
+      error,
+      profile,
+    });
+
     return (
       <main className="barber-slug-page">
         {error || "Barber shop not found."}
@@ -54,13 +73,16 @@ const BarberSlugPage = () => {
     );
   }
 
+  /* ------------------------------------------------------------------------ */
+  /*                              BARBER IDs                                  */
+  /* ------------------------------------------------------------------------ */
+
   // BarberProfile MongoDB document ID.
   const barberProfileId = getId(
     profile._id ?? profile.id
   );
 
   // Auth user ID associated with the BarberProfile.
-  // These fields must actually contain the Auth user ID.
   const barberUserId = getId(
     profile.userId ??
       profile.user?._id ??
@@ -69,20 +91,58 @@ const BarberSlugPage = () => {
       profile.barberUserId
   );
 
-  const coordinates = profile.location?.coordinates;
+  /* ------------------------------------------------------------------------ */
+  /*                              DEBUG LOGS                                  */
+  /* ------------------------------------------------------------------------ */
 
-  const latitude = coordinates?.[1] ?? null;
-  const longitude = coordinates?.[0] ?? null;
+  console.group("[BarberSlugPage] BARBER IDENTIFICATION DEBUG");
 
-  console.log("[BarberSlugPage] IDs:", {
-    salonSlug: profile.slug || slug,
-    barberProfileId,
-    barberUserId,
+  console.log("Salon slug:", slug);
+
+  console.log("BARBER PROFILE RESPONSE:", profile);
+
+  console.log("BARBER PROFILE ID:", barberProfileId);
+
+  console.log("BARBER AUTH USER ID:", barberUserId);
+
+  console.log("RAW ID FIELDS:", {
+    rawProfileId: profile._id,
+    rawId: profile.id,
     rawUserId: profile.userId,
     rawUser: profile.user,
     rawAuthUserId: profile.authUserId,
     rawBarberUserId: profile.barberUserId,
   });
+
+  console.log("SALON DETAILS:", {
+    shopName: profile.shopName,
+    shopSlug: profile.slug,
+    businessType: profile.businessType,
+    status: profile.status,
+    isActive: profile.isActive,
+  });
+
+  console.log("SERVICES:", services);
+
+  console.log("IDS PASSED TO SlugServicesSection:", {
+    barberProfileId,
+    barberUserId,
+  });
+
+  console.groupEnd();
+
+  /* ------------------------------------------------------------------------ */
+  /*                              LOCATION                                    */
+  /* ------------------------------------------------------------------------ */
+
+  const coordinates = profile.location?.coordinates;
+
+  const latitude = coordinates?.[1] ?? null;
+  const longitude = coordinates?.[0] ?? null;
+
+  /* ------------------------------------------------------------------------ */
+  /*                              DETAILS                                     */
+  /* ------------------------------------------------------------------------ */
 
   const details = {
     ...profile,
@@ -98,6 +158,10 @@ const BarberSlugPage = () => {
     : profile.profileImage
       ? [profile.profileImage]
       : [];
+
+  /* ------------------------------------------------------------------------ */
+  /*                                  UI                                      */
+  /* ------------------------------------------------------------------------ */
 
   return (
     <main className="barber-slug-page">

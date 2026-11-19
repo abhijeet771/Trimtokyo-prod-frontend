@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteAdminOrder } from "../../services/adminOrders.service";
+import { deleteAdminOrder } from "../../services/admin/adminOrders.service";
 
 const useDeleteAdminOrder = () => {
   const [loading, setLoading] = useState(false);

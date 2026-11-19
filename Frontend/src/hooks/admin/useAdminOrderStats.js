@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getAdminOrderStats } from "../../services/adminOrders.service";
+import { getAdminOrderStats } from "../../services/admin/adminOrders.service";
 
 const useAdminOrderStats = () => {
   const [stats, setStats] = useState({});

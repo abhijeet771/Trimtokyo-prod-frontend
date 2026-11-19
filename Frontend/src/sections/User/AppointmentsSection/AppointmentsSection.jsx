@@ -1,17 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  CalendarDays,
-  Clock3,
-  ChevronLeft,
-  ChevronRight,
-  Scissors,
-  Store,
-  IndianRupee,
-  CheckCircle2,
-} from "lucide-react";
+import { CalendarDays,  Clock3,  ChevronLeft,  ChevronRight,
+  Scissors,  Store,  IndianRupee,  CheckCircle2, } from "lucide-react";
 
 import { getSlots } from "../../../services/timeslot.service";
 import "./AppointmentsSection.scss";
+
+/* -------------------------------------------------------------------------- */
+/*                                  DEBUG                                     */
+/* -------------------------------------------------------------------------- */
 
 const DEBUG = true;
 
@@ -22,6 +18,10 @@ const debugLog = (...args) => {
 const debugError = (...args) => {
   if (DEBUG) console.error("[AppointmentsSection]", ...args);
 };
+
+/* -------------------------------------------------------------------------- */
+/*                                HELPERS                                     */
+/* -------------------------------------------------------------------------- */
 
 const formatDate = (date) => {
   const year = date.getFullYear();
@@ -52,6 +52,7 @@ const getServicePrice = (service) => {
   }
 
   const numericPrice = Number(price);
+
   return Number.isFinite(numericPrice) ? numericPrice : null;
 };
 
@@ -151,6 +152,10 @@ const getSlotValue = (slot) => {
   return start ? formatTime(start) : "Available time";
 };
 
+/* -------------------------------------------------------------------------- */
+/*                             SLOT RESPONSE                                  */
+/* -------------------------------------------------------------------------- */
+
 const extractSlots = (response) => {
   const data = response?.data ?? response;
 
@@ -199,20 +204,43 @@ const isSlotUnavailable = (slot) => {
   return unavailable;
 };
 
-// This ID must match the Auth user ID stored in TimeSlot.barberId.
-// The current booking draft may contain a profile ID instead.
-const getBarberId = (shop, service) =>
-  shop?.barberUserId ||
-  service?.barberUserId ||
-  shop?.authUserId ||
-  service?.authUserId ||
-  shop?.barberId ||
-  service?.barberId ||
-  shop?.barberProfileId ||
-  service?.barberProfileId ||
-  shop?._id ||
-  shop?.id ||
-  "";
+/* -------------------------------------------------------------------------- */
+/*                              BARBER ID                                     */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * TimeSlot.barberId stores the Auth user ID.
+ *
+ * Do not fall back to barberProfileId, shop._id, or shop.id.
+ * Those can identify the BarberProfile rather than the Auth user.
+ */
+const getBarberId = (shop, service) => {
+  const candidates = [
+    shop?.barberUserId,
+    service?.barberUserId,
+    shop?.authUserId,
+    service?.authUserId,
+    shop?.userId,
+    service?.userId,
+    shop?.user?._id,
+    service?.user?._id,
+    shop?.barber?.userId,
+    service?.barber?.userId,
+  ];
+
+  const barberId = candidates.find(
+    (value) =>
+      value !== undefined &&
+      value !== null &&
+      String(value).trim() !== ""
+  );
+
+  return barberId ? String(barberId).trim() : "";
+};
+
+/* -------------------------------------------------------------------------- */
+/*                         APPOINTMENTS SECTION                              */
+/* -------------------------------------------------------------------------- */
 
 const AppointmentsSection = ({
   onContinue,
@@ -237,6 +265,10 @@ const AppointmentsSection = ({
   const [retryCount, setRetryCount] = useState(0);
   const [weekOffset, setWeekOffset] = useState(0);
 
+  /* ------------------------------------------------------------------------ */
+  /*                         BOOKING DRAFT SYNC                               */
+  /* ------------------------------------------------------------------------ */
+
   useEffect(() => {
     if (!bookingDraft) return;
 
@@ -249,6 +281,28 @@ const AppointmentsSection = ({
     }
   }, [bookingDraft]);
 
+  /* ------------------------------------------------------------------------ */
+  /*                         BARBER ID DEBUG                                  */
+  /* ------------------------------------------------------------------------ */
+
+  useEffect(() => {
+    debugLog("BARBER ID VALIDATION:", {
+      barberId,
+      shopBarberUserId: shop?.barberUserId,
+      serviceBarberUserId: service?.barberUserId,
+      shopAuthUserId: shop?.authUserId,
+      serviceAuthUserId: service?.authUserId,
+      shopUserId: shop?.userId,
+      serviceUserId: service?.userId,
+      shopProfileId: shop?.barberProfileId,
+      serviceProfileId: service?.barberProfileId,
+    });
+  }, [barberId, shop, service]);
+
+  /* ------------------------------------------------------------------------ */
+  /*                         FETCH AVAILABLE SLOTS                            */
+  /* ------------------------------------------------------------------------ */
+
   useEffect(() => {
     let active = true;
 
@@ -256,13 +310,11 @@ const AppointmentsSection = ({
       debugLog("Starting availability request:", {
         selectedDate,
         barberId,
-        shop,
-        service,
         retryCount,
       });
 
       if (!selectedDate || !barberId) {
-        debugError("Cannot fetch slots: missing date or barber ID.", {
+        debugError("Cannot fetch slots: missing date or Auth user ID.", {
           selectedDate,
           barberId,
           shop,
@@ -271,11 +323,13 @@ const AppointmentsSection = ({
 
         setSlots([]);
         setSelectedSlot(null);
+
         setSlotsError(
           !barberId
-            ? "The barber ID could not be identified. Please return to the salon and select the service again."
+            ? "The barber Auth ID could not be identified. Please return to the salon and select the service again."
             : ""
         );
+
         setSlotsLoading(false);
         return;
       }
@@ -284,14 +338,16 @@ const AppointmentsSection = ({
         setSlotsLoading(true);
         setSlotsError("");
 
+        setSlots([]);
+
         debugLog("Calling getSlots with:", {
           date: selectedDate,
-          barberId: String(barberId),
+          barberId,
         });
 
         const response = await getSlots(
           selectedDate,
-          String(barberId)
+          barberId
         );
 
         debugLog("Raw API response:", response);
@@ -347,12 +403,15 @@ const AppointmentsSection = ({
 
         setSlots([]);
         setSelectedSlot(null);
+
         setSlotsError(
           error?.response?.data?.message ||
             "Unable to load available time slots. Please try again."
         );
       } finally {
-        if (active) setSlotsLoading(false);
+        if (active) {
+          setSlotsLoading(false);
+        }
       }
     };
 
@@ -369,22 +428,30 @@ const AppointmentsSection = ({
     service,
   ]);
 
+  /* ------------------------------------------------------------------------ */
+  /*                              CALENDAR                                    */
+  /* ------------------------------------------------------------------------ */
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const currentWeekStart = new Date(today);
+
   currentWeekStart.setDate(
     currentWeekStart.getDate() - currentWeekStart.getDay()
   );
 
   const displayedWeekStart = new Date(currentWeekStart);
+
   displayedWeekStart.setDate(
     displayedWeekStart.getDate() + weekOffset * 7
   );
 
   const dates = Array.from({ length: 7 }, (_, index) => {
     const date = new Date(displayedWeekStart);
+
     date.setDate(displayedWeekStart.getDate() + index);
+
     return date;
   });
 
@@ -393,10 +460,18 @@ const AppointmentsSection = ({
     year: "numeric",
   });
 
+  /* ------------------------------------------------------------------------ */
+  /*                         AVAILABLE SLOTS                                   */
+  /* ------------------------------------------------------------------------ */
+
   const availableSlots = useMemo(
     () => slots.filter((slot) => !isSlotUnavailable(slot)),
     [slots]
   );
+
+  /* ------------------------------------------------------------------------ */
+  /*                              HANDLERS                                    */
+  /* ------------------------------------------------------------------------ */
 
   const handlePreviousWeek = () => {
     if (weekOffset > 0) {
@@ -427,6 +502,7 @@ const AppointmentsSection = ({
         slot,
         slotId: getSlotId(slot),
       });
+
       return;
     }
 
@@ -435,6 +511,7 @@ const AppointmentsSection = ({
 
   const handleRetry = () => {
     debugLog("Retry requested.");
+
     setRetryCount((count) => count + 1);
   };
 
@@ -444,6 +521,7 @@ const AppointmentsSection = ({
         selectedDate,
         selectedSlot,
       });
+
       return;
     }
 
@@ -459,6 +537,10 @@ const AppointmentsSection = ({
 
     onContinue?.(payload);
   };
+
+  /* ------------------------------------------------------------------------ */
+  /*                              DISPLAY DATA                                */
+  /* ------------------------------------------------------------------------ */
 
   const formattedSelectedDate = selectedDate
     ? new Date(`${selectedDate}T00:00:00`).toLocaleDateString(
@@ -477,6 +559,10 @@ const AppointmentsSection = ({
   const serviceImage = getServiceImage(service);
   const selectedSlotId = getSlotId(selectedSlot);
 
+  /* ------------------------------------------------------------------------ */
+  /*                                  UI                                      */
+  /* ------------------------------------------------------------------------ */
+
   return (
     <section className="appointments-section">
       <div className="appointments-section__heading">
@@ -486,6 +572,7 @@ const AppointmentsSection = ({
 
         <div>
           <h2>Book Your Appointment</h2>
+
           <p>
             {service
               ? "Choose your preferred date and an available time."
@@ -498,7 +585,10 @@ const AppointmentsSection = ({
         <div className="appointments-section__service-summary">
           <div className="appointments-section__service-image">
             {serviceImage ? (
-              <img src={serviceImage} alt={getServiceName(service)} />
+              <img
+                src={serviceImage}
+                alt={getServiceName(service)}
+              />
             ) : (
               <Scissors size={25} />
             )}
@@ -594,6 +684,7 @@ const AppointmentsSection = ({
         <div className="appointments-section__slots-heading">
           <div>
             <h3>Available Time Slots</h3>
+
             <p>
               {formattedSelectedDate
                 ? `Choose a time for ${formattedSelectedDate}`
@@ -605,12 +696,19 @@ const AppointmentsSection = ({
         </div>
 
         {slotsLoading ? (
-          <div className="appointments-section__empty-slots" role="status">
+          <div
+            className="appointments-section__empty-slots"
+            role="status"
+          >
             Loading available times...
           </div>
         ) : slotsError ? (
-          <div className="appointments-section__empty-slots" role="alert">
+          <div
+            className="appointments-section__empty-slots"
+            role="alert"
+          >
             <p>{slotsError}</p>
+
             <button type="button" onClick={handleRetry}>
               Try Again
             </button>
@@ -647,6 +745,7 @@ const AppointmentsSection = ({
 
         <div className="appointments-section__note">
           <CalendarDays size={17} />
+
           <span>
             Your appointment details will be reviewed before confirmation.
           </span>
@@ -661,7 +760,9 @@ const AppointmentsSection = ({
 
             <span>
               <strong>Time:</strong>{" "}
-              {selectedSlot ? getSlotValue(selectedSlot) : "Not selected"}
+              {selectedSlot
+                ? getSlotValue(selectedSlot)
+                : "Not selected"}
             </span>
           </div>
 

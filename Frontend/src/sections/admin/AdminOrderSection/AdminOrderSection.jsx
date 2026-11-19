@@ -1,13 +1,14 @@
 import { useMemo, useState, useEffect } from "react";
 
 import { ShoppingBag, Clock3, Activity, CheckCircle2, XCircle, Search, RefreshCw, ChevronLeft, ChevronRight,
-  IndianRupee, Eye, Trash2, Users, Scissors, AlertCircle,} from "lucide-react";
+  IndianRupee, Eye, Trash2, Users, Scissors, AlertCircle, Plus,} from "lucide-react";
 
 import useAdminOrders from "../../../hooks/admin/useAdminOrders";
 import useAdminOrderStats from "../../../hooks/admin/useAdminOrderStats";
 import useDeleteAdminOrder from "../../../hooks/admin/useDeleteAdminOrder";
 
 import OrderSidebar from "../../../components/admin/OrderSidebar/OrderSidebar";
+import AdminOrderDialog from "../../../components/admin/AdminOrderDialog/AdminOrderDialog";
 
 import "./AdminOrderSection.scss";
 
@@ -103,6 +104,7 @@ const AdminOrderSection = () => {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [deleteError, setDeleteError] = useState("");
+  const [showOrderDialog, setShowOrderDialog] = useState(false);
 
   // Paginated order list.
   const {
@@ -112,6 +114,8 @@ const AdminOrderSection = () => {
     totalOrders = 0,
     totalPages = 0,
     refresh: refreshOrders,
+    addManualOrder,
+    creating,
   } = useAdminOrders(currentPage, ORDERS_PER_PAGE);
 
   // Independent order statistics.
@@ -219,6 +223,21 @@ const AdminOrderSection = () => {
 
   const handleOpenOrder = (order) => {
     setSelectedOrder(order);
+  };
+
+  const handleCreateManualOrder = async (formData) => {
+    const result = await addManualOrder(formData);
+
+    if (result?.success) {
+      setShowOrderDialog(false);
+      await refreshStats();
+
+      if (currentPage !== 1) {
+        setCurrentPage(1);
+      }
+    }
+
+    return result;
   };
 
   const handleDeleteOrder = async (order) => {
@@ -443,12 +462,22 @@ const AdminOrderSection = () => {
             </p>
           </div>
 
-          <button
-            type="button"
-            className="admin-order-refresh"
-            onClick={handleRefresh}
-            disabled={loading || statsLoading}
-          >
+          <div className="admin-order-panel__actions">
+            <button
+              type="button"
+              className="admin-order-add-button"
+              onClick={() => setShowOrderDialog(true)}
+            >
+              <Plus size={16} />
+              Add Order
+            </button>
+
+            <button
+              type="button"
+              className="admin-order-refresh"
+              onClick={handleRefresh}
+              disabled={loading || statsLoading}
+            >
             <RefreshCw
               size={16}
               className={
@@ -457,8 +486,9 @@ const AdminOrderSection = () => {
                   : ""
               }
             />
-            Refresh
-          </button>
+              Refresh
+            </button>
+          </div>
         </div>
 
         {/* SEARCH AND FILTERS */}
@@ -789,6 +819,13 @@ const AdminOrderSection = () => {
         order={selectedOrder}
         isOpen={Boolean(selectedOrder)}
         onClose={() => setSelectedOrder(null)}
+      />
+
+      <AdminOrderDialog
+        open={showOrderDialog}
+        onClose={() => setShowOrderDialog(false)}
+        onSubmit={handleCreateManualOrder}
+        loading={creating}
       />
     </section>
   );
