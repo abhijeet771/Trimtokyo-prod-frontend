@@ -1,9 +1,28 @@
-import React, { useMemo, useState } from "react";
-import {  IndianRupee,  ShoppingCart,  Wallet,  ReceiptText,
-  TrendingUp,  CalendarDays,  House,  Clock3, } from "lucide-react";
 
-import {  ResponsiveContainer,  AreaChart,  Area,  XAxis,  YAxis,
-  CartesianGrid,  Tooltip,  PieChart,  Pie,  Cell,} from "recharts";
+import React, { useMemo, useState } from "react";
+import {
+  IndianRupee,
+  ShoppingCart,
+  Wallet,
+  ReceiptText,
+  TrendingUp,
+  CalendarDays,
+  House,
+  Clock3,
+} from "lucide-react";
+
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
 import useAdminAnalytics from "../../../../../hooks/admin/useAdminAnalytics";
 import "./RevenueSales.scss";
@@ -38,11 +57,18 @@ const topBarbers = [
   { name: "Vikram Das", orders: 112, revenue: 49320, avg: 440 },
 ];
 
+// DATE FILTER OPTIONS
 const RANGE_OPTIONS = [
   { label: "Last 7 Days", value: "7" },
   { label: "Last 30 Days", value: "30" },
   { label: "Last 90 Days", value: "90" },
+  { label: "Last 6 Months", value: "180" },
+  { label: "Last 1 Year", value: "365" },
 ];
+
+const getRangeLabel = (value) =>
+  RANGE_OPTIONS.find((option) => option.value === value)?.label ||
+  `Last ${value} Days`;
 
 const formatCurrency = (value) =>
   `₹${Number(value || 0).toLocaleString("en-IN", {
@@ -93,7 +119,13 @@ const CustomPieTooltip = ({ active, payload }) => {
   );
 };
 
-const RevenuePieCard = ({ title, subtitle, icon: Icon, data,  total,}) => {
+const RevenuePieCard = ({
+  title,
+  subtitle,
+  icon: Icon,
+  data,
+  total,
+}) => {
   return (
     <article className="revenue-sales__pie-card">
       <div className="revenue-sales__card-heading">
@@ -167,7 +199,8 @@ const RevenuePieCard = ({ title, subtitle, icon: Icon, data,  total,}) => {
 };
 
 const RevenueSales = () => {
-  const [dateRange, setDateRange] = useState("30");
+  // Default: Last 1 Year
+  const [dateRange, setDateRange] = useState("365");
 
   const dateFilters = useMemo(
     () => getDateFilters(dateRange),
@@ -226,6 +259,8 @@ const RevenueSales = () => {
       color: "orange",
     },
   ];
+
+  const selectedRangeLabel = getRangeLabel(dateRange);
 
   return (
     <section className="revenue-sales">
@@ -299,18 +334,15 @@ const RevenueSales = () => {
 
               <div className="revenue-sales__kpi-content">
                 <span>{kpi.title}</span>
-                <h3>
-                  {loading ? "..." : kpi.value}
-                </h3>
+
+                <h3>{loading ? "..." : kpi.value}</h3>
 
                 <div className="revenue-sales__kpi-trend">
                   <TrendingUp size={15} />
                   <strong>Selected period</strong>
                 </div>
 
-                <small>
-                  {dateRange} day overview
-                </small>
+                <small>{selectedRangeLabel}</small>
               </div>
             </article>
           );
@@ -326,7 +358,7 @@ const RevenueSales = () => {
           </div>
 
           <span className="revenue-sales__period-label">
-            Last {dateRange} Days
+            {selectedRangeLabel}
           </span>
         </div>
 
@@ -480,12 +512,14 @@ const RevenueSales = () => {
               {topBarbers.map((barber, index) => (
                 <tr key={barber.name}>
                   <td>{index + 1}</td>
+
                   <td className="revenue-sales__barber-name">
                     <span className="revenue-sales__rank">
                       {barber.name.charAt(0)}
                     </span>
                     {barber.name}
                   </td>
+
                   <td>{barber.orders}</td>
                   <td>{formatCurrency(barber.revenue)}</td>
                   <td>{formatCurrency(barber.avg)}</td>

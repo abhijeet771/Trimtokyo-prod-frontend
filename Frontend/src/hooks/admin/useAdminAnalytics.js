@@ -1,8 +1,11 @@
 
 import { useCallback, useEffect, useState } from "react";
-import { getAdminAnalytics } from "../../services/admin/adminAnalytics.service";
+import {
+  getAdminAnalytics,
+  getAdminUsersAnalytics,
+} from "../../services/admin/adminAnalytics.service";
 
-const useAdminAnalytics = (filters = {}) => {
+const useAdminAnalytics = (filters = {}, type = "revenue") => {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +15,12 @@ const useAdminAnalytics = (filters = {}) => {
       setLoading(true);
       setError(null);
 
-      const response = await getAdminAnalytics(filters);
+      const getAnalytics =
+        type === "users"
+          ? getAdminUsersAnalytics
+          : getAdminAnalytics;
+
+      const response = await getAnalytics(filters);
 
       if (!response?.success) {
         throw new Error(
@@ -33,7 +41,7 @@ const useAdminAnalytics = (filters = {}) => {
     } finally {
       setLoading(false);
     }
-  }, [filters.startDate, filters.endDate]);
+  }, [filters.startDate, filters.endDate, type]);
 
   useEffect(() => {
     fetchAnalytics();
