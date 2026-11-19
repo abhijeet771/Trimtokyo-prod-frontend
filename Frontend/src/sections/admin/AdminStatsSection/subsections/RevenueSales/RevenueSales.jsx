@@ -1,85 +1,14 @@
-import React, { useState } from "react";
-import {
-  IndianRupee,
-  ShoppingCart,
-  Wallet,
-  ReceiptText,
-  TrendingUp,
-  CalendarDays,
-  House,
-  Clock3,
-} from "lucide-react";
+import React, { useMemo, useState } from "react";
+import {  IndianRupee,  ShoppingCart,  Wallet,  ReceiptText,
+  TrendingUp,  CalendarDays,  House,  Clock3, } from "lucide-react";
 
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
+import {  ResponsiveContainer,  AreaChart,  Area,  XAxis,  YAxis,
+  CartesianGrid,  Tooltip,  PieChart,  Pie,  Cell,} from "recharts";
 
+import useAdminAnalytics from "../../../../../hooks/admin/useAdminAnalytics";
 import "./RevenueSales.scss";
 
-// DEMO DATA — replace with analytics API responses later.
-const revenueKpis = [
-  {
-    id: "revenue",
-    title: "Total Revenue",
-    value: "₹4,86,320",
-    change: "+18.2%",
-    icon: IndianRupee,
-    color: "green",
-  },
-  {
-    id: "orders",
-    title: "Total Orders",
-    value: "1,248",
-    change: "+12.5%",
-    icon: ShoppingCart,
-    color: "blue",
-  },
-  {
-    id: "average",
-    title: "Average Order Value",
-    value: "₹389",
-    change: "+6.1%",
-    icon: Wallet,
-    color: "purple",
-  },
-  {
-    id: "completed",
-    title: "Completed Revenue",
-    value: "₹4,12,640",
-    change: "+15.3%",
-    icon: ReceiptText,
-    color: "orange",
-  },
-];
-
-const revenueTrend = [
-  { date: "Sep 1", revenue: 5000 },
-  { date: "Sep 3", revenue: 6500 },
-  { date: "Sep 5", revenue: 8000 },
-  { date: "Sep 7", revenue: 12000 },
-  { date: "Sep 9", revenue: 9500 },
-  { date: "Sep 11", revenue: 12500 },
-  { date: "Sep 13", revenue: 17000 },
-  { date: "Sep 15", revenue: 14500 },
-  { date: "Sep 17", revenue: 18000 },
-  { date: "Sep 19", revenue: 23000 },
-  { date: "Sep 21", revenue: 18500 },
-  { date: "Sep 23", revenue: 17000 },
-  { date: "Sep 25", revenue: 22000 },
-  { date: "Sep 27", revenue: 28000 },
-  { date: "Sep 29", revenue: 26000 },
-  { date: "Sep 30", revenue: 31000 },
-];
-
+// DEMO DATA — breakdown APIs are not implemented yet.
 const paymentData = [
   { name: "UPI", value: 252886, color: "#268b16" },
   { name: "Card", value: 136170, color: "#3478f6" },
@@ -116,7 +45,29 @@ const RANGE_OPTIONS = [
 ];
 
 const formatCurrency = (value) =>
-  `₹${Number(value).toLocaleString("en-IN")}`;
+  `₹${Number(value || 0).toLocaleString("en-IN", {
+    maximumFractionDigits: 0,
+  })}`;
+
+const getDateFilters = (days) => {
+  const end = new Date();
+  const start = new Date();
+
+  start.setDate(start.getDate() - Number(days) + 1);
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  return {
+    startDate: formatDate(start),
+    endDate: formatDate(end),
+  };
+};
 
 const RevenueTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
@@ -142,13 +93,7 @@ const CustomPieTooltip = ({ active, payload }) => {
   );
 };
 
-const RevenuePieCard = ({
-  title,
-  subtitle,
-  icon: Icon,
-  data,
-  total,
-}) => {
+const RevenuePieCard = ({ title, subtitle, icon: Icon, data,  total,}) => {
   return (
     <article className="revenue-sales__pie-card">
       <div className="revenue-sales__card-heading">
@@ -186,7 +131,7 @@ const RevenuePieCard = ({
 
           <div className="revenue-sales__pie-center">
             <strong>{formatCurrency(total)}</strong>
-            <span>Total Revenue</span>
+            <span>Demo Revenue</span>
           </div>
         </div>
 
@@ -205,14 +150,11 @@ const RevenuePieCard = ({
                     className="revenue-sales__legend-dot"
                     style={{ backgroundColor: item.color }}
                   />
-
                   <span>{item.name}</span>
                 </div>
 
                 <div className="revenue-sales__legend-value">
-                  <strong>
-                    {Math.round(percentage)}%
-                  </strong>
+                  <strong>{Math.round(percentage)}%</strong>
                   <small>{formatCurrency(item.value)}</small>
                 </div>
               </div>
@@ -227,11 +169,70 @@ const RevenuePieCard = ({
 const RevenueSales = () => {
   const [dateRange, setDateRange] = useState("30");
 
+  const dateFilters = useMemo(
+    () => getDateFilters(dateRange),
+    [dateRange]
+  );
+
+  const {
+    analytics,
+    loading,
+    error,
+    refetch,
+  } = useAdminAnalytics(dateFilters);
+
+  const summary = analytics?.summary || {};
+
+  const revenueTrend = (analytics?.revenueTrend || []).map(
+    (item) => ({
+      ...item,
+      date: new Date(`${item.date}T00:00:00`).toLocaleDateString(
+        "en-IN",
+        {
+          day: "numeric",
+          month: "short",
+        }
+      ),
+    })
+  );
+
+  const revenueKpis = [
+    {
+      id: "revenue",
+      title: "Total Revenue",
+      value: formatCurrency(summary.totalRevenue),
+      icon: IndianRupee,
+      color: "green",
+    },
+    {
+      id: "orders",
+      title: "Total Orders",
+      value: Number(summary.totalOrders || 0).toLocaleString("en-IN"),
+      icon: ShoppingCart,
+      color: "blue",
+    },
+    {
+      id: "average",
+      title: "Average Order Value",
+      value: formatCurrency(summary.averageOrderValue),
+      icon: Wallet,
+      color: "purple",
+    },
+    {
+      id: "pending",
+      title: "Pending Revenue",
+      value: formatCurrency(summary.pendingRevenue),
+      icon: ReceiptText,
+      color: "orange",
+    },
+  ];
+
   return (
     <section className="revenue-sales">
       <div className="revenue-sales__demo-notice">
-        Demo analytics — all figures are illustrative, not live
-        business data.
+        Revenue, orders, average order value and pending revenue
+        are live. The breakdown charts and barber table still use
+        demo data.
       </div>
 
       {/* HEADER AND FILTERS */}
@@ -266,6 +267,22 @@ const RevenueSales = () => {
         </label>
       </header>
 
+      {/* LOADING AND ERROR */}
+      {loading && (
+        <div className="revenue-sales__demo-notice">
+          Loading analytics...
+        </div>
+      )}
+
+      {error && (
+        <div className="revenue-sales__demo-notice">
+          <span>{error}</span>
+          <button type="button" onClick={refetch}>
+            Retry
+          </button>
+        </div>
+      )}
+
       {/* KPI CARDS */}
       <div className="revenue-sales__kpis">
         {revenueKpis.map((kpi) => {
@@ -282,14 +299,18 @@ const RevenueSales = () => {
 
               <div className="revenue-sales__kpi-content">
                 <span>{kpi.title}</span>
-                <h3>{kpi.value}</h3>
+                <h3>
+                  {loading ? "..." : kpi.value}
+                </h3>
 
                 <div className="revenue-sales__kpi-trend">
                   <TrendingUp size={15} />
-                  <strong>{kpi.change}</strong>
+                  <strong>Selected period</strong>
                 </div>
 
-                <small>vs previous period</small>
+                <small>
+                  {dateRange} day overview
+                </small>
               </div>
             </article>
           );
@@ -311,86 +332,99 @@ const RevenueSales = () => {
 
         <div className="revenue-sales__trend-summary">
           <span>Total Revenue</span>
-          <strong>₹4,86,320</strong>
-          <span className="revenue-sales__positive">
-            <TrendingUp size={15} />
-            +18.2%
-          </span>
+          <strong>
+            {formatCurrency(summary.totalRevenue)}
+          </strong>
         </div>
 
         <div className="revenue-sales__area-chart">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart
-              data={revenueTrend}
-              margin={{ top: 12, right: 12, left: -12, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient
-                  id="revenueSalesGradient"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop
-                    offset="0%"
-                    stopColor="#7cfc00"
-                    stopOpacity={0.28}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="#7cfc00"
-                    stopOpacity={0.02}
-                  />
-                </linearGradient>
-              </defs>
-
-              <CartesianGrid
-                stroke="#edf1eb"
-                strokeDasharray="4 4"
-                vertical={false}
-              />
-
-              <XAxis
-                dataKey="date"
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: "#849084", fontSize: 11 }}
-                minTickGap={22}
-              />
-
-              <YAxis
-                axisLine={false}
-                tickLine={false}
-                tick={{ fill: "#849084", fontSize: 11 }}
-                tickFormatter={(value) =>
-                  value >= 1000
-                    ? `${value / 1000}K`
-                    : value
-                }
-              />
-
-              <Tooltip content={<RevenueTooltip />} />
-
-              <Area
-                type="monotone"
-                dataKey="revenue"
-                stroke="#268b16"
-                strokeWidth={2.5}
-                fill="url(#revenueSalesGradient)"
-                activeDot={{
-                  r: 5,
-                  fill: "#268b16",
-                  stroke: "#ffffff",
-                  strokeWidth: 2,
+          {loading ? (
+            <div className="revenue-sales__demo-notice">
+              Loading revenue trend...
+            </div>
+          ) : revenueTrend.length === 0 ? (
+            <div className="revenue-sales__demo-notice">
+              No revenue data available for this period.
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart
+                data={revenueTrend}
+                margin={{
+                  top: 12,
+                  right: 12,
+                  left: -12,
+                  bottom: 0,
                 }}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+              >
+                <defs>
+                  <linearGradient
+                    id="revenueSalesGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="0%"
+                      stopColor="#7cfc00"
+                      stopOpacity={0.28}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="#7cfc00"
+                      stopOpacity={0.02}
+                    />
+                  </linearGradient>
+                </defs>
+
+                <CartesianGrid
+                  stroke="#edf1eb"
+                  strokeDasharray="4 4"
+                  vertical={false}
+                />
+
+                <XAxis
+                  dataKey="date"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#849084", fontSize: 11 }}
+                  minTickGap={22}
+                />
+
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#849084", fontSize: 11 }}
+                  tickFormatter={(value) =>
+                    value >= 1000
+                      ? `${value / 1000}K`
+                      : value
+                  }
+                />
+
+                <Tooltip content={<RevenueTooltip />} />
+
+                <Area
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#268b16"
+                  strokeWidth={2.5}
+                  fill="url(#revenueSalesGradient)"
+                  activeDot={{
+                    r: 5,
+                    fill: "#268b16",
+                    stroke: "#ffffff",
+                    strokeWidth: 2,
+                  }}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </article>
 
-      {/* THREE REVENUE BREAKDOWNS */}
+      {/* THREE REVENUE BREAKDOWNS — DEMO DATA */}
       <div className="revenue-sales__pie-grid">
         <RevenuePieCard
           title="Revenue by Payment Method"
@@ -417,7 +451,7 @@ const RevenueSales = () => {
         />
       </div>
 
-      {/* TOP BARBERS TABLE */}
+      {/* TOP BARBERS TABLE — DEMO DATA */}
       <article className="revenue-sales__table-card">
         <div className="revenue-sales__section-heading">
           <div>
