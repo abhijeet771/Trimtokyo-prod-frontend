@@ -1,26 +1,58 @@
 
-import { useCallback, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+
 import {
   getAdminAnalytics,
   getAdminUsersAnalytics,
+  getAdminBarberAnalytics,
 } from "../../services/admin/adminAnalytics.service";
 
-const useAdminAnalytics = (filters = {}, type = "revenue") => {
+/* =========================================
+   ADMIN ANALYTICS HOOK
+========================================= */
+
+const useAdminAnalytics = (
+  filters = {},
+  type = "revenue"
+) => {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  /* =========================================
+     FETCH ANALYTICS
+  ========================================= */
 
   const fetchAnalytics = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const getAnalytics =
-        type === "users"
-          ? getAdminUsersAnalytics
-          : getAdminAnalytics;
+      let getAnalytics;
 
-      const response = await getAnalytics(filters);
+      switch (type) {
+        case "users":
+          getAnalytics = getAdminUsersAnalytics;
+          break;
+
+        case "barbers":
+          getAnalytics = getAdminBarberAnalytics;
+          break;
+
+        case "revenue":
+        default:
+          getAnalytics = getAdminAnalytics;
+          break;
+      }
+
+      const response = await getAnalytics({
+        startDate: filters.startDate,
+        endDate: filters.endDate,
+      });
 
       if (!response?.success) {
         throw new Error(
@@ -29,6 +61,7 @@ const useAdminAnalytics = (filters = {}, type = "revenue") => {
       }
 
       setAnalytics(response.data);
+
       return response.data;
     } catch (err) {
       const message =
@@ -37,15 +70,29 @@ const useAdminAnalytics = (filters = {}, type = "revenue") => {
         "Failed to fetch analytics";
 
       setError(message);
+      setAnalytics(null);
+
       return null;
     } finally {
       setLoading(false);
     }
-  }, [filters.startDate, filters.endDate, type]);
+  }, [
+    filters.startDate,
+    filters.endDate,
+    type,
+  ]);
+
+  /* =========================================
+     AUTO FETCH
+  ========================================= */
 
   useEffect(() => {
     fetchAnalytics();
   }, [fetchAnalytics]);
+
+  /* =========================================
+     RETURN
+  ========================================= */
 
   return {
     analytics,
