@@ -1,5 +1,5 @@
 
-import apik from "./apik";
+import apik from "../apik";
 
 /* -------------------------------------------------------------------------- */
 /*                              GET BARBER SHOP                               */

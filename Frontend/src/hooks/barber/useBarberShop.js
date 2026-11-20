@@ -1,6 +1,6 @@
 
 import { useCallback, useEffect, useState } from "react";
-import { getBarberShopBySlug } from "../../services/barberShop.service";
+import { getBarberShopBySlug } from "../../services/barber/barberShop.service";
 
 const useBarberShop = (slug) => {
   const [barberShop, setBarberShop] = useState(null);

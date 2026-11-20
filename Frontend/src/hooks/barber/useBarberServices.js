@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { addBarberService, getMyBarberServices,} from "../../services/barberService.service";
+import { addBarberService, getMyBarberServices,} from "../../services/barber/barberService.service";
 
 const useBarberServices = () => {
   const [services, setServices] = useState([]);

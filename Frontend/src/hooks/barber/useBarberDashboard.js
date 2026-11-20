@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getBarberDashboard } from "../../services/barberDashboard.service.js";
+import { getBarberDashboard } from "../../services/barber/barberDashboard.service.js";
 
 const INITIAL_DATA = {
   kpis: {

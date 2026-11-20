@@ -672,3 +672,60 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+
+.order-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.complete-order-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 12px;
+  color: #ffffff;
+  background: #268b16;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: #1e7011;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.order-status-feedback {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #237b27;
+  background: #eaf8e9;
+  border: 1px solid #d1edce;
+  border-radius: 9px;
+  font-size: 13px;
+
+  &.is-error {
+    color: #bd3030;
+    background: #fff0f0;
+    border-color: #ffd4d4;
+  }
+}
+
+@media (max-width: 650px) {
+  .order-action-buttons {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+

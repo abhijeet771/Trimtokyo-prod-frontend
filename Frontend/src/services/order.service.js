@@ -1,3 +1,4 @@
+
 import apik from "./apik";
 
 /* ============================================================
@@ -22,6 +23,10 @@ export const getBarberOrders = (type) =>
     params: type ? { type } : {},
   });
 
-// Update order status
+// Update order status (existing API)
 export const updateOrderStatus = (id, status) =>
+  apik.patch(`/api/orders/${id}/status`, { status });
+
+// Update barber order status
+export const updateBarberOrderStatus = (id, status) =>
   apik.patch(`/api/orders/${id}/status`, { status });

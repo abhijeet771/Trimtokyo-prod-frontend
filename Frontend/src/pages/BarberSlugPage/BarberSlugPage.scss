@@ -1,3 +1,4 @@
+
 .barber-slug-page {
   --slug-primary: #3b82f6;
   --slug-primary-dark: #2563eb;
@@ -31,7 +32,7 @@
     box-sizing: border-box;
   }
 
-  /* SHARED SECTION FOUNDATION */
+  /* Shared section foundation */
 
   &__section {
     width: 100%;
@@ -61,7 +62,7 @@
     line-height: 1.6;
   }
 
-  /* COMMON CONTROLS */
+  /* Common controls */
 
   button,
   input,
@@ -82,7 +83,18 @@
     outline-offset: 2px;
   }
 
-  /* LOADING / ERROR STATES */
+  /* Reviews section integration */
+
+  > .slug-reviews {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 0;
+    margin: 24px auto 48px;
+    padding: 28px 0;
+    box-sizing: border-box;
+  }
+
+  /* Loading / error states */
 
   &__loading,
   &__error,
@@ -109,7 +121,7 @@
   }
 }
 
-/* TABLET */
+/* Tablet */
 
 @media (max-width: 992px) {
   .barber-slug-page {
@@ -121,10 +133,16 @@
     &__section-title {
       font-size: 1.1rem;
     }
+
+    > .slug-reviews {
+      margin-top: 20px;
+      margin-bottom: 36px;
+      padding: 22px 0;
+    }
   }
 }
 
-/* MOBILE */
+/* Mobile */
 
 @media (max-width: 600px) {
   .barber-slug-page {
@@ -140,10 +158,16 @@
     &__section-subtitle {
       font-size: 0.79rem;
     }
+
+    > .slug-reviews {
+      margin-top: 16px;
+      margin-bottom: 25px;
+      padding: 16px 0;
+    }
   }
 }
 
-/* SMALL PHONES */
+/* Small phones */
 
 @media (max-width: 380px) {
   .barber-slug-page {
@@ -154,10 +178,14 @@
     &__section-title {
       font-size: 0.96rem;
     }
+
+    > .slug-reviews {
+      margin-top: 12px;
+    }
   }
 }
 
-/* ACCESSIBILITY */
+/* Accessibility */
 
 @media (prefers-reduced-motion: reduce) {
   .barber-slug-page,

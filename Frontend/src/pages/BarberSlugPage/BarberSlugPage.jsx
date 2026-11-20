@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import useBarberShop from "../../hooks/barber/useBarberShop";
 import HeaderSection from "../../sections/User/Shopheader/Shopheader";
+
 import SlugHeroSection from "../sections/SlugHeroSection";
 import SlugServicesSection from "../sections/SlugServicesSection";
 import SlugGallerySection from "../sections/SlugGallerySection";
@@ -12,10 +13,6 @@ import SlugMapSection from "../sections/SlugMapSection";
 import SlugReviewsSection from "../sections/SlugReviewsSection";
 
 import "./BarberSlugPage.scss";
-
-/* -------------------------------------------------------------------------- */
-/*                                  HELPERS                                   */
-/* -------------------------------------------------------------------------- */
 
 const getId = (value) => {
   if (!value) return "";
@@ -30,26 +27,18 @@ const getId = (value) => {
   return "";
 };
 
-/* -------------------------------------------------------------------------- */
-/*                              BARBER SLUG PAGE                              */
-/* -------------------------------------------------------------------------- */
-
 const BarberSlugPage = () => {
   const { slug } = useParams();
 
   const {
     profile,
-    gallery,
-    services,
-    team,
-    reviews,
+    gallery = [],
+    services = [],
+    team = [],
+    reviews = { items: [], summary: null },
     loading,
     error,
   } = useBarberShop(slug);
-
-  /* ------------------------------------------------------------------------ */
-  /*                              LOADING / ERROR                             */
-  /* ------------------------------------------------------------------------ */
 
   if (loading) {
     return (
@@ -73,77 +62,31 @@ const BarberSlugPage = () => {
     );
   }
 
-  /* ------------------------------------------------------------------------ */
-  /*                              BARBER IDs                                  */
-  /* ------------------------------------------------------------------------ */
+  // BarberProfile MongoDB document ID
+  const barberProfileId = getId(profile._id ?? profile.id);
 
-  // BarberProfile MongoDB document ID.
-  const barberProfileId = getId(
-    profile._id ?? profile.id
-  );
-
-  // Auth user ID associated with the BarberProfile.
+  // Associated Auth user ID
   const barberUserId = getId(
     profile.userId ??
-      profile.user?._id ??
-      profile.user?.id ??
-      profile.authUserId ??
-      profile.barberUserId
+    profile.user?._id ??
+    profile.user?.id ??
+    profile.authUserId ??
+    profile.barberUserId
   );
 
-  /* ------------------------------------------------------------------------ */
-  /*                              DEBUG LOGS                                  */
-  /* ------------------------------------------------------------------------ */
-
-  console.group("[BarberSlugPage] BARBER IDENTIFICATION DEBUG");
-
-  console.log("Salon slug:", slug);
-
-  console.log("BARBER PROFILE RESPONSE:", profile);
-
-  console.log("BARBER PROFILE ID:", barberProfileId);
-
-  console.log("BARBER AUTH USER ID:", barberUserId);
-
-  console.log("RAW ID FIELDS:", {
-    rawProfileId: profile._id,
-    rawId: profile.id,
-    rawUserId: profile.userId,
-    rawUser: profile.user,
-    rawAuthUserId: profile.authUserId,
-    rawBarberUserId: profile.barberUserId,
-  });
-
-  console.log("SALON DETAILS:", {
-    shopName: profile.shopName,
-    shopSlug: profile.slug,
-    businessType: profile.businessType,
-    status: profile.status,
-    isActive: profile.isActive,
-  });
-
-  console.log("SERVICES:", services);
-
-  console.log("IDS PASSED TO SlugServicesSection:", {
+  console.log("[BarberSlugPage] Shop IDs:", {
+    slug,
     barberProfileId,
     barberUserId,
   });
 
-  console.groupEnd();
-
-  /* ------------------------------------------------------------------------ */
-  /*                              LOCATION                                    */
-  /* ------------------------------------------------------------------------ */
-
+  // Location
   const coordinates = profile.location?.coordinates;
 
   const latitude = coordinates?.[1] ?? null;
   const longitude = coordinates?.[0] ?? null;
 
-  /* ------------------------------------------------------------------------ */
-  /*                              DETAILS                                     */
-  /* ------------------------------------------------------------------------ */
-
+  // Shop details
   const details = {
     ...profile,
     rating: profile.avgRating ?? 0,
@@ -158,10 +101,6 @@ const BarberSlugPage = () => {
     : profile.profileImage
       ? [profile.profileImage]
       : [];
-
-  /* ------------------------------------------------------------------------ */
-  /*                                  UI                                      */
-  /* ------------------------------------------------------------------------ */
 
   return (
     <main className="barber-slug-page">
@@ -202,20 +141,21 @@ const BarberSlugPage = () => {
         state={profile.state}
         postalCode={profile.postalCode}
         phone={profile.phone}
-        latitude={details.latitude}
-        longitude={details.longitude}
+        latitude={latitude}
+        longitude={longitude}
         mapUrl={details.mapEmbedUrl}
       />
 
       <SlugReviewsSection
-        reviews={reviews.items}
+        barberId={barberProfileId}
+        reviews={reviews?.items ?? []}
         averageRating={
-          reviews.summary?.avgRating ??
+          reviews?.summary?.avgRating ??
           profile.avgRating ??
           0
         }
         totalReviews={
-          reviews.summary?.totalReviews ??
+          reviews?.summary?.totalReviews ??
           profile.totalReviews ??
           0
         }

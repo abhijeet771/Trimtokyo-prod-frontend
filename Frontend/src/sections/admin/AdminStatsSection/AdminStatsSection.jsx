@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   LayoutDashboard,
@@ -6,6 +7,7 @@ import {
   Scissors,
   Megaphone,
   ShoppingCart,
+  Wallet,
 } from "lucide-react";
 
 import Overview from "./subsections/Overview/Overview";
@@ -14,6 +16,7 @@ import UsersSection from "./subsections/Users/Users";
 import Barber from "./subsections/Barber/Barber";
 import Marketing from "./subsections/Marketing/Marketing";
 import Orders from "./subsections/Orders/Orders";
+import Expenditure from "./subsections/Expenditure/Expenditure";
 
 import "./AdminStatsSection.scss";
 
@@ -53,6 +56,12 @@ const STAT_TABS = [
     label: "Orders",
     icon: ShoppingCart,
     component: Orders,
+  },
+  {
+    id: "expenditure",
+    label: "Expenditure",
+    icon: Wallet,
+    component: Expenditure,
   },
 ];
 

@@ -1,6 +1,6 @@
 
 import {  useEffect,useState,  useCallback,} from "react";
-import {  getMyProfile,  addProfile as addProfileService,  updateProfile as updateProfileService,} from "../../services/barberProfile.service";
+import {  getMyProfile,  addProfile as addProfileService,  updateProfile as updateProfileService,} from "../../services/barber/barberProfile.service";
 
 const useBarberProfile = () => {
   const [profile, setProfile] = useState(null);

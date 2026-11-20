@@ -1,8 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import {  Search,  ClipboardList,  Clock3,  CircleCheckBig,  XCircle,  Eye,  X,} from "lucide-react";
+import {  Search,  ClipboardList,  Clock3,  CircleCheckBig,  XCircle,  Eye,  X,  Check,} from "lucide-react";
+
 import useBarberOrders from "../../../hooks/barber/useBarberOrders";
+import useBarberOrderStatus from "../../../hooks/barber/useBarberOrderStatus";
+
 import BarberOrderCard from "../../../components/barber/BarberOrderCard/BarberOrderCard";
-import {  getMyProfile,  toggleAutoConfirm,} from "../../../services/api";
+
+import {
+  getMyProfile,
+  toggleAutoConfirm,
+} from "../../../services/api";
 
 import "./BarberOrderSection.scss";
 
@@ -11,14 +18,37 @@ const ORDERS_PER_PAGE = 5;
 const BarberOrderSection = () => {
   const { orders = [], loading } = useBarberOrders();
 
+  const {
+    updateStatus,
+    loading: statusLoading,
+    error: statusError,
+  } = useBarberOrderStatus();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [selectedOrder, setSelectedOrder] = useState(null);
+
   const [autoConfirmEnabled, setAutoConfirmEnabled] = useState(false);
   const [toggleLoading, setToggleLoading] = useState(false);
 
-  // Fetch barber profile and auto-confirm setting
+  const [updatingOrderId, setUpdatingOrderId] = useState(null);
+  const [orderStatusMessage, setOrderStatusMessage] = useState("");
+
+  // Local status overrides after successful API updates.
+  const [updatedStatuses, setUpdatedStatuses] = useState({});
+
+  // Apply locally updated statuses to the fetched orders.
+  const displayedOrders = useMemo(
+    () =>
+      orders.map((order) => ({
+        ...order,
+        status: updatedStatuses[order._id] || order.status,
+      })),
+    [orders, updatedStatuses]
+  );
+
+  // Fetch barber profile and auto-confirm setting.
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -35,7 +65,7 @@ const BarberOrderSection = () => {
     fetchProfile();
   }, []);
 
-  // Close order details with Escape
+  // Close order details with Escape.
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === "Escape") {
@@ -54,28 +84,37 @@ const BarberOrderSection = () => {
     };
   }, [selectedOrder]);
 
-  // Toggle auto-confirm
+  // Toggle auto-confirm.
   const handleToggleAutoConfirm = async () => {
     try {
       setToggleLoading(true);
+
       const updated = !autoConfirmEnabled;
+
       await toggleAutoConfirm(updated);
 
       setAutoConfirmEnabled(updated);
     } catch (err) {
-      alert(err.response?.data?.message ||"Failed to update auto confirm");
+      alert(
+        err.response?.data?.message ||
+          "Failed to update auto confirm"
+      );
     } finally {
       setToggleLoading(false);
     }
   };
 
-  // Customer name fallback
+  // Customer name fallback.
   const getCustomerName = (order) => {
-    return ( order.deliveryAddress?.fullName || order.userId?.name || order.userId?.fullName || "Unknown customer"
+    return (
+      order.deliveryAddress?.fullName ||
+      order.userId?.name ||
+      order.userId?.fullName ||
+      "Unknown customer"
     );
   };
 
-  // Order price formatting
+  // Order price formatting.
   const formatPrice = (amount) => {
     const price = Number(amount);
 
@@ -86,36 +125,66 @@ const BarberOrderSection = () => {
     return `₹${price.toLocaleString("en-IN")}`;
   };
 
-  // KPI values
-  const totalOrders = orders.length;
-  const pendingOrders = orders.filter((order) => order.status === "PENDING").length;
-  const confirmedOrders = orders.filter((order) => order.status === "CONFIRMED").length;
-  const cancelledOrders = orders.filter((order) => order.status === "CANCELLED").length;
+  // KPI values.
+  const totalOrders = displayedOrders.length;
 
-  // Search and status filtering
+  const pendingOrders = displayedOrders.filter(
+    (order) => order.status === "PENDING"
+  ).length;
+
+  const confirmedOrders = displayedOrders.filter(
+    (order) => order.status === "CONFIRMED"
+  ).length;
+
+  const cancelledOrders = displayedOrders.filter(
+    (order) => order.status === "CANCELLED"
+  ).length;
+
+  // Search and status filtering.
   const filteredOrders = useMemo(() => {
     const searchTerm = search.trim().toLowerCase();
 
-    return orders.filter((order) => {
-      const customerName = (order.deliveryAddress?.fullName ||order.userId?.name ||order.userId?.fullName ||"").toLowerCase();
+    return displayedOrders.filter((order) => {
+      const customerName = (
+        order.deliveryAddress?.fullName ||
+        order.userId?.name ||
+        order.userId?.fullName ||
+        ""
+      ).toLowerCase();
+
       const orderId = String(order._id || "").toLowerCase();
-      const matchesSearch = customerName.includes(searchTerm) || orderId.includes(searchTerm);
-      const matchesStatus = statusFilter === "ALL" || order.status === statusFilter;
+
+      const matchesSearch =
+        customerName.includes(searchTerm) ||
+        orderId.includes(searchTerm);
+
+      const matchesStatus =
+        statusFilter === "ALL" ||
+        order.status === statusFilter;
+
       return matchesSearch && matchesStatus;
     });
-  }, [orders, search, statusFilter]);
+  }, [displayedOrders, search, statusFilter]);
 
-  // Pagination
-  const totalPages = Math.ceil(filteredOrders.length / ORDERS_PER_PAGE  );
+  // Pagination.
+  const totalPages = Math.ceil(
+    filteredOrders.length / ORDERS_PER_PAGE
+  );
+
   const indexOfLast = currentPage * ORDERS_PER_PAGE;
   const indexOfFirst = indexOfLast - ORDERS_PER_PAGE;
 
-  const currentOrders = filteredOrders.slice(indexOfFirst,indexOfLast);
+  const currentOrders = filteredOrders.slice(
+    indexOfFirst,
+    indexOfLast
+  );
 
-  // Reset pagination when search/filter changes
-  useEffect(() => {setCurrentPage(1);}, [search, statusFilter]);
+  // Reset pagination when search/filter changes.
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter]);
 
-  // Keep the page within the available range
+  // Keep the page within the available range.
   useEffect(() => {
     if (totalPages === 0) {
       setCurrentPage(1);
@@ -124,11 +193,14 @@ const BarberOrderSection = () => {
     }
   }, [currentPage, totalPages]);
 
-  // Format status labels
+  // Format status labels.
   const formatStatus = (status = "UNKNOWN") =>
-    status.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+    status
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .replace(/\b\w/g, (char) => char.toUpperCase());
 
-  // Format booking date
+  // Format booking date.
   const formatDate = (value) => {
     if (!value) return "—";
 
@@ -138,7 +210,60 @@ const BarberOrderSection = () => {
       return "—";
     }
 
-    return date.toLocaleDateString("en-IN", {day: "2-digit",month: "short",year: "numeric",});
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  // Complete an in-progress order.
+  const handleCompleteOrder = async (order) => {
+    if (order.status !== "IN_PROGRESS" || statusLoading) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "Are you sure you want to mark this order as completed?"
+    );
+
+    if (!confirmed) return;
+
+    setUpdatingOrderId(order._id);
+    setOrderStatusMessage("");
+
+    try {
+      const result = await updateStatus(
+        order._id,
+        "COMPLETED"
+      );
+
+      if (!result.success) {
+        setOrderStatusMessage(
+          result.message || "Failed to complete order"
+        );
+        return;
+      }
+
+      // Update the displayed order status immediately.
+      setUpdatedStatuses((previous) => ({
+        ...previous,
+        [order._id]: "COMPLETED",
+      }));
+
+      // Update the details dialog if this order is open.
+      setSelectedOrder((previous) =>
+        previous?._id === order._id
+          ? { ...previous, status: "COMPLETED" }
+          : previous
+      );
+
+      setOrderStatusMessage(
+        `Order #${String(order._id).slice(-8).toUpperCase()} marked as completed successfully.`
+      );
+    } finally {
+      setUpdatingOrderId(null);
+    }
   };
 
   if (loading) {
@@ -166,10 +291,16 @@ const BarberOrderSection = () => {
           <button
             type="button"
             className={
-              autoConfirmEnabled? "toggle-btn active": "toggle-btn"}
+              autoConfirmEnabled ? "toggle-btn active" : "toggle-btn"
+            }
             disabled={toggleLoading}
-            onClick={handleToggleAutoConfirm}>
-            {toggleLoading? "Updating...": autoConfirmEnabled? "ON": "OFF"}
+            onClick={handleToggleAutoConfirm}
+          >
+            {toggleLoading
+              ? "Updating..."
+              : autoConfirmEnabled
+              ? "ON"
+              : "OFF"}
           </button>
         </div>
       </div>
@@ -209,6 +340,17 @@ const BarberOrderSection = () => {
         </div>
       </div>
 
+      {/* STATUS UPDATE FEEDBACK */}
+      {(orderStatusMessage || statusError) && (
+        <div
+          className={`order-status-feedback ${
+            statusError && !orderStatusMessage ? "is-error" : ""
+          }`}
+        >
+          {orderStatusMessage || statusError}
+        </div>
+      )}
+
       {/* SEARCH AND FILTER */}
       <div className="filter-bar">
         <div className="search-box">
@@ -224,7 +366,7 @@ const BarberOrderSection = () => {
 
         <select
           value={statusFilter}
-          onChange={(event) =>setStatusFilter(event.target.value)}
+          onChange={(event) => setStatusFilter(event.target.value)}
           aria-label="Filter orders by status"
         >
           <option value="ALL">All Orders</option>
@@ -243,7 +385,9 @@ const BarberOrderSection = () => {
           <h3>No Orders Found</h3>
 
           <p>
-            {orders.length === 0? "You haven't received any customer bookings yet.": "No orders match your current search or filter."}
+            {orders.length === 0
+              ? "You haven't received any customer bookings yet."
+              : "No orders match your current search or filter."}
           </p>
         </div>
       ) : (
@@ -264,6 +408,9 @@ const BarberOrderSection = () => {
               <tbody>
                 {currentOrders.map((order) => {
                   const customerName = getCustomerName(order);
+
+                  const isUpdating =
+                    updatingOrderId === order._id;
 
                   return (
                     <tr key={order._id}>
@@ -290,7 +437,9 @@ const BarberOrderSection = () => {
 
                       {/* BOOKING DATE */}
                       <td>
-                        {formatDate(order.scheduledAt || order.createdAt)}
+                        {formatDate(
+                          order.scheduledAt || order.createdAt
+                        )}
                       </td>
 
                       {/* PRICE */}
@@ -303,20 +452,49 @@ const BarberOrderSection = () => {
                       {/* STATUS */}
                       <td>
                         <span
-                          className={`order-status status-${(order.status || "unknown").toLowerCase()}`}>
+                          className={`order-status status-${(
+                            order.status || "unknown"
+                          ).toLowerCase()}`}
+                        >
                           {formatStatus(order.status)}
                         </span>
                       </td>
 
-                      {/* ACTION */}
+                      {/* ACTIONS */}
                       <td>
-                        <button
-                          type="button"
-                          className="view-order-btn"
-                          onClick={() =>setSelectedOrder(order)}aria-label={`View order ${String(order._id).slice(-8)}`}>
-                          <Eye size={16} />
-                          View
-                        </button>
+                        <div className="order-action-buttons">
+                          <button
+                            type="button"
+                            className="view-order-btn"
+                            onClick={() => setSelectedOrder(order)}
+                            aria-label={`View order ${String(
+                              order._id
+                            ).slice(-8)}`}
+                          >
+                            <Eye size={16} />
+                            View
+                          </button>
+
+                          {order.status === "IN_PROGRESS" && (
+                            <button
+                              type="button"
+                              className="complete-order-btn"
+                              disabled={statusLoading}
+                              onClick={() =>
+                                handleCompleteOrder(order)
+                              }
+                              aria-label={`Complete order ${String(
+                                order._id
+                              ).slice(-8)}`}
+                            >
+                              <Check size={16} />
+
+                              {isUpdating
+                                ? "Updating..."
+                                : "Complete"}
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );
@@ -328,9 +506,13 @@ const BarberOrderSection = () => {
           {/* PAGINATION */}
           {totalPages > 1 && (
             <div className="pagination">
-              <button type="button"
+              <button
+                type="button"
                 disabled={currentPage === 1}
-                onClick={() => setCurrentPage((previous) => previous - 1)}>
+                onClick={() =>
+                  setCurrentPage((previous) => previous - 1)
+                }
+              >
                 Previous
               </button>
 
@@ -342,7 +524,8 @@ const BarberOrderSection = () => {
 
                 <small>
                   Showing {indexOfFirst + 1}–
-                  {Math.min(indexOfLast,filteredOrders.length)}{" "}of {filteredOrders.length} orders
+                  {Math.min(indexOfLast, filteredOrders.length)} of{" "}
+                  {filteredOrders.length} orders
                 </small>
               </div>
 
@@ -370,7 +553,8 @@ const BarberOrderSection = () => {
             }
           }}
         >
-          <div className="order-dialog"
+          <div
+            className="order-dialog"
             role="dialog"
             aria-modal="true"
             aria-label="Order details"
@@ -381,7 +565,9 @@ const BarberOrderSection = () => {
 
                 <p>
                   Order #
-                  {String(selectedOrder._id).slice(-8).toUpperCase()}
+                  {String(selectedOrder._id)
+                    .slice(-8)
+                    .toUpperCase()}
                 </p>
               </div>
 
