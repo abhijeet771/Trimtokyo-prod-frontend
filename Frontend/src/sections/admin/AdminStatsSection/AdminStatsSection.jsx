@@ -8,6 +8,7 @@ import {
   Megaphone,
   ShoppingCart,
   Wallet,
+  TrendingUp,
 } from "lucide-react";
 
 import Overview from "./subsections/Overview/Overview";
@@ -17,6 +18,7 @@ import Barber from "./subsections/Barber/Barber";
 import Marketing from "./subsections/Marketing/Marketing";
 import Orders from "./subsections/Orders/Orders";
 import Expenditure from "./subsections/Expenditure/Expenditure";
+import Profit from "./subsections/Profit/Profit";
 
 import "./AdminStatsSection.scss";
 
@@ -62,6 +64,12 @@ const STAT_TABS = [
     label: "Expenditure",
     icon: Wallet,
     component: Expenditure,
+  },
+  {
+    id: "profit",
+    label: "Profit & Loss",
+    icon: TrendingUp,
+    component: Profit,
   },
 ];
 
