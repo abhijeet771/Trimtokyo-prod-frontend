@@ -88,7 +88,7 @@ const EventsSection = () => {
 
           <div className="events-section__hero-image">
             <img
-              src="/events/e1.png"
+              src="/event/e1.png"
               alt="Wedding grooming for a special occasion"
               loading="lazy"
             />

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -11,17 +12,25 @@ const OptionalSection = () => {
 
   const activeSection = OPTIONAL_SECTION_CONTENT.tabs[activeTab];
 
-  // Home service cards → Home Service page
-  // Slot booking cards → Auth page
-  const handleItemClick = () => {
+  // Handle individual card clicks
+  const handleItemClick = (item) => {
+    // Home Service: keep existing navigation
     if (activeTab === "homeService") {
       navigate("/salon/trimtokyo-home-service");
-    } else {
-      navigate("/auth");
+      return;
+    }
+
+    // Slot Booking: navigate to the selected salon after login
+    if (item?.slug) {
+      navigate("/auth", {
+        state: {
+          from: `/salon/${item.slug}`,
+        },
+      });
     }
   };
 
-  // View All follows the same routing logic
+  // View All navigation
   const handleViewAll = () => {
     if (activeTab === "homeService") {
       navigate("/salon/trimtokyo-home-service");
@@ -33,6 +42,7 @@ const OptionalSection = () => {
   return (
     <section className="optional-section">
       <div className="optional-section__container">
+
         {/* TABS */}
         <div className="optional-section__tabs">
           <button
@@ -58,18 +68,24 @@ const OptionalSection = () => {
             <div
               className="optional-section__card"
               key={item.id}
-              onClick={handleItemClick}
+              onClick={() => handleItemClick(item)}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  handleItemClick();
+              onKeyDown={(event) => {
+                if (
+                  event.key === "Enter" ||
+                  event.key === " "
+                ) {
+                  event.preventDefault();
+                  handleItemClick(item);
                 }
               }}
             >
               <div className="optional-section__image">
-                <img src={item.image} alt={item.name} />
+                <img
+                  src={item.image}
+                  alt={item.name}
+                />
               </div>
 
               <div className="optional-section__content">
@@ -82,11 +98,15 @@ const OptionalSection = () => {
 
         {/* VIEW ALL */}
         <div className="optional-section__view-all">
-          <button type="button" onClick={handleViewAll}>
+          <button
+            type="button"
+            onClick={handleViewAll}
+          >
             View All
             <ArrowRight size={17} />
           </button>
         </div>
+
       </div>
     </section>
   );
