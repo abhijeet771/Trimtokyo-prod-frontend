@@ -1,8 +1,11 @@
+
 import "./Services.scss";
 
 import { useNavigate } from "react-router-dom";
+
 import ServiceCard from "../ServiceCard/ServiceCard";
 import Button from "../../User/Button/Button";
+
 import { SERVICES_CONTENT } from "../../../constants/services";
 import useFeaturedBarbers from "../../../hooks/useFeaturedBarbers";
 
@@ -26,9 +29,21 @@ const Services = () => {
     limit: 6,
   });
 
-  const handleNavigateToAuth = () => {
-    navigate("/auth");
+  /* -------------------------------------------------------------------------- */
+  /*                         NAVIGATE TO ALL SALONS                             */
+  /* -------------------------------------------------------------------------- */
+
+  const handleNavigateToSearch = () => {
+    navigate("/auth", {
+      state: {
+        from: "/search?category=salon",
+      },
+    });
   };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   RENDER                                   */
+  /* -------------------------------------------------------------------------- */
 
   return (
     <section className="services">
@@ -98,7 +113,7 @@ const Services = () => {
         <div className="services__view-all">
           <Button
             variant="secondary"
-            onClick={handleNavigateToAuth}
+            onClick={handleNavigateToSearch}
           >
             {buttonText}
           </Button>

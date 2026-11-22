@@ -1,3 +1,4 @@
+
 import "./ServiceCard.scss";
 
 import {
@@ -18,13 +19,26 @@ const ServiceCard = ({
   totalReviews,
   startingPrice,
   listingType,
+  businessType,
   isDeliveryAvailable,
   badgeText = "Featured",
 }) => {
   const navigate = useNavigate();
 
+  // Determine whether this listing is a salon or individual barber.
+  const isSalon =
+    businessType === "salon" || listingType === "salon";
+
+  const searchDestination = isSalon
+    ? "/search?category=salon"
+    : "/search?category=barber";
+
   const handleSeeDetails = () => {
-    navigate("/auth");
+    navigate("/auth", {
+      state: {
+        from: searchDestination,
+      },
+    });
   };
 
   return (
@@ -68,7 +82,7 @@ const ServiceCard = ({
 
         <div className="service-card__tags">
           <span className="service-card__tag">
-            {listingType === "salon" ? "Salon" : "Barber"}
+            {isSalon ? "Salon" : "Barber"}
           </span>
 
           {isDeliveryAvailable && (
