@@ -22,6 +22,10 @@
     }
   }
 
+  /* ===============================
+     TAB SWITCHER
+  ================================ */
+
   .slot-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -42,6 +46,7 @@
       color: #68776c;
       font-size: 13px;
       font-weight: 600;
+      cursor: pointer;
       transition:
         background 0.2s ease,
         color 0.2s ease,
@@ -70,6 +75,10 @@
     animation: slot-tab-enter 0.16s ease-out;
   }
 
+  /* ===============================
+     CARDS
+  ================================ */
+
   .slot-form-card,
   .bookings-card,
   .slot-placeholder {
@@ -87,7 +96,16 @@
     }
   }
 
-  /* GENERATE FORM */
+  .slot-form-description {
+    margin: -10px 0 22px;
+    color: #7a887e;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ===============================
+     GENERATE FORM
+  ================================ */
 
   .form {
     display: grid;
@@ -117,29 +135,156 @@
         outline: none;
         background: #fff;
         color: #2c4132;
+        font-family: inherit;
         font-size: 13px;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+
+        &:hover {
+          border-color: #b9cfbd;
+        }
 
         &:focus {
           border-color: #24854e;
           box-shadow: 0 0 0 3px rgba(36, 133, 78, 0.09);
         }
+
+        &:disabled {
+          background: #f5f8f5;
+          cursor: not-allowed;
+        }
       }
     }
 
+    /* DATE RANGE PRESETS */
+
+    .slot-range-group {
+      grid-column: 1 / -1;
+      gap: 10px;
+    }
+
+    .slot-range-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+
+      button {
+        min-width: 85px;
+        min-height: 38px;
+        padding: 8px 15px;
+        border: 1px solid #dce8de;
+        border-radius: 8px;
+        background: #f8faf8;
+        color: #526457;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.2s ease,
+          border-color 0.2s ease,
+          color 0.2s ease,
+          box-shadow 0.2s ease;
+
+        &:hover:not(.active) {
+          border-color: #9bc5a5;
+          background: #eff6f0;
+          color: #21643a;
+        }
+
+        &.active {
+          border-color: #198349;
+          background: #198349;
+          color: #fff;
+          box-shadow: 0 2px 6px rgba(25, 131, 73, 0.15);
+        }
+
+        &:focus-visible {
+          outline: 2px solid #24854e;
+          outline-offset: 3px;
+        }
+      }
+    }
+
+    /* SELECTED DATE RANGE INFORMATION */
+
+    .slot-range-info {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 13px 15px;
+      border: 1px solid #dcebe0;
+      border-radius: 9px;
+      background: #f4f9f5;
+      color: #617568;
+      font-size: 12px;
+      line-height: 1.5;
+
+      strong {
+        color: #198349;
+        font-size: 15px;
+        font-weight: 700;
+      }
+    }
+
+    /* ERROR AND SUCCESS MESSAGES */
+
+    .slot-error,
+    .slot-success {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 11px 13px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .slot-error {
+      border: 1px solid #f1d3d0;
+      background: #fff7f6;
+      color: #b33b32;
+    }
+
+    .slot-success {
+      border: 1px solid #d1e9d7;
+      background: #f3faf4;
+      color: #23713b;
+    }
+
+    /* GENERATE BUTTON */
+
     .submit-btn {
+      grid-column: 1 / -1;
       align-self: end;
-      min-height: 43px;
-      padding: 11px 18px;
+      width: 100%;
+      min-height: 46px;
+      padding: 12px 18px;
       border: 0;
       border-radius: 8px;
       background: #198349;
       color: #fff;
+      font-family: inherit;
       font-size: 13px;
       font-weight: 700;
-      transition: background 0.2s ease;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
 
       &:hover:not(:disabled) {
         background: #126b3a;
+        box-shadow: 0 3px 8px rgba(25, 131, 73, 0.17);
+      }
+
+      &:focus-visible {
+        outline: 2px solid #24854e;
+        outline-offset: 3px;
       }
 
       &:disabled {
@@ -149,7 +294,9 @@
     }
   }
 
-  /* UPCOMING BOOKINGS */
+  /* ===============================
+     UPCOMING BOOKINGS
+  ================================ */
 
   .booking-list {
     display: flex;
@@ -186,7 +333,9 @@
     font-size: 13px;
   }
 
-  /* GENERATED SLOTS PLACEHOLDER */
+  /* ===============================
+     GENERATED SLOTS PLACEHOLDER
+  ================================ */
 
   .slot-placeholder {
     min-height: 180px;
@@ -209,6 +358,161 @@
   }
 }
 
+/* ===============================
+   TABLET
+================================ */
+
+@media (max-width: 850px) {
+  .slot-section {
+    .form {
+      gap: 15px;
+    }
+
+    .slot-form-card,
+    .bookings-card,
+    .slot-placeholder {
+      padding: 19px;
+    }
+  }
+}
+
+/* ===============================
+   MOBILE
+================================ */
+
+@media (max-width: 650px) {
+  .slot-section {
+    .slot-section-header {
+      margin-bottom: 17px;
+
+      h2 {
+        font-size: 21px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    .slot-tabs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5px;
+      margin-bottom: 17px;
+
+      button {
+        width: 100%;
+        min-width: 0;
+        padding: 12px;
+        text-align: left;
+      }
+    }
+
+    .slot-form-card,
+    .bookings-card,
+    .slot-placeholder {
+      padding: 16px;
+      border-radius: 10px;
+    }
+
+    .slot-form-card > h3 {
+      margin-bottom: 17px;
+      font-size: 16px;
+    }
+
+    .slot-form-description {
+      margin-top: -8px;
+      margin-bottom: 19px;
+      font-size: 12px;
+    }
+
+    .form {
+      grid-template-columns: 1fr;
+      gap: 14px;
+
+      .form-group {
+        gap: 7px;
+
+        label {
+          font-size: 12px;
+        }
+
+        input,
+        select {
+          height: 45px;
+          font-size: 14px;
+        }
+      }
+
+      .slot-range-group,
+      .slot-range-info,
+      .slot-error,
+      .slot-success,
+      .submit-btn {
+        grid-column: 1;
+      }
+
+      .slot-range-presets {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+
+        button {
+          width: 100%;
+          min-width: 0;
+          min-height: 42px;
+          padding: 9px 10px;
+        }
+      }
+
+      .slot-range-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        padding: 12px;
+        font-size: 11px;
+      }
+
+      .submit-btn {
+        min-height: 46px;
+        margin-top: 3px;
+      }
+    }
+
+    .booking-item {
+      padding: 13px;
+    }
+  }
+}
+
+/* ===============================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 380px) {
+  .slot-section {
+    .slot-form-card,
+    .bookings-card,
+    .slot-placeholder {
+      padding: 13px;
+    }
+
+    .form {
+      .slot-range-presets {
+        grid-template-columns: 1fr 1fr;
+
+        button {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}
+
+/* ===============================
+   REDUCED MOTION
+================================ */
+
 @keyframes slot-tab-enter {
   from {
     opacity: 0;
@@ -221,34 +525,15 @@
   }
 }
 
-@media (max-width: 650px) {
-  .slot-section {
-    .slot-tabs {
-      display: grid;
-      grid-template-columns: 1fr;
-
-      button {
-        width: 100%;
-        min-width: 0;
-        text-align: left;
-      }
-    }
-
-    .slot-form-card,
-    .bookings-card,
-    .slot-placeholder {
-      padding: 16px;
-    }
-
-    .form {
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .slot-section .slot-tab-content {
-    animation: none;
+  .slot-section {
+    .slot-tab-content {
+      animation: none;
+    }
+
+    * {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

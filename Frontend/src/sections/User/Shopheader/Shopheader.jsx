@@ -1,10 +1,10 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Scissors,
   Search,
   ShoppingCart,
-  Menu,
   CalendarCheck,
 } from "lucide-react";
 
@@ -21,7 +21,6 @@ const ShopHeader = ({ user: userProp, onOpenSidebar }) => {
 
   const [search, setSearch] = useState("");
 
-  // Prefer the explicitly provided user, falling back to AuthContext.
   const user = userProp || authUser || null;
 
   const profile = user?.profile || user || {};
@@ -72,15 +71,6 @@ const ShopHeader = ({ user: userProp, onOpenSidebar }) => {
     <header className="shop-header">
       <div className="shop-header__left">
         <button
-          className="shop-header__mobile-menu"
-          type="button"
-          aria-label="Open account navigation"
-          onClick={onOpenSidebar}
-        >
-          <Menu size={22} />
-        </button>
-
-        <button
           className="shop-header__brand"
           type="button"
           onClick={() => navigate("/")}
@@ -126,9 +116,9 @@ const ShopHeader = ({ user: userProp, onOpenSidebar }) => {
           type="button"
           onClick={handleBookingsClick}
           aria-label="My appointments"
+          title="Bookings"
         >
           <CalendarCheck size={21} />
-          <span>Bookings</span>
         </button>
 
         <button
@@ -136,6 +126,7 @@ const ShopHeader = ({ user: userProp, onOpenSidebar }) => {
           type="button"
           onClick={handleCartClick}
           aria-label={`Shopping cart, ${cartCount} items`}
+          title="Cart"
         >
           <span className="shop-header__cart-icon-wrap">
             <ShoppingCart size={23} />
@@ -146,8 +137,6 @@ const ShopHeader = ({ user: userProp, onOpenSidebar }) => {
               </span>
             )}
           </span>
-
-          <span>Cart</span>
         </button>
 
         {user ? (

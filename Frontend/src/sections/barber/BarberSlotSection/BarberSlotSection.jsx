@@ -1,29 +1,50 @@
-
 import { useState } from "react";
 
 import { useCreateSlots } from "../../../hooks/barber/useTimeSlots";
-
 import BarberGeneratedSlots from "./BarberGeneratedSlots";
 import BarberUpcomingBookings from "./BarberUpcomingBookings";
-
 import "./BarberSlotSection.scss";
+
+const getLocalDateString = (date = new Date()) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const addDaysToDate = (dateString, days) => {
+  const date = new Date(`${dateString}T00:00:00`);
+  date.setDate(date.getDate() + days);
+
+  return getLocalDateString(date);
+};
+
+const getInclusiveDays = (startDate, endDate) => {
+  const start = new Date(`${startDate}T00:00:00`);
+  const end = new Date(`${endDate}T00:00:00`);
+
+  return Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
+};
 
 const BarberSlotSection = () => {
   const [activeTab, setActiveTab] = useState("generate");
 
+  const today = getLocalDateString();
+
   const [form, setForm] = useState({
-    date: "",
+    startDate: today,
+    endDate: "",
     startTime: "",
     endTime: "",
     duration: 30,
   });
 
-  const {
-    generateSlots,
-    loading: creating,
-    error,
-    success,
-    resetMessages,
+  const [selectedPreset, setSelectedPreset] = useState("custom");
+  const [generationSummary, setGenerationSummary] = useState(null);
+
+  const { generateSlots, loading: creating,
+    error, success, resetMessages,
   } = useCreateSlots();
 
   const handleChange = (event) => {
@@ -34,14 +55,53 @@ const BarberSlotSection = () => {
       [name]: name === "duration" ? Number(value) : value,
     }));
 
+    if (name === "startDate" || name === "endDate") {
+      setSelectedPreset("custom");
+    }
+
+    setGenerationSummary(null);
+    resetMessages();
+  };
+
+  const handlePresetChange = (days) => {
+    const startDate = form.startDate || today;
+
+    setForm((previous) => ({
+      ...previous,
+      startDate,
+      endDate: addDaysToDate(startDate, days - 1),
+    }));
+
+    setSelectedPreset(String(days));
+    setGenerationSummary(null);
     resetMessages();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     resetMessages();
+    setGenerationSummary(null);
 
-    if (!form.date || !form.startTime || !form.endTime) {
+    if ( !form.startDate || !form.endDate ||
+      !form.startTime || !form.endTime
+    ) {
+      return;
+    }
+
+    if (form.startDate < today) {
+      return;
+    }
+
+    if (form.endDate < form.startDate) {
+      return;
+    }
+
+    const totalDays = getInclusiveDays(
+      form.startDate,
+      form.endDate
+    );
+
+    if (totalDays > 90) {
       return;
     }
 
@@ -51,17 +111,26 @@ const BarberSlotSection = () => {
 
     try {
       const result = await generateSlots({
-        date: form.date,
+        startDate: form.startDate,
+        endDate: form.endDate,
         startTime: form.startTime,
         endTime: form.endTime,
         duration: Number(form.duration),
       });
 
-      // Support common API response shapes.
       if (result?.success === false) {
         return;
       }
 
+      // Read generation summary returned by the backend.
+      const summary = result?.data?.summary;
+
+      if (summary) {
+        setGenerationSummary(summary);
+      }
+
+      // Keep the selected dates and duration for convenience.
+      // Clear only the time fields after successful generation.
       setForm((previous) => ({
         ...previous,
         startTime: "",
@@ -88,19 +157,15 @@ const BarberSlotSection = () => {
 
       {/* TAB SWITCHER */}
       <div className="slot-tabs">
-        <button
-          type="button"
+        <button type="button"
           className={activeTab === "generate" ? "active" : ""}
-          onClick={() => setActiveTab("generate")}
-        >
+          onClick={() => setActiveTab("generate")}>
           Generate Slots
         </button>
 
         <button
-          type="button"
-          className={activeTab === "generated" ? "active" : ""}
-          onClick={() => setActiveTab("generated")}
-        >
+          type="button" className={activeTab === "generated" ? "active" : ""}
+          onClick={() => setActiveTab("generated")}>
           Generated Slots
         </button>
 
@@ -119,24 +184,108 @@ const BarberSlotSection = () => {
           <div className="slot-form-card">
             <h3>Create Availability Slots</h3>
 
+            <p className="slot-form-description">
+              Set your availability for multiple dates at once.
+              All days, including weekends, are included.
+            </p>
+
             <form className="form" onSubmit={handleSubmit}>
+              {/* DATE RANGE PRESETS */}
+              <div className="form-group slot-range-group">
+                <label>Quick Date Range</label>
+
+                <div className="slot-range-presets">
+                  {[10, 15, 30].map((days) => (
+                    <button
+                      key={days}
+                      type="button"
+                      className={ selectedPreset === String(days) ? "active" : ""}
+                      onClick={() => handlePresetChange(days)}
+                    >
+                      {days} Days
+                    </button>
+                  ))}
+
+                  <button
+                    type="button"
+                    className={
+                      selectedPreset === "custom" ? "active" : ""
+                    }
+                    onClick={() => {
+                      setSelectedPreset("custom");
+                      setGenerationSummary(null);
+                      resetMessages();
+                    }}
+                  >
+                    Custom
+                  </button>
+                </div>
+              </div>
+
+              {/* START DATE */}
               <div className="form-group">
-                <label htmlFor="slot-date">Date</label>
+                <label htmlFor="slot-start-date">
+                  Start Date
+                </label>
+
                 <input
-                  id="slot-date"
+                  id="slot-start-date"
                   type="date"
-                  name="date"
-                  value={form.date}
+                  name="startDate"
+                  value={form.startDate}
                   onChange={handleChange}
-                  min={new Date().toLocaleDateString("en-CA")}
+                  min={today}
                   required
                 />
               </div>
 
+              {/* END DATE */}
+              <div className="form-group">
+                <label htmlFor="slot-end-date">
+                  End Date
+                </label>
+
+                <input
+                  id="slot-end-date"
+                  type="date"
+                  name="endDate"
+                  value={form.endDate}
+                  onChange={handleChange}
+                  min={form.startDate || today}
+                  max={
+                    form.startDate ? addDaysToDate(form.startDate, 89) : undefined
+                  }
+                  required
+                />
+              </div>
+
+              {/* SELECTED DATE RANGE INFO */}
+              {form.startDate && form.endDate && (
+                <div className="slot-range-info">
+                  <span>
+                    <strong>
+                      {form.endDate >= form.startDate
+                        ? getInclusiveDays(
+                            form.startDate,
+                            form.endDate
+                          )
+                        : 0}
+                    </strong>{" "}
+                    calendar days selected
+                  </span>
+
+                  <span>
+                    Weekdays and weekends included
+                  </span>
+                </div>
+              )}
+
+              {/* START TIME */}
               <div className="form-group">
                 <label htmlFor="slot-start-time">
                   Start Time
                 </label>
+
                 <input
                   id="slot-start-time"
                   type="time"
@@ -147,10 +296,12 @@ const BarberSlotSection = () => {
                 />
               </div>
 
+              {/* END TIME */}
               <div className="form-group">
                 <label htmlFor="slot-end-time">
                   End Time
                 </label>
+
                 <input
                   id="slot-end-time"
                   type="time"
@@ -162,10 +313,12 @@ const BarberSlotSection = () => {
                 />
               </div>
 
+              {/* SLOT DURATION */}
               <div className="form-group">
                 <label htmlFor="slot-duration">
                   Slot Duration
                 </label>
+
                 <select
                   id="slot-duration"
                   name="duration"
@@ -179,24 +332,71 @@ const BarberSlotSection = () => {
                 </select>
               </div>
 
+              {/* VALIDATION MESSAGE */}
+              {form.startDate &&
+                form.endDate &&
+                form.endDate < form.startDate && (
+                  <p className="slot-error" role="alert">
+                    End date must be on or after start date.
+                  </p>
+                )}
+
+              {form.startDate &&
+                form.endDate >= form.startDate &&
+                getInclusiveDays(
+                  form.startDate,
+                  form.endDate
+                ) > 90 && (
+                  <p className="slot-error" role="alert">
+                    You can generate availability for a maximum
+                    of 90 days at a time.
+                  </p>
+                )}
+
+              {form.startTime &&
+                form.endTime &&
+                form.startTime >= form.endTime && (
+                  <p className="slot-error" role="alert">
+                    End time must be later than start time.
+                  </p>
+                )}
+
+              {/* API ERROR */}
               {error && (
                 <p className="slot-error" role="alert">
                   {error}
                 </p>
               )}
 
+              {/* SUCCESS MESSAGE */}
               {success && (
                 <p className="slot-success" role="status">
                   {success}
                 </p>
               )}
 
+              {/* GENERATE BUTTON */}
               <button
                 type="submit"
                 className="submit-btn"
-                disabled={creating}
+                disabled={
+                  creating ||
+                  !form.startDate ||
+                  !form.endDate ||
+                  !form.startTime ||
+                  !form.endTime ||
+                  form.startDate < today ||
+                  form.endDate < form.startDate ||
+                  getInclusiveDays(
+                    form.startDate,
+                    form.endDate
+                  ) > 90 ||
+                  form.startTime >= form.endTime
+                }
               >
-                {creating ? "Creating..." : "Generate Slots"}
+                {creating
+                  ? "Generating Availability..."
+                  : "Generate Slots"}
               </button>
             </form>
           </div>
@@ -210,7 +410,7 @@ const BarberSlotSection = () => {
         </div>
       )}
 
-      {/* UPCOMING BOOKINGS TAB — LEFT UNCHANGED */}
+      {/* UPCOMING BOOKINGS TAB */}
       {activeTab === "bookings" && (
         <div className="slot-tab-content">
           <BarberUpcomingBookings />

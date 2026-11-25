@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
 import "./HeaderSection.scss";
 
 import {
   FiSearch,
-  FiMapPin,
   FiShoppingCart,
   FiX,
 } from "react-icons/fi";
@@ -19,52 +19,12 @@ const HeaderSection = () => {
   const { user, logout } = useAuth();
   const { cartCount } = useCart();
 
-  const [location, setLocation] = useState("Select Location");
   const [searchTerm, setSearchTerm] = useState("");
   const [showLoginDialog, setShowLoginDialog] = useState(false);
 
-  useEffect(() => {
-    if (!navigator.geolocation) return;
+  const handleSearch = (event) => {
+    event.preventDefault();
 
-    navigator.geolocation.getCurrentPosition(
-      async ({ coords }) => {
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`
-          );
-
-          if (!response.ok) {
-            throw new Error("Location unavailable");
-          }
-
-          const data = await response.json();
-          const address = data.address || {};
-
-          const city =
-            address.city ||
-            address.town ||
-            address.village ||
-            address.suburb ||
-            address.county ||
-            "Unknown";
-
-          const state = address.state || "";
-
-          setLocation(state ? `${city}, ${state}` : city);
-        } catch {
-          setLocation("Select Location");
-        }
-      },
-      () => setLocation("Select Location"),
-      {
-        enableHighAccuracy: false,
-        timeout: 10000,
-        maximumAge: 300000,
-      }
-    );
-  }, []);
-
-  const handleSearch = () => {
     const query = searchTerm.trim();
 
     navigate(
@@ -74,21 +34,9 @@ const HeaderSection = () => {
     );
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleSearch();
-    }
+  const handleAuthClick = () => {
+    navigate("/auth");
   };
-
-  const displayName =
-    user?.name ||
-    user?.fullName ||
-    user?.username ||
-    user?.firstName ||
-    user?.email?.split("@")[0] ||
-    "";
-
-  const handleAuthClick = () => navigate("/auth");
 
   const handleCartClick = () => {
     if (!user) {
@@ -104,11 +52,13 @@ const HeaderSection = () => {
     navigate("/auth?redirect=%2Fcart");
   };
 
-  const closeLoginDialog = () => setShowLoginDialog(false);
+  const closeLoginDialog = () => {
+    setShowLoginDialog(false);
+  };
 
   return (
     <>
-      <header className="header">
+      <header className={`header ${user ? "header--logged-in" : ""}`}>
         <div className="header__container">
 
           {/* LEFT SECTION */}
@@ -130,36 +80,12 @@ const HeaderSection = () => {
                 <span className="header__brand-dot">.</span>
               </span>
             </button>
-
-            <button
-              type="button"
-              className="header__location"
-              aria-label={`Selected location: ${location}`}
-              title={location}
-            >
-              <FiMapPin className="header__location-icon" />
-
-              <span className="header__location-content">
-                <span className="header__eyebrow">
-                  Delivering to
-                </span>
-
-                <strong>{location}</strong>
-
-                <span className="header__location-update">
-                  Update location
-                </span>
-              </span>
-            </button>
           </div>
 
           {/* SEARCH SECTION */}
           <form
             className="header__search"
-            onSubmit={(event) => {
-              event.preventDefault();
-              handleSearch();
-            }}
+            onSubmit={handleSearch}
           >
             <span className="header__search-label">
               Explore
@@ -173,7 +99,6 @@ const HeaderSection = () => {
               onChange={(event) =>
                 setSearchTerm(event.target.value)
               }
-              onKeyDown={handleKeyDown}
               aria-label="Search shops, services or barbers"
             />
 

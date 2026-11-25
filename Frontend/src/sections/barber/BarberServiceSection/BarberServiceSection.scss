@@ -1,3 +1,4 @@
+
 .barber-services {
   width: 100%;
   min-width: 0;
@@ -9,6 +10,8 @@
   * {
     box-sizing: border-box;
   }
+
+  /* HEADER */
 
   &__header {
     margin-bottom: 22px;
@@ -287,6 +290,56 @@
     }
   }
 
+  /* SEARCH */
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 0 20px;
+    padding: 0 14px;
+    border: 1px solid #dce7df;
+    border-radius: 10px;
+    background: #fff;
+    color: #647b6a;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    > svg {
+      flex-shrink: 0;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      min-height: 43px;
+      padding: 11px 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #293b30;
+      font-family: inherit;
+      font-size: 13px;
+
+      &::placeholder {
+        color: #94a397;
+      }
+
+      &:focus {
+        border: none;
+        box-shadow: none;
+      }
+    }
+
+    &:focus-within {
+      border-color: #29965a;
+      box-shadow: 0 0 0 3px rgb(41 150 90 / 10%);
+    }
+  }
+
   /* SERVICES TABLE */
 
   &__table-wrapper {
@@ -300,7 +353,7 @@
 
   &__table {
     width: 100%;
-    min-width: 760px;
+    min-width: 950px;
     border-collapse: separate;
     border-spacing: 0;
     text-align: left;
@@ -372,6 +425,8 @@
     }
   }
 
+  /* GENDER */
+
   &__gender {
     display: inline-flex;
     align-items: center;
@@ -400,6 +455,41 @@
     }
   }
 
+  /* APPROVAL STATUS */
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+
+    &--pending {
+      background: #fff4d9;
+      color: #946313;
+    }
+
+    &--approved {
+      background: #e1f5e7;
+      color: #217442;
+    }
+
+    &--rejected {
+      background: #feeaea;
+      color: #b33434;
+    }
+
+    &--unknown {
+      background: #f1f5f2;
+      color: #64756a;
+    }
+  }
+
+  /* PRICE AND DURATION */
+
   &__price {
     color: #247542 !important;
     font-weight: 750;
@@ -424,6 +514,46 @@
     overflow-wrap: anywhere;
   }
 
+  /* DELETE BUTTON */
+
+  &__delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 34px;
+    padding: 8px 11px;
+    border: 1px solid #f0cccc;
+    border-radius: 8px;
+    background: #fff;
+    color: #c63d3d;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      border-color: #e7a6a6;
+      background: #fff2f2;
+      color: #a92222;
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgb(220 38 38 / 15%);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+  }
+
   /* EMPTY STATE */
 
   &__empty {
@@ -442,6 +572,7 @@
       margin: 0;
       color: #788a7d;
       font-size: 12px;
+      text-align: center;
     }
   }
 
@@ -500,6 +631,8 @@
       }
     }
   }
+
+  /* LOADING */
 
   &__loading {
     display: flex;
@@ -625,6 +758,24 @@
 
     &__add-button {
       width: 100%;
+    }
+
+    &__search {
+      max-width: 100%;
+      margin-bottom: 15px;
+
+      input {
+        font-size: 12px;
+      }
+    }
+
+    &__table {
+      min-width: 950px;
+    }
+
+    &__delete-button {
+      padding: 7px 9px;
+      font-size: 11px;
     }
 
     &__pagination {

@@ -1,16 +1,15 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingCart, LogOut, UserRound, ChevronDown } from "lucide-react";
+import {
+  ShoppingCart,
+  LogOut,
+  UserRound,
+  ChevronDown,
+} from "lucide-react";
+
 import "./UserProfileMenu.scss";
 
-/**
- * Small account menu for the "Hello, Account" header control.
- *
- * Props:
- * - user: optional logged-in user object
- * - cartCount: optional number shown beside Cart
- * - onLogout: optional async/sync logout callback from your AuthContext
- */
 export default function UserProfileMenu({
   user = {},
   cartCount = 0,
@@ -18,10 +17,12 @@ export default function UserProfileMenu({
 }) {
   const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+
   const rootRef = useRef(null);
   const navigate = useNavigate();
 
   const profile = user?.profile || user || {};
+
   const displayName =
     profile.firstName ||
     profile.name ||
@@ -30,17 +31,24 @@ export default function UserProfileMenu({
     "Account";
 
   const email = profile.email || "";
-  const initial = String(displayName).trim().charAt(0).toUpperCase() || "A";
+
+  const initial =
+    String(displayName).trim().charAt(0).toUpperCase() || "A";
 
   useEffect(() => {
     const handlePointerDown = (event) => {
-      if (rootRef.current && !rootRef.current.contains(event.target)) {
+      if (
+        rootRef.current &&
+        !rootRef.current.contains(event.target)
+      ) {
         setOpen(false);
       }
     };
 
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
     };
 
     document.addEventListener("pointerdown", handlePointerDown);
@@ -56,19 +64,28 @@ export default function UserProfileMenu({
     if (loggingOut) return;
 
     setLoggingOut(true);
+
     try {
       if (onLogout) {
         await onLogout();
       } else {
-        // Fallback only. Prefer passing your AuthContext logout callback.
         navigate("/auth");
       }
+
       setOpen(false);
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
       setLoggingOut(false);
     }
+  };
+
+  const handleProfileClick = () => {
+    setOpen(false);
+
+    navigate("/cart", {
+      state: { activeSection: "profile" },
+    });
   };
 
   return (
@@ -80,12 +97,22 @@ export default function UserProfileMenu({
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
       >
-        <span className="user-profile-menu__avatar">{initial}</span>
+        <span className="user-profile-menu__avatar">
+          {initial}
+        </span>
+
         <span className="user-profile-menu__trigger-copy">
-          <span className="user-profile-menu__hello">Hello,</span>
+          <span className="user-profile-menu__hello">
+            Hello,
+          </span>
+
           <strong>Account</strong>
         </span>
-        <ChevronDown className="user-profile-menu__chevron" size={15} />
+
+        <ChevronDown
+          className="user-profile-menu__chevron"
+          size={15}
+        />
       </button>
 
       {open && (
@@ -94,15 +121,21 @@ export default function UserProfileMenu({
             <span className="user-profile-menu__avatar user-profile-menu__avatar--large">
               {initial}
             </span>
+
             <div className="user-profile-menu__identity-text">
               <strong>{displayName}</strong>
-              {email && <span title={email}>{email}</span>}
+
+              {email && (
+                <span title={email}>{email}</span>
+              )}
+
               {!email && <span>Welcome back</span>}
             </div>
           </div>
 
           <div className="user-profile-menu__divider" />
 
+          {/* Cart */}
           <Link
             to="/cart"
             role="menuitem"
@@ -110,7 +143,9 @@ export default function UserProfileMenu({
             onClick={() => setOpen(false)}
           >
             <ShoppingCart size={17} />
+
             <span>My Cart</span>
+
             {Number(cartCount) > 0 && (
               <span className="user-profile-menu__count">
                 {cartCount}
@@ -118,18 +153,21 @@ export default function UserProfileMenu({
             )}
           </Link>
 
-          <Link
-            to="/user"
+          {/* Profile - Opens the existing dashboard profile section */}
+          <button
+            type="button"
             role="menuitem"
             className="user-profile-menu__item"
-            onClick={() => setOpen(false)}
+            onClick={handleProfileClick}
           >
             <UserRound size={17} />
-            <span>My Account</span>
-          </Link>
+
+            <span>Profile</span>
+          </button>
 
           <div className="user-profile-menu__divider" />
 
+          {/* Logout */}
           <button
             type="button"
             role="menuitem"
@@ -138,7 +176,10 @@ export default function UserProfileMenu({
             disabled={loggingOut}
           >
             <LogOut size={17} />
-            <span>{loggingOut ? "Logging out..." : "Logout"}</span>
+
+            <span>
+              {loggingOut ? "Logging out..." : "Logout"}
+            </span>
           </button>
         </div>
       )}

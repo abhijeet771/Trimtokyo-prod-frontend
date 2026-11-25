@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -10,6 +11,7 @@ import {
   MdVerifiedUser,
   MdStarOutline,
   MdArrowForward,
+  MdHome,
 } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "sonner";
@@ -179,7 +181,6 @@ const AuthPage = () => {
   return (
     <main className="auth-page">
       <section className="auth-left">
-
         {/* BRAND - CLICK TO GO HOME */}
         <button
           type="button"
@@ -260,6 +261,16 @@ const AuthPage = () => {
 
       <section className="auth-right">
         <div className="auth-card">
+          {/* MOBILE HOME BUTTON */}
+          <button
+            type="button"
+            className="auth-mobile-home"
+            onClick={() => navigate("/")}
+            aria-label="Go to TrimTokyo homepage"
+          >
+            <MdHome />
+          </button>
+
           <header className="auth-header">
             <h2>
               {mode === "login" ? "Welcome back" : "Create account"}

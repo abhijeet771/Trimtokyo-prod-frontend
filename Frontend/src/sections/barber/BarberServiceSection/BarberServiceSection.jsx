@@ -1,38 +1,80 @@
 import React, { useState, useEffect } from "react";
-import {  Scissors,  UserRound,  Users,  Clock,Plus,} from "lucide-react";
+import {  Scissors,  UserRound,  Users,  Clock,  Plus,  Search,  Trash2,} from "lucide-react";
 
 import useBarberServices from "../../../hooks/barber/useBarberServices";
 import useBarberProfile from "../../../hooks/barber/useBarberProfile";
 import "./BarberServiceSection.scss";
 
 const SERVICES_PER_PAGE = 5;
-const INITIAL_FORM = {  title: "",  price: "",  duration: "",  description: "",  gender: "",imageUrl: "",};
+
+const INITIAL_FORM = { title: "", price: "", duration: "",
+  description: "",
+  gender: "",
+  imageUrl: "",
+};
 
 const formatCurrency = (value) =>
   `₹${Number(value || 0).toLocaleString("en-IN")}`;
 
 const BarberServiceSection = () => {
-  const {services = [], loading, error, createService,} = useBarberServices();
+  const {
+    services = [],
+    loading,
+    error,
+    createService,
+    searchServices,
+    deleteService,
+    deletingId,
+  } = useBarberServices();
+
   const { profile } = useBarberProfile();
+
   const [form, setForm] = useState(INITIAL_FORM);
   const [currentPage, setCurrentPage] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const isApproved = profile?.status === "APPROVED";
+
   const totalServices = services.length;
-  const menServices = services.filter((service) => service.gender?.toLowerCase() === "male").length;
-  const womenServices = services.filter((service) => service.gender?.toLowerCase() === "female").length;
+
+  const menServices = services.filter(
+    (service) => service.gender?.toLowerCase() === "male"
+  ).length;
+
+  const womenServices = services.filter(
+    (service) => service.gender?.toLowerCase() === "female"
+  ).length;
 
   const averageDuration =
     totalServices > 0
-      ? Math.round(services.reduce(
-            (total, service) => total + (Number(service.duration) || 0),0) / totalServices
+      ? Math.round(
+          services.reduce(
+            (total, service) =>
+              total + (Number(service.duration) || 0),
+            0
+          ) / totalServices
         )
       : 0;
+
+  // Debounced server-side search
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      searchServices(searchTerm).catch(() => {});
+      setCurrentPage(1);
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [searchTerm, searchServices]);
 
   const totalPages = Math.ceil(totalServices / SERVICES_PER_PAGE);
   const indexOfLast = currentPage * SERVICES_PER_PAGE;
   const indexOfFirst = indexOfLast - SERVICES_PER_PAGE;
-  const currentServices = services.slice(indexOfFirst, indexOfLast);
+
+  const currentServices = services.slice(
+    indexOfFirst,
+    indexOfLast
+  );
 
   useEffect(() => {
     if (totalPages === 0 && currentPage !== 1) {
@@ -45,7 +87,10 @@ const BarberServiceSection = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setForm((previous) => ({ ...previous, [name]: value,}));
+    setForm((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (event) => {
@@ -53,13 +98,20 @@ const BarberServiceSection = () => {
 
     if (submitting) return;
 
-    if ( !form.title.trim() || form.price === "" || form.duration === "" || !form.gender)
-    {
+    if (
+      !form.title.trim() ||
+      form.price === "" ||
+      form.duration === "" ||
+      !form.gender
+    ) {
       alert("Please fill all required fields.");
       return;
     }
 
-    if (Number(form.price) < 0 || Number(form.duration) <= 0) {
+    if (
+      Number(form.price) < 0 ||
+      Number(form.duration) <= 0
+    ) {
       alert("Enter a valid price and duration.");
       return;
     }
@@ -71,7 +123,9 @@ const BarberServiceSection = () => {
 
     try {
       setSubmitting(true);
-      await createService({ ...form,
+
+      await createService({
+        ...form,
         title: form.title.trim(),
         price: Number(form.price),
         duration: Number(form.duration),
@@ -81,26 +135,60 @@ const BarberServiceSection = () => {
 
       setForm(INITIAL_FORM);
       setCurrentPage(1);
+
+      // Refresh using the current search term
+      await searchServices(searchTerm).catch(() => {});
     } catch (err) {
-      alert( err.response?.data?.message || "Something went wrong while creating the service.");
+      alert(
+        err.response?.data?.message ||
+          err.message ||
+          "Something went wrong while creating the service."
+      );
     } finally {
       setSubmitting(false);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="barber-services__loading">
-        Loading services...
-      </div>
+  const handleDelete = async (service) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${service.title}"?`
     );
-  }
+
+    if (!confirmed) return;
+
+    try {
+      await deleteService(service._id);
+
+      // Reapply the current search after deletion
+      await searchServices(searchTerm).catch(() => {});
+
+      alert("Service deleted successfully.");
+    } catch (err) {
+      alert(
+        err.response?.data?.message ||
+          "Failed to delete service."
+      );
+    }
+  };
+
+  const getStatusLabel = (status) => {
+    switch (status?.toUpperCase()) {
+      case "APPROVED":
+        return "Approved";
+      case "REJECTED":
+        return "Rejected";
+      case "PENDING":
+        return "Pending";
+      default:
+        return "Unknown";
+    }
+  };
 
   const kpis = [
-    { label: "Total Services", value: totalServices, icon: Scissors, accent: "purple", },
-    { label: "Men's Services", value: menServices, icon: UserRound, accent: "blue",},
-    { label: "Women's Services", value: womenServices, icon: Users, accent: "pink", },
-    { label: "Average Service Time", value: `${averageDuration} min`, icon: Clock, accent: "orange",},
+    {     label: "Total Services",     value: totalServices,    icon: Scissors,     accent: "purple",    },
+    {     label: "Men's Services",     value: menServices,      icon: UserRound,    accent: "blue",    },
+    {     label: "Women's Services",   value: womenServices,    icon: Users,        accent: "pink",    },
+    {     label: "Average Service Time",     value: `${averageDuration} min`,    icon: Clock,    accent: "orange",    },
   ];
 
   return (
@@ -119,8 +207,13 @@ const BarberServiceSection = () => {
           const Icon = kpi.icon;
 
           return (
-            <article key={kpi.label} className="barber-services__kpi-card">
-              <div className={`barber-services__kpi-icon barber-services__kpi-icon--${kpi.accent}`}>
+            <article
+              key={kpi.label}
+              className="barber-services__kpi-card"
+            >
+              <div
+                className={`barber-services__kpi-icon barber-services__kpi-icon--${kpi.accent}`}
+              >
                 <Icon size={21} />
               </div>
 
@@ -133,10 +226,12 @@ const BarberServiceSection = () => {
         })}
       </div>
 
-      {/* Error / approval notice */}
+      {/* Error / Approval Notice */}
       {error && (
         <div className="barber-services__message barber-services__message--error">
-          {typeof error === "string" ? error : error.message || "Unable to load services."}
+          {typeof error === "string"
+            ? error
+            : error.message || "Unable to load services."}
         </div>
       )}
 
@@ -155,9 +250,14 @@ const BarberServiceSection = () => {
           </div>
         </div>
 
-        <form className="barber-services__form" onSubmit={handleSubmit}>
+        <form
+          className="barber-services__form"
+          onSubmit={handleSubmit}
+        >
           <div className="barber-services__field">
-            <label htmlFor="service-title">Service Title *</label>
+            <label htmlFor="service-title">
+              Service Title *
+            </label>
             <input
               id="service-title"
               name="title"
@@ -202,7 +302,9 @@ const BarberServiceSection = () => {
           </div>
 
           <div className="barber-services__field">
-            <label htmlFor="service-gender">Service For *</label>
+            <label htmlFor="service-gender">
+              Service For *
+            </label>
             <select
               id="service-gender"
               name="gender"
@@ -218,7 +320,9 @@ const BarberServiceSection = () => {
           </div>
 
           <div className="barber-services__field barber-services__field--full">
-            <label htmlFor="service-description">Description</label>
+            <label htmlFor="service-description">
+              Description
+            </label>
             <textarea
               id="service-description"
               name="description"
@@ -255,21 +359,42 @@ const BarberServiceSection = () => {
         </form>
       </section>
 
-      {/* Services Table */}
+      {/* All Services */}
       <section className="barber-services__panel">
         <div className="barber-services__panel-header">
           <div>
             <h2>All Services</h2>
             <p>
-              {totalServices} {totalServices === 1 ? "service" : "services"} available
+              {totalServices}{" "}
+              {totalServices === 1 ? "service" : "services"} found
             </p>
           </div>
         </div>
 
-        {totalServices === 0 ? (
+        {/* Search */}
+        <div className="barber-services__search">
+          <Search size={19} />
+          <input
+            type="search"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder="Search services by name..."
+            aria-label="Search services by name"
+          />
+        </div>
+
+        {loading ? (
+          <div className="barber-services__loading">
+            Loading services...
+          </div>
+        ) : totalServices === 0 ? (
           <div className="barber-services__empty">
             <Scissors size={30} />
-            <p>No services added yet.</p>
+            <p>
+              {searchTerm
+                ? "No services found matching your search."
+                : "No services added yet."}
+            </p>
           </div>
         ) : (
           <>
@@ -281,7 +406,9 @@ const BarberServiceSection = () => {
                     <th>Gender</th>
                     <th>Price</th>
                     <th>Duration</th>
+                    <th>Status</th>
                     <th>Description</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
 
@@ -292,7 +419,11 @@ const BarberServiceSection = () => {
                         <div className="barber-services__service-name">
                           {service.imageUrl ? (
                             <img
-                              src={service.imageUrl} alt="" className="barber-services__service-image" loading="lazy"/>
+                              src={service.imageUrl}
+                              alt=""
+                              className="barber-services__service-image"
+                              loading="lazy"
+                            />
                           ) : (
                             <div className="barber-services__service-image barber-services__service-image--placeholder">
                               <Scissors size={17} />
@@ -307,8 +438,12 @@ const BarberServiceSection = () => {
                         <span
                           className={`barber-services__gender barber-services__gender--${(
                             service.gender || "other"
-                          ).toLowerCase()}`}>
-                          {service.gender ? service.gender.charAt(0).toUpperCase() + service.gender.slice(1) : "Other"}
+                          ).toLowerCase()}`}
+                        >
+                          {service.gender
+                            ? service.gender.charAt(0).toUpperCase() +
+                              service.gender.slice(1)
+                            : "Other"}
                         </span>
                       </td>
 
@@ -323,8 +458,34 @@ const BarberServiceSection = () => {
                         </span>
                       </td>
 
+                      <td>
+                        <span
+                          className={`barber-services__status barber-services__status--${(
+                            service.status || "unknown"
+                          ).toLowerCase()}`}
+                        >
+                          {getStatusLabel(service.status)}
+                        </span>
+                      </td>
+
                       <td className="barber-services__description">
                         {service.description?.trim() || "—"}
+                      </td>
+
+                      <td>
+                        <button
+                          type="button"
+                          className="barber-services__delete-button"
+                          onClick={() => handleDelete(service)}
+                          disabled={deletingId === service._id}
+                          title="Delete service"
+                          aria-label={`Delete ${service.title}`}
+                        >
+                          <Trash2 size={16} />
+                          {deletingId === service._id
+                            ? "Deleting..."
+                            : "Delete"}
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -337,7 +498,8 @@ const BarberServiceSection = () => {
               <div className="barber-services__pagination">
                 <span>
                   Showing {indexOfFirst + 1}–
-                  {Math.min(indexOfLast, totalServices)} of {totalServices}
+                  {Math.min(indexOfLast, totalServices)} of{" "}
+                  {totalServices}
                 </span>
 
                 <div className="barber-services__pagination-controls">
@@ -346,7 +508,8 @@ const BarberServiceSection = () => {
                     disabled={currentPage === 1}
                     onClick={() =>
                       setCurrentPage((prev) => prev - 1)
-                    }>
+                    }
+                  >
                     Previous
                   </button>
 
@@ -354,11 +517,13 @@ const BarberServiceSection = () => {
                     {currentPage} / {totalPages}
                   </span>
 
-                  <button type="button"
+                  <button
+                    type="button"
                     disabled={currentPage === totalPages}
                     onClick={() =>
                       setCurrentPage((prev) => prev + 1)
-                    }>
+                    }
+                  >
                     Next
                   </button>
                 </div>
