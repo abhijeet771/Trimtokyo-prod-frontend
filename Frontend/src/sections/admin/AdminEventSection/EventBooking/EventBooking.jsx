@@ -1,43 +1,24 @@
+import React, { useEffect, useState } from "react";
+import {  Search,  Plus,  Eye,  Pencil,  Trash2,
+  ChevronLeft,  ChevronRight,  X,  CalendarDays,} from "lucide-react";
 
-import React, { useMemo, useState } from "react";
-import {
-  Search,
-  Plus,
-  Eye,
-  Pencil,
-  Trash2,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  CalendarDays,
-} from "lucide-react";
-
-import initialBookings from "./EventBooking.js";
+import useEventBooking from "../../../../hooks/admin/useEventBooking";
 import EventBookingDialog from "./EventBookingDialog.jsx";
 import "./EventBooking.scss";
 
 const ITEMS_PER_PAGE = 10;
 
-const EVENT_TYPES = [
-  "Marriage / Wedding",
-  "Mundan",
-  "Upanayanam",
-  "Party",
-  "Corporate",
-  "Other",
-];
-
 const BOOKING_STATUSES = [
-  "Pending",
-  "Confirmed",
-  "Completed",
-  "Cancelled",
+  { label: "Pending", value: "PENDING" },
+  { label: "Confirmed", value: "CONFIRMED" },
+  { label: "Completed", value: "COMPLETED" },
+  { label: "Cancelled", value: "CANCELLED" },
 ];
 
 const formatDate = (value) => {
   if (!value) return "—";
 
-  const date = new Date(`${value}T00:00:00`);
+  const date = new Date(value);
 
   if (Number.isNaN(date.getTime())) return value;
 
@@ -48,65 +29,83 @@ const formatDate = (value) => {
   });
 };
 
+const formatStatus = (status) => {
+  if (!status) return "Pending";
+
+  return status.charAt(0) + status.slice(1).toLowerCase();
+};
+
 export default function EventBooking() {
-  const [bookings, setBookings] = useState(initialBookings);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [eventTypeFilter, setEventTypeFilter] = useState("All");
-  const [statusFilter, setStatusFilter] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
+  /* ============================================================
+     EVENT BOOKING HOOK
+  ============================================================ */
+
+  const {
+    bookings,
+    categories,
+
+    page,
+    limit,
+    total,
+    totalPages,
+
+    search,
+    status,
+    eventCategory,
+
+    setPage,
+
+    loading,
+    categoriesLoading,
+    creating,
+    updating,
+    statusUpdating,
+    deleting,
+
+    fetchBookings,
+    fetchCategories,
+    createBooking,
+    updateBooking,
+    changeBookingStatus,
+    removeBooking,
+  } = useEventBooking(1, ITEMS_PER_PAGE);
+
+  /* ============================================================
+     LOCAL UI STATE
+  ============================================================ */
+
+  const [searchTerm, setSearchTerm] = useState(search);
+  const [eventTypeFilter, setEventTypeFilter] = useState(eventCategory || "All");
+  const [statusFilter, setStatusFilter] = useState(status || "All");
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState("add");
   const [selectedBooking, setSelectedBooking] = useState(null);
 
-  const filteredBookings = useMemo(() => {
-    const query = searchTerm.trim().toLowerCase();
+  /* ============================================================
+     FETCH BOOKINGS
+  ============================================================ */
 
-    return bookings.filter((booking) => {
-      const matchesSearch =
-        !query ||
-        [
-          booking.bookingId,
-          booking.customerName,
-          booking.phoneNumber,
-          booking.eventType,
-        ].some((value) =>
-          String(value ?? "").toLowerCase().includes(query)
-        );
+  useEffect(() => {
+    fetchBookings({
+      page,
+      limit: ITEMS_PER_PAGE,
+      search: searchTerm,
+      status: statusFilter === "All" ? "" : statusFilter,
+      eventCategory:
+        eventTypeFilter === "All" ? "" : eventTypeFilter,
+    }).catch(() => {});
+  }, [
+    page,
+    searchTerm,
+    statusFilter,
+    eventTypeFilter,
+    fetchBookings,
+  ]);
 
-      const matchesType =
-        eventTypeFilter === "All" ||
-        booking.eventType === eventTypeFilter;
-
-      const matchesStatus =
-        statusFilter === "All" ||
-        booking.status === statusFilter;
-
-      return matchesSearch && matchesType && matchesStatus;
-    });
-  }, [bookings, searchTerm, eventTypeFilter, statusFilter]);
-
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredBookings.length / ITEMS_PER_PAGE)
-  );
-
-  const safePage = Math.min(currentPage, totalPages);
-
-  const paginatedBookings = filteredBookings.slice(
-    (safePage - 1) * ITEMS_PER_PAGE,
-    safePage * ITEMS_PER_PAGE
-  );
-
-  const firstItem =
-    filteredBookings.length === 0
-      ? 0
-      : (safePage - 1) * ITEMS_PER_PAGE + 1;
-
-  const lastItem = Math.min(
-    safePage * ITEMS_PER_PAGE,
-    filteredBookings.length
-  );
+  /* ============================================================
+     OPEN DIALOG
+  ============================================================ */
 
   const openDialog = (mode, booking = null) => {
     setDialogMode(mode);
@@ -119,70 +118,146 @@ export default function EventBooking() {
     setSelectedBooking(null);
   };
 
-  const handleSaveBooking = (formData) => {
-    if (dialogMode === "edit" && selectedBooking) {
-      setBookings((previous) =>
-        previous.map((booking) =>
-          booking.id === selectedBooking.id
-            ? { ...booking, ...formData }
-            : booking
-        )
-      );
-    } else {
-      const nextId =
-        bookings.reduce(
-          (maximum, booking) =>
-            Math.max(maximum, Number(booking.id) || 0),
-          0
-        ) + 1;
+  /* ============================================================
+     LOAD CATEGORIES FOR ADD / EDIT
+  ============================================================ */
 
-      const newBooking = {
-        ...formData,
-        id: nextId,
-        bookingId: `EVT-${String(nextId).padStart(3, "0")}`,
-        createdAt: new Date().toISOString(),
-      };
-
-      setBookings((previous) => [newBooking, ...previous]);
-      setCurrentPage(1);
+  useEffect(() => {
+    if (
+      dialogOpen &&
+      (dialogMode === "add" || dialogMode === "edit")
+    ) {
+      fetchCategories().catch(() => {});
     }
+  }, [dialogOpen, dialogMode, fetchCategories]);
 
-    closeDialog();
+  /* ============================================================
+     CREATE / UPDATE BOOKING
+  ============================================================ */
+
+  const handleSaveBooking = async (formData) => {
+    try {
+      if (dialogMode === "edit" && selectedBooking) {
+        await updateBooking(selectedBooking._id, formData);
+      } else {
+        await createBooking(formData);
+      }
+
+      closeDialog();
+
+      setPage(1);
+
+      await fetchBookings({
+        page: 1,
+        limit: ITEMS_PER_PAGE,
+        search: searchTerm,
+        status: statusFilter === "All" ? "" : statusFilter,
+        eventCategory:
+          eventTypeFilter === "All" ? "" : eventTypeFilter,
+      });
+    } catch (error) {
+      // Hook handles the error toast.
+    }
   };
 
-  const handleDeleteBooking = (bookingToDelete) => {
-    if (!bookingToDelete) return;
+  /* ============================================================
+     DELETE BOOKING
+  ============================================================ */
 
-    setBookings((previous) =>
-      previous.filter(
-        (booking) => booking.id !== bookingToDelete.id
-      )
-    );
+  const handleDeleteBooking = async (bookingToDelete) => {
+    if (!bookingToDelete?._id) return;
 
-    setCurrentPage(1);
-    closeDialog();
+    try {
+      await removeBooking(bookingToDelete._id);
+
+      closeDialog();
+
+      // Refresh current page. If it became empty, go to previous page.
+      const remainingBookings = bookings.length - 1;
+
+      const nextPage =
+        remainingBookings === 0 && page > 1
+          ? page - 1
+          : page;
+
+      setPage(nextPage);
+
+      await fetchBookings({
+        page: nextPage,
+        limit: ITEMS_PER_PAGE,
+        search: searchTerm,
+        status: statusFilter === "All" ? "" : statusFilter,
+        eventCategory:
+          eventTypeFilter === "All" ? "" : eventTypeFilter,
+      });
+    } catch (error) {
+      // Hook handles the error toast.
+    }
   };
+
+  /* ============================================================
+     CHANGE BOOKING STATUS
+  ============================================================ */
+
+  const handleStatusChange = async (bookingId, newStatus) => {
+    try {
+      await changeBookingStatus(bookingId, newStatus);
+
+      await fetchBookings({
+        page,
+        limit: ITEMS_PER_PAGE,
+        search: searchTerm,
+        status: statusFilter === "All" ? "" : statusFilter,
+        eventCategory:
+          eventTypeFilter === "All" ? "" : eventTypeFilter,
+      });
+    } catch (error) {
+      // Hook handles the error toast.
+    }
+  };
+
+  /* ============================================================
+     CLEAR FILTERS
+  ============================================================ */
 
   const clearFilters = () => {
     setSearchTerm("");
     setEventTypeFilter("All");
     setStatusFilter("All");
-    setCurrentPage(1);
+    setPage(1);
   };
+
+  /* ============================================================
+     PAGINATION
+  ============================================================ */
+
+  const safePage = Math.min(page, Math.max(1, totalPages));
+
+  const firstItem = total === 0 ? 0 : (safePage - 1) * limit + 1;
+
+  const lastItem = Math.min(safePage * limit, total);
 
   const pageNumbers = Array.from(
     { length: totalPages },
     (_, index) => index + 1
   ).filter(
-    (page) =>
-      page === 1 ||
-      page === totalPages ||
-      Math.abs(page - safePage) <= 1
+    (pageNumber) =>
+      pageNumber === 1 ||
+      pageNumber === totalPages ||
+      Math.abs(pageNumber - safePage) <= 1
   );
+
+  /* ============================================================
+     RENDER
+  ============================================================ */
 
   return (
     <section className="event-booking">
+
+      {/* TOOLBAR */}
+
       <div className="event-booking__toolbar">
+
         <div className="event-booking__search">
           <Search size={18} />
 
@@ -192,7 +267,7 @@ export default function EventBooking() {
             value={searchTerm}
             onChange={(event) => {
               setSearchTerm(event.target.value);
-              setCurrentPage(1);
+              setPage(1);
             }}
             aria-label="Search event bookings"
           />
@@ -202,7 +277,7 @@ export default function EventBooking() {
               type="button"
               onClick={() => {
                 setSearchTerm("");
-                setCurrentPage(1);
+                setPage(1);
               }}
               aria-label="Clear search"
             >
@@ -212,37 +287,52 @@ export default function EventBooking() {
         </div>
 
         <div className="event-booking__filters">
+
+          {/* EVENT CATEGORY FILTER */}
+
           <select
             aria-label="Filter by event type"
             value={eventTypeFilter}
             onChange={(event) => {
               setEventTypeFilter(event.target.value);
-              setCurrentPage(1);
+              setPage(1);
             }}
           >
             <option value="All">All Event Types</option>
-            {EVENT_TYPES.map((type) => (
-              <option key={type} value={type}>
-                {type}
+
+            {categories.map((category) => (
+              <option
+                key={category._id}
+                value={category._id}
+              >
+                {category.name}
               </option>
             ))}
           </select>
+
+          {/* STATUS FILTER */}
 
           <select
             aria-label="Filter by booking status"
             value={statusFilter}
             onChange={(event) => {
               setStatusFilter(event.target.value);
-              setCurrentPage(1);
+              setPage(1);
             }}
           >
             <option value="All">All Statuses</option>
-            {BOOKING_STATUSES.map((status) => (
-              <option key={status} value={status}>
-                {status}
+
+            {BOOKING_STATUSES.map((item) => (
+              <option
+                key={item.value}
+                value={item.value}
+              >
+                {item.label}
               </option>
             ))}
           </select>
+
+          {/* ADD BOOKING */}
 
           <button
             type="button"
@@ -252,12 +342,16 @@ export default function EventBooking() {
             <Plus size={18} />
             <span>Add Booking</span>
           </button>
+
         </div>
       </div>
+
+      {/* TABLE */}
 
       <div className="event-booking__table-card">
         <div className="event-booking__table-wrapper">
           <table className="event-booking__table">
+
             <thead>
               <tr>
                 <th>Booking ID</th>
@@ -272,93 +366,169 @@ export default function EventBooking() {
             </thead>
 
             <tbody>
-              {paginatedBookings.length > 0 ? (
-                paginatedBookings.map((booking) => (
-                  <tr key={booking.id}>
-                    <td>
-                      <span className="event-booking__booking-id">
-                        {booking.bookingId}
-                      </span>
-                    </td>
 
-                    <td>
-                      <div className="event-booking__customer">
-                        <span className="event-booking__customer-avatar">
-                          {(booking.customerName || "?")
-                            .trim()
-                            .charAt(0)
-                            .toUpperCase()}
+              {loading ? (
+                <tr>
+                  <td colSpan={6}>
+                    <div className="event-booking__empty">
+                      <p>Loading event bookings...</p>
+                    </div>
+                  </td>
+                </tr>
+              ) : bookings.length > 0 ? (
+
+                bookings.map((booking) => {
+
+                  const categoryName =
+                    typeof booking.eventCategory === "object"
+                      ? booking.eventCategory?.name
+                      : "—";
+
+                  const bookingStatus = (
+                    booking.status || "PENDING"
+                  ).toUpperCase();
+
+                  return (
+                    <tr key={booking._id}>
+
+                      {/* BOOKING ID */}
+
+                      <td>
+                        <span className="event-booking__booking-id">
+                          {booking._id}
+                        </span>
+                      </td>
+
+                      {/* CUSTOMER */}
+
+                      <td>
+                        <div className="event-booking__customer">
+
+                          <span className="event-booking__customer-avatar">
+                            {(booking.customerName || "?")
+                              .trim()
+                              .charAt(0)
+                              .toUpperCase()}
+                          </span>
+
+                          <div className="event-booking__customer-details">
+                            <strong>
+                              {booking.customerName}
+                            </strong>
+
+                            <span>
+                              {booking.phone}
+                            </span>
+                          </div>
+
+                        </div>
+                      </td>
+
+                      {/* EVENT CATEGORY */}
+
+                      <td>
+                        <span className="event-booking__event-type">
+                          {categoryName || "—"}
+                        </span>
+                      </td>
+
+                      {/* EVENT DATE */}
+
+                      <td>
+                        <span className="event-booking__date">
+                          <CalendarDays size={15} />
+                          {formatDate(booking.eventDate)}
+                        </span>
+                      </td>
+
+                      {/* STATUS */}
+
+                      <td>
+                        <span
+                          className={`event-booking__status event-booking__status--${bookingStatus.toLowerCase()}`}
+                        >
+                          <span className="event-booking__status-dot" />
+
+                          {formatStatus(bookingStatus)}
                         </span>
 
-                        <div className="event-booking__customer-details">
-                          <strong>{booking.customerName}</strong>
-                          <span>{booking.phoneNumber}</span>
+                        <select
+                          aria-label={`Change status for ${booking.customerName}`}
+                          value={bookingStatus}
+                          disabled={statusUpdating}
+                          onChange={(event) =>
+                            handleStatusChange(
+                              booking._id,
+                              event.target.value
+                            )
+                          }
+                          style={{
+                            display: "block",
+                            marginTop: "6px",
+                            maxWidth: "135px",
+                          }}
+                        >
+                          {BOOKING_STATUSES.map((item) => (
+                            <option
+                              key={item.value}
+                              value={item.value}
+                            >
+                              {item.label}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+
+                      {/* ACTIONS */}
+
+                      <td>
+                        <div className="event-booking__actions">
+
+                          <button
+                            type="button"
+                            className="event-booking__action-button event-booking__action-button--view"
+                            onClick={() =>
+                              openDialog("view", booking)
+                            }
+                            aria-label="View booking"
+                            title="View booking"
+                          >
+                            <Eye size={16} />
+                          </button>
+
+                          <button
+                            type="button"
+                            className="event-booking__action-button event-booking__action-button--edit"
+                            onClick={() =>
+                              openDialog("edit", booking)
+                            }
+                            aria-label="Edit booking"
+                            title="Edit booking"
+                          >
+                            <Pencil size={16} />
+                          </button>
+
+                          <button
+                            type="button"
+                            className="event-booking__action-button event-booking__action-button--delete"
+                            onClick={() =>
+                              openDialog("delete", booking)
+                            }
+                            aria-label="Delete booking"
+                            title="Delete booking"
+                          >
+                            <Trash2 size={16} />
+                          </button>
                         </div>
-                      </div>
-                    </td>
+                      </td>
+                    </tr>
+                  );
+                })
 
-                    <td>
-                      <span className="event-booking__event-type">
-                        {booking.eventType}
-                      </span>
-                    </td>
-
-                    <td>
-                      <span className="event-booking__date">
-                        <CalendarDays size={15} />
-                        {formatDate(booking.eventDate)}
-                      </span>
-                    </td>
-
-                    <td>
-                      <span
-                        className={`event-booking__status event-booking__status--${(
-                          booking.status || "pending"
-                        )
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                      >
-                        <span className="event-booking__status-dot" />
-                        {booking.status}
-                      </span>
-                    </td>
-
-                    <td>
-                      <div className="event-booking__actions">
-                        <button
-                          type="button"
-                          className="event-booking__action-button event-booking__action-button--view"
-                          onClick={() => openDialog("view", booking)}
-                          aria-label={`View ${booking.bookingId}`}
-                          title="View booking"
-                        >
-                          <Eye size={16} />
-                        </button>
-
-                        <button
-                          type="button"
-                          className="event-booking__action-button event-booking__action-button--edit"
-                          onClick={() => openDialog("edit", booking)}
-                          aria-label={`Edit ${booking.bookingId}`}
-                          title="Edit booking"
-                        >
-                          <Pencil size={16} />
-                        </button>
-
-                        <button
-                          type="button"
-                          className="event-booking__action-button event-booking__action-button--delete"
-                          onClick={() => openDialog("delete", booking)}
-                          aria-label={`Delete ${booking.bookingId}`}
-                          title="Delete booking"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
               ) : (
+
+                /* EMPTY STATE */
+
                 <tr>
                   <td colSpan={6}>
                     <div className="event-booking__empty">
@@ -376,13 +546,16 @@ export default function EventBooking() {
                       {searchTerm ||
                       eventTypeFilter !== "All" ||
                       statusFilter !== "All" ? (
+
                         <button
                           type="button"
                           onClick={clearFilters}
                         >
                           Clear filters
                         </button>
+
                       ) : (
+
                         <button
                           type="button"
                           onClick={() => openDialog("add")}
@@ -390,6 +563,7 @@ export default function EventBooking() {
                           <Plus size={16} />
                           Add Booking
                         </button>
+
                       )}
                     </div>
                   </td>
@@ -399,29 +573,37 @@ export default function EventBooking() {
           </table>
         </div>
 
+        {/* PAGINATION */}
+
         <div className="event-booking__pagination">
+
           <p>
             Showing <strong>{firstItem}–{lastItem}</strong> of{" "}
-            <strong>{filteredBookings.length}</strong> bookings
+            <strong>{total}</strong> bookings
           </p>
 
           <div className="event-booking__pagination-controls">
+
             <button
               type="button"
               onClick={() =>
-                setCurrentPage((page) => Math.max(1, page - 1))
+                setPage((previous) => Math.max(1, previous - 1))
               }
-              disabled={safePage <= 1}
+              disabled={safePage <= 1 || loading}
               aria-label="Previous page"
             >
               <ChevronLeft size={17} />
             </button>
 
-            {pageNumbers.reduce((items, page, index, pages) => {
-              if (index > 0 && page - pages[index - 1] > 1) {
+            {pageNumbers.reduce((items, pageNumber, index, pages) => {
+
+              if (
+                index > 0 &&
+                pageNumber - pages[index - 1] > 1
+              ) {
                 items.push(
                   <span
-                    key={`ellipsis-${page}`}
+                    key={`ellipsis-${pageNumber}`}
                     className="event-booking__pagination-ellipsis"
                   >
                     …
@@ -432,19 +614,20 @@ export default function EventBooking() {
               items.push(
                 <button
                   type="button"
-                  key={page}
+                  key={pageNumber}
                   className={
-                    safePage === page
+                    safePage === pageNumber
                       ? "event-booking__page-button event-booking__page-button--active"
                       : "event-booking__page-button"
                   }
-                  onClick={() => setCurrentPage(page)}
-                  aria-label={`Page ${page}`}
+                  onClick={() => setPage(pageNumber)}
+                  aria-label={`Page ${pageNumber}`}
                   aria-current={
-                    safePage === page ? "page" : undefined
+                    safePage === pageNumber ? "page" : undefined
                   }
+                  disabled={loading}
                 >
-                  {page}
+                  {pageNumber}
                 </button>
               );
 
@@ -454,23 +637,29 @@ export default function EventBooking() {
             <button
               type="button"
               onClick={() =>
-                setCurrentPage((page) =>
-                  Math.min(totalPages, page + 1)
+                setPage((previous) =>
+                  Math.min(totalPages, previous + 1)
                 )
               }
-              disabled={safePage >= totalPages}
+              disabled={safePage >= totalPages || loading}
               aria-label="Next page"
             >
               <ChevronRight size={17} />
             </button>
+
           </div>
         </div>
       </div>
+
+      {/* EVENT BOOKING DIALOG */}
 
       <EventBookingDialog
         isOpen={dialogOpen}
         mode={dialogMode}
         bookingData={selectedBooking}
+        categories={categories}
+        categoriesLoading={categoriesLoading}
+        isSaving={creating || updating || deleting}
         onClose={closeDialog}
         onSave={handleSaveBooking}
         onConfirmDelete={handleDeleteBooking}

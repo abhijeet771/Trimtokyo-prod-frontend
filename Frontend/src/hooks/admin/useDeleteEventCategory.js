@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { deleteEventCategory } from "../../services/adminEventCategory.services";
+import { deleteEventCategory } from "../../services/admin/adminEventCategory.services";
 
 const useDeleteEventCategory = () => {
   const [loading, setLoading] = useState(false);

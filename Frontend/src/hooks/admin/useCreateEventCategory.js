@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { createEventCategory } from "../../services/adminEventCategory.services";
+import { createEventCategory } from "../../services/admin/adminEventCategory.services";
 
 const useCreateEventCategory = () => {
   const [loading, setLoading] = useState(false);

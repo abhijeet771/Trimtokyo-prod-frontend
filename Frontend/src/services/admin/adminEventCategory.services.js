@@ -1,4 +1,4 @@
-import apik from "./apik";
+import apik from "../apik";
 
 const EVENT_CATEGORY_BASE_URL = "/api/admin/event-categories";
 

@@ -6,7 +6,7 @@ import {
   approveBarber as approveBarberAPI,
   declineBarber as declineBarberAPI,
   featureBarber,
-} from "../../services/adminApproval.service";
+} from "../../services/admin/adminApproval.service";
 
 const useAdminApprovals = () => {
   const [approvals, setApprovals] = useState([]);

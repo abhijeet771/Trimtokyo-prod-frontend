@@ -4,7 +4,7 @@ import {
   getPendingServices,
   approveService as approveServiceAPI,
   rejectService as rejectServiceAPI,
-} from "../../services/adminServiceApproval.service";
+} from "../../services/admin/adminServiceApproval.service";
 
 const useAdminServiceApprovals = () => {
   const [services, setServices] = useState([]);

@@ -8,6 +8,7 @@
     box-sizing: border-box;
   }
 
+  /* Toolbar */
   &__toolbar {
     display: flex;
     align-items: center;
@@ -28,9 +29,7 @@
     border-radius: 8px;
     background: #fff;
     color: #788071;
-    transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
     &:focus-within {
       border-color: #268b16;
@@ -78,6 +77,7 @@
     }
   }
 
+  /* Filters */
   &__filters {
     display: flex;
     align-items: center;
@@ -98,10 +98,17 @@
       font: inherit;
       font-size: 12px;
       cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
       &:focus {
         border-color: #268b16;
         box-shadow: 0 0 0 3px rgba(38, 139, 22, 0.08);
+      }
+
+      &:disabled {
+        background: #f5f6f3;
+        color: #a0a69b;
+        cursor: not-allowed;
       }
     }
   }
@@ -122,11 +129,9 @@
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
-    transition:
-      background 0.2s ease,
-      border-color 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease;
 
-    &:hover {
+    &:hover:not(:disabled) {
       border-color: #207512;
       background: #207512;
     }
@@ -135,8 +140,14 @@
       outline: 3px solid rgba(38, 139, 22, 0.17);
       outline-offset: 2px;
     }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
   }
 
+  /* Table */
   &__table-card {
     width: 100%;
     min-width: 0;
@@ -151,11 +162,24 @@
     overflow-x: auto;
     scrollbar-width: thin;
     scrollbar-color: #cbd2c6 #f5f6f4;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: #cbd2c6;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f5f6f4;
+    }
   }
 
   &__table {
     width: 100%;
-    min-width: 820px;
+    min-width: 900px;
     border-collapse: collapse;
     text-align: left;
 
@@ -203,6 +227,7 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Customer */
   &__customer {
     display: flex;
     align-items: center;
@@ -244,11 +269,13 @@
     }
   }
 
+  /* Event category */
   &__event-type {
     color: #525b4c;
     font-size: 12px;
   }
 
+  /* Date */
   &__date {
     display: inline-flex;
     align-items: center;
@@ -263,6 +290,7 @@
     }
   }
 
+  /* Status badge */
   &__status {
     display: inline-flex;
     align-items: center;
@@ -272,6 +300,7 @@
     border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
+    white-space: nowrap;
 
     &--pending {
       border-color: #dce9ff;
@@ -306,6 +335,35 @@
     background: currentColor;
   }
 
+  /* Inline status update select */
+  &__status-select {
+    width: 130px;
+    min-height: 34px;
+    padding: 0 25px 0 9px;
+    border: 1px solid #dfe4db;
+    border-radius: 7px;
+    outline: none;
+    background: #fff;
+    color: #4b5444;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      border-color: #268b16;
+      box-shadow: 0 0 0 3px rgba(38, 139, 22, 0.08);
+    }
+
+    &:disabled {
+      background: #f5f6f3;
+      color: #92998a;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  /* Actions */
   &__actions-heading {
     text-align: center;
   }
@@ -328,17 +386,19 @@
     border-radius: 7px;
     background: #fff;
     cursor: pointer;
-    transition:
-      background 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
     &--view {
       border-color: #dfe7e0;
       background: #f8faf7;
       color: #58634f;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: #cbd9c4;
         background: #edf5e9;
         color: #268b16;
@@ -350,7 +410,7 @@
       background: #f4faf1;
       color: #328723;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: #b9dcae;
         background: #e8f6e3;
       }
@@ -361,7 +421,7 @@
       background: #fff7f7;
       color: #c94a4a;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: #e9bebe;
         background: #ffeded;
       }
@@ -373,6 +433,7 @@
     }
   }
 
+  /* Empty state */
   &__empty {
     display: flex;
     flex-direction: column;
@@ -432,6 +493,37 @@
     color: #7b8871;
   }
 
+  /* Loading state */
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 220px;
+    padding: 30px;
+    color: #788071;
+    font-size: 12px;
+
+    svg {
+      color: #268b16;
+      animation: event-booking-spin 0.9s linear infinite;
+    }
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    border: 1px solid #f0dada;
+    border-radius: 8px;
+    background: #fff5f5;
+    color: #bd4141;
+    font-size: 12px;
+  }
+
+  /* Pagination */
   &__pagination {
     display: flex;
     align-items: center;
@@ -470,6 +562,7 @@
       background: #fff;
       color: #626c58;
       cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
 
       &:hover:not(:disabled) {
         border-color: #c8ddbd;
@@ -498,9 +591,14 @@
     font-size: 11px;
     cursor: pointer;
 
-    &:hover {
+    &:hover:not(:disabled) {
       border-color: #c8ddbd;
       background: #f3f9ef;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     &--active {
@@ -525,6 +623,13 @@
   }
 }
 
+@keyframes event-booking-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tablet */
 @media (max-width: 1150px) {
   .event-booking {
     &__toolbar {
@@ -548,6 +653,7 @@
   }
 }
 
+/* Mobile */
 @media (max-width: 600px) {
   .event-booking {
     &__filters {
@@ -564,6 +670,10 @@
     &__add-button {
       grid-column: 1 / -1;
       width: 100%;
+    }
+
+    &__table {
+      min-width: 900px;
     }
 
     &__pagination {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getAllEventCategories } from "../../services/adminEventCategory.services";
+import { getAllEventCategories } from "../../services/admin/adminEventCategory.services";
 
 const useEventCategories = ({
   page = 1,

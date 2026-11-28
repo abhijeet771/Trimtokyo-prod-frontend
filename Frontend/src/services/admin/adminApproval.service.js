@@ -1,4 +1,4 @@
-import apik from "./apik";
+import apik from "../apik";
 
 /* ============================================================
    ADMIN BARBER APPROVAL APIs
